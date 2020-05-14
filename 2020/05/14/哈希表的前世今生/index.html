@@ -5,7 +5,7 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="https://github.com/Chengqiji/chengqiji.github.io">
+  <link rel="dns-prefetch" href="https://chengqiji.github.io">
   <title>哈希表的前世今生01 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,76 +13,76 @@
   <meta name="description" content="主要内容：（注意：不足处会不断更新，请谅解）  开篇 哈希表原理 JDK7 HashMap JDK8 HashMap Hashtable JDK7 ConcurrentHashMap JDK8 ConcurrentHashMap 最后的总结和交流">
 <meta property="og:type" content="article">
 <meta property="og:title" content="哈希表的前世今生01">
-<meta property="og:url" content="https://github.com/Chengqiji/chengqiji.github.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/index.html">
+<meta property="og:url" content="https://chengqiji.github.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:description" content="主要内容：（注意：不足处会不断更新，请谅解）  开篇 哈希表原理 JDK7 HashMap JDK8 HashMap Hashtable JDK7 ConcurrentHashMap JDK8 ConcurrentHashMap 最后的总结和交流">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted0.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted1.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted2.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted3.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted4.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted5.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted7.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted8.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted9.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted12.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted13.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted14.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted15.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted16.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted17.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted18.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted19.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted20.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted21.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted22.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted23.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted24.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted25.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted26.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted27.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted28.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted29.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted30.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted31.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted32.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted33.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted34.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted35.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted36.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted37.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted38.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted39.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted40.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted41.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted42.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted43.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted44.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted45.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted46.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted47.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted48.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted49.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted50.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted51.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted52.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted53.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted54.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted55.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted56.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted57.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted58.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted59.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted61.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted62.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted63.png">
-<meta property="og:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted64.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted0.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted1.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted2.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted3.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted4.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted5.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted7.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted8.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted9.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted12.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted13.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted14.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted15.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted16.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted17.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted18.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted19.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted20.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted21.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted22.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted23.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted24.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted25.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted26.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted27.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted28.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted29.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted30.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted31.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted32.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted33.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted34.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted35.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted36.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted37.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted38.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted39.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted40.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted41.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted42.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted43.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted44.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted45.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted46.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted47.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted48.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted49.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted50.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted51.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted52.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted53.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted54.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted55.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted56.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted57.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted58.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted59.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted61.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted62.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted63.png">
+<meta property="og:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted64.png">
 <meta property="article:published_time" content="2020-05-14T03:10:00.000Z">
 <meta property="article:modified_time" content="2020-05-14T10:22:55.404Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted0.png">
+<meta name="twitter:image" content="https://chengqiji.github.io/Chengqiji/chengqiji.github.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted0.png">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -603,7 +603,7 @@ addCount(<span class="number">1L</span>, binCount);
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://github.com/Chengqiji/chengqiji.github.io/2020/05/14/哈希表的前世今生/" title="哈希表的前世今生01" target="_blank">https://github.com/Chengqiji/chengqiji.github.io/2020/05/14/哈希表的前世今生/</a>
+          <a href="https://chengqiji.github.io/2020/05/14/哈希表的前世今生/" title="哈希表的前世今生01" target="_blank">https://chengqiji.github.io/2020/05/14/哈希表的前世今生/</a>
         </li>
         
         <li>
@@ -670,7 +670,7 @@ addCount(<span class="number">1L</span>, binCount);
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://github.com/Chengqiji/chengqiji.github.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -747,7 +747,7 @@ addCount(<span class="number">1L</span>, binCount);
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018-2020 <a href="https://github.com/Chengqiji/chengqiji.github.io/" target="_blank">Stephen Cheng</a>
+    		&copy; 2018-2020 <a href="https://chengqiji.github.io/" target="_blank">Stephen Cheng</a>
     	</div>
       	<div class="footer-right">
 			
