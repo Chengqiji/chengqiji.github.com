@@ -10,12 +10,12 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="主要内容：（注意：不足处会不断更新，请谅解）  开篇 哈希表原理 JDK7 HashMap JDK8 HashMap Hashtable JDK7 ConcurrentHashMap JDK8 ConcurrentHashMap 最后的总结和交流   一、开篇问题1：哈希表的前世今生是什么&amp;emsp;&amp;emsp;哈希表（hashtable 散列表）是一种数据结构，查询、添加、删除效率非常快，时间复">
+  <meta name="description" content="主要内容：（注意：不足处会不断更新，请谅解）  开篇 哈希表原理 JDK7 HashMap JDK8 HashMap Hashtable JDK7 ConcurrentHashMap JDK8 ConcurrentHashMap 最后的总结和交流">
 <meta property="og:type" content="article">
 <meta property="og:title" content="哈希表的前世今生">
 <meta property="og:url" content="http://yoursite.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="主要内容：（注意：不足处会不断更新，请谅解）  开篇 哈希表原理 JDK7 HashMap JDK8 HashMap Hashtable JDK7 ConcurrentHashMap JDK8 ConcurrentHashMap 最后的总结和交流   一、开篇问题1：哈希表的前世今生是什么&amp;emsp;&amp;emsp;哈希表（hashtable 散列表）是一种数据结构，查询、添加、删除效率非常快，时间复">
+<meta property="og:description" content="主要内容：（注意：不足处会不断更新，请谅解）  开篇 哈希表原理 JDK7 HashMap JDK8 HashMap Hashtable JDK7 ConcurrentHashMap JDK8 ConcurrentHashMap 最后的总结和交流">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://yoursite.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted-0.png">
 <meta property="og:image" content="http://yoursite.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted-1.png">
@@ -79,7 +79,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted-63.png">
 <meta property="og:image" content="http://yoursite.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted-64.png">
 <meta property="article:published_time" content="2020-05-14T03:10:28.000Z">
-<meta property="article:modified_time" content="2020-05-14T07:37:43.418Z">
+<meta property="article:modified_time" content="2020-05-14T07:51:52.608Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://yoursite.com/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/%5Cimages%5Cpasted-0.png">
@@ -295,7 +295,8 @@
 <li>Hashtable</li>
 <li>JDK7 ConcurrentHashMap</li>
 <li>JDK8 ConcurrentHashMap</li>
-<li>最后的总结和交流</li>
+<li>最后的总结和交流<a id="more"></a>
+</li>
 </ol>
 <hr>
 <h3 id="一、开篇"><a href="#一、开篇" class="headerlink" title="一、开篇"></a><em>一、开篇</em></h3><h4 id="问题1：哈希表的前世今生是什么"><a href="#问题1：哈希表的前世今生是什么" class="headerlink" title="问题1：哈希表的前世今生是什么"></a>问题1：哈希表的前世今生是什么</h4><p>&emsp;&emsp;哈希表（hashtable 散列表）是一种数据结构，查询、添加、删除效率非常快，时间复杂度可以达到O（1）。  </p>
