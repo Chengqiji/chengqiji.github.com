@@ -669,6 +669,9 @@
   
   <!--彩带1.点击自动替换彩带-->
 
+     <script src="https://g.joyinshare.com/hc/ribbon.min.js" type="text/javascript"></script> 
+    <!--<script type="text/javascript" src="/js/ribbon.js"></script>-->
+
 
 
   
@@ -722,6 +725,16 @@
 </script>
 
   
+  
+  <script type="text/javascript" src="/lib/snow.js"></script>
+  <script type="text/javascript" src="/lib/jquery-2.1.4.min.js"></script>
+  <script>
+    snow.down();
+    $(window).resize(function() {
+      $("canvas").css("z-index","500").remove();
+      snow.down();
+    });
+  </script>
   
 
 </body>
