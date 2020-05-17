@@ -6,25 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqiji.github.io">
-  <title>JVM内存模型 | Stephen Cheng`s blog</title>
+  <title>JVM运行时数据区 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="由对象推导出内存模型先由两张图来阐述：">
+  <meta name="description" content="如何判断一个对象是垃圾判断对象是否存活一般有两种方式： 引用计数：每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。可达性分析（Reachability Analysis）：从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。不可达">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM内存模型">
-<meta property="og:url" content="https://chengqiji.github.io/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/index.html">
+<meta property="og:title" content="JVM运行时数据区">
+<meta property="og:url" content="https://chengqiji.github.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
-<meta property="og:description" content="由对象推导出内存模型先由两张图来阐述：">
+<meta property="og:description" content="如何判断一个对象是垃圾判断对象是否存活一般有两种方式： 引用计数：每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。可达性分析（Reachability Analysis）：从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。不可达">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/jvm11.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/jvm12.png">
-<meta property="article:published_time" content="2020-05-17T14:28:50.000Z">
-<meta property="article:modified_time" content="2020-05-17T14:31:11.651Z">
+<meta property="og:image" content="https://chengqiji.github.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm13.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm14.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm15.png">
+<meta property="article:published_time" content="2020-05-17T16:05:50.000Z">
+<meta property="article:modified_time" content="2020-05-17T16:04:15.408Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chengqiji.github.io/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/jvm11.png">
+<meta name="twitter:image" content="https://chengqiji.github.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm13.png">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -192,14 +193,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JVM内存模型" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-JVM垃圾回收" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      JVM内存模型
+      JVM运行时数据区
     </h1>
   
 
@@ -211,8 +212,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
-        <time datetime="2020-05-17T14:28:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
+<a href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="archive-article-date">
+        <time datetime="2020-05-17T16:05:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
 </a>
 
   
@@ -225,7 +226,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">378字</span>
+      <span class="post-count">3.1k字</span>
     </span>
   </span>
 
@@ -234,7 +235,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">1分</span>
+      <span class="post-count">11分</span>
     </span>
   </span>
 </div>
@@ -245,20 +246,54 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h3 id="由对象推导出内存模型"><a href="#由对象推导出内存模型" class="headerlink" title="由对象推导出内存模型"></a>由对象推导出内存模型</h3><p>先由两张图来阐述：</p>
-<p><img src="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/jvm11.png" alt="upload successful"><br> <a id="more"></a><br><img src="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/jvm12.png" alt="upload successful"></p>
-<h3 id="Young区"><a href="#Young区" class="headerlink" title="Young区"></a>Young区</h3><p>Young区分为两大块：Survivor（s0+s1），Eden；比例为1：1：8<br>目的是有百分之10的空间去换取一个空间的连续性问题，也就是解决空间碎片的问题。</p>
-<h4 id="Eden区"><a href="#Eden区" class="headerlink" title="Eden区"></a>Eden区</h4><p>正常对象创建所在区域，大多数对象都“朝生夕死”。<br>如果只有一个Young区的话，我们的对象不断在Young区分配，一旦进行垃圾回收，就有不断的对象被回收掉，只有少部分存活，就会形成空间的不连续，就会提前去触发GC，GC会去占用垃圾回收线程，会去执行stop the world。  </p>
-<h4 id="Survivor区"><a href="#Survivor区" class="headerlink" title="Survivor区"></a>Survivor区</h4><p>Survivor区分为两块：FROM和TO（s0和s1）<br>在一个时间点上，只能由一个区有数据，另一个为空。它们两个循环交替的进行存储。  </p>
-<h3 id="old区"><a href="#old区" class="headerlink" title="old区"></a>old区</h3><p>都是存放一些年龄比较大的，或者超过了某个阈值的对象。  </p>
-<h4 id="控制参数"><a href="#控制参数" class="headerlink" title="控制参数"></a>控制参数</h4><p>-Xms设置堆的最小空间大小。</p>
-<p>-Xmx设置堆的最大空间大小。</p>
-<p>-XX:NewSize设置新生代最小空间大小。</p>
-<p>-XX:MaxNewSize设置新生代最大空间大小。</p>
-<p>-XX:PermSize设置永久代最小空间大小。</p>
-<p>-XX:MaxPermSize设置永久代最大空间大小。</p>
-<p>-Xss设置每个线程的堆栈大小。</p>
-<p>没有直接设置老年代的参数，但是可以设置堆空间大小和新生代空间大小两个参数来间接控制。</p>
+    <h3 id="如何判断一个对象是垃圾"><a href="#如何判断一个对象是垃圾" class="headerlink" title="如何判断一个对象是垃圾"></a>如何判断一个对象是垃圾</h3><p>判断对象是否存活一般有两种方式：</p>
+<p><strong>引用计数：</strong>每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。<br><strong>可达性分析（Reachability Analysis）：</strong>从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。不可达对象。</p>
+<p>在Java语言中，GC Roots包括：</p>
+<p>(1)虚拟机栈中引用的对象。</p>
+<p>(2)方法区中类静态属性实体引用的对象。<br> <a id="more"></a><br>(3)方法区中常量引用的对象。</p>
+<p>(4)本地方法栈中JNI引用的对象。  </p>
+<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><p>（1）标记清除<br>（2）复制<br>（3）标记整理  </p>
+<h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记 -清除算法"></a>标记 -清除算法</h4><p>“标记-清除”（Mark-Sweep）算法，如它的名字一样，算法分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收掉所有被标记的对象。之所以说它是最基础的收集算法，是因为后续的收集算法都是基于这种思路并对其缺点进行改进而得到的。</p>
+<p>它的主要缺点有两个：一个是效率问题，标记和清除过程的效率都不高；另外一个是空间问题，标记清除之后会产生大量不连续的内存碎片，空间碎片太多可能会导致，当程序在以后的运行过程中需要分配较大对象时无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作。  </p>
+<h4 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h4><p>“复制”（Copying）的收集算法，它将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</p>
+<p>这样使得每次都是对其中的一块进行内存回收，内存分配时也就不用考虑内存碎片等复杂情况，只要移动堆顶指针，按顺序分配内存即可，实现简单，运行高效。只是这种算法的代价是将内存缩小为原来的一半，持续复制长生存期的对象则导致效率降低。  </p>
+<h4 id="标记-压缩算法"><a href="#标记-压缩算法" class="headerlink" title="标记-压缩算法"></a>标记-压缩算法</h4><p>复制收集算法在对象存活率较高时就要执行较多的复制操作，效率将会变低。更关键的是，如果不想浪费50%的空间，就需要有额外的空间进行分配担保，以应对被使用的内存中所有对象都100%存活的极端情况，所以在老年代一般不能直接选用这种算法。</p>
+<p>根据老年代的特点，有人提出了另外一种“标记-整理”（Mark-Compact）算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存  </p>
+<h4 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h4><p>GC分代的基本假设：绝大部分对象的生命周期都非常短暂，存活时间短。</p>
+<p>“分代收集”（Generational Collection）算法，把Java堆分为新生代和老年代，这样就可以根据各个年代的特点采用最适当的收集算法。在新生代中，每次垃圾收集时都发现有大批对象死去，只有少量存活，那就选用复制算法，只需要付出少量存活对象的复制成本就可以完成收集。而老年代中因为对象存活率高、没有额外空间对它进行分配担保，就必须使用“标记-清理”或“标记-整理”算法来进行回收。  </p>
+<h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><blockquote>
+<p>如果说收集算法是内存回收的方法论，垃圾收集器就是内存回收的具体实现  </p>
+</blockquote>
+<h4 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h4><p>串行收集器是最古老，最稳定以及效率高的收集器，可能会产生较长的停顿，只使用一个线程去回收。新生代、老年代使用串行回收；新生代复制算法、老年代标记-压缩；垃圾收集的过程中会Stop The World（服务暂停）<br><img src="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm13.png" alt="Alt text">  </p>
+<h4 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h4><p>ParNew收集器其实就是Serial收集器的多线程版本。新生代并行，老年代串行；新生代复制算法、老年代标记-压缩<br><img src="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm14.png" alt="Alt text">    </p>
+<h4 id="Parallel收集器"><a href="#Parallel收集器" class="headerlink" title="Parallel收集器"></a>Parallel收集器</h4><p>Parallel Scavenge收集器类似ParNew收集器，Parallel收集器更关注系统的吞吐量。可以通过参数来打开自适应调节策略，虚拟机会根据当前系统的运行情况收集性能监控信息，动态调整这些参数以提供最合适的停顿时间或最大的吞吐量；也可以通过参数控制GC的时间不大于多少毫秒或者比例；新生代复制算法、老年代标记-压缩</p>
+<p>参数控制： -XX:+UseParallelGC 使用Parallel收集器+ 老年代串行  </p>
+<h4 id="Parallel-Old-收集器"><a href="#Parallel-Old-收集器" class="headerlink" title="Parallel Old 收集器"></a>Parallel Old 收集器</h4><p>Parallel Old是Parallel Scavenge收集器的老年代版本，使用多线程和“标记－整理”算法。这个收集器是在JDK 1.6中才开始提供</p>
+<p>参数控制： -XX:+UseParallelOldGC 使用Parallel收集器+ 老年代并行</p>
+<h4 id="CMS收集器"><a href="#CMS收集器" class="headerlink" title="CMS收集器"></a>CMS收集器</h4><p>CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时间为目标的收集器。目前很大一部分的Java应用都集中在互联网站或B/S系统的服务端上，这类应用尤其重视服务的响应速度，希望系统停顿时间最短，以给用户带来较好的体验。</p>
+<p>从名字（包含“Mark Sweep”）上就可以看出CMS收集器是基于“标记-清除”算法实现的，它的运作过程相对于前面几种收集器来说要更复杂一些，整个过程分为4个步骤，包括：</p>
+<p>(1)初始标记（CMS initial mark）</p>
+<p>(2)并发标记（CMS concurrent mark）</p>
+<p>(3)重新标记（CMS remark）</p>
+<p>(4)并发清除（CMS concurrent sweep）</p>
+<p>其中初始标记、重新标记这两个步骤仍然需要“Stop The World”。初始标记仅仅只是标记一下GC Roots能直接关联到的对象，速度很快，并发标记阶段就是进行GC Roots Tracing的过程，而重新标记阶段则是为了修正并发标记期间，因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。</p>
+<p>由于整个过程中耗时最长的并发标记和并发清除过程中，收集器线程都可以与用户线程一起工作，所以总体上来说，CMS收集器的内存回收过程是与用户线程一起并发地执行。老年代收集器（新生代使用ParNew）</p>
+<p>优点: 并发收集、低停顿<br>缺点: 产生大量空间碎片、并发阶段会降低吞吐量</p>
+<p>参数控制：</p>
+<p>-XX:+UseConcMarkSweepGC 使用CMS收集器<br>-XX:+ UseCMSCompactAtFullCollection Full GC后，进行一次碎片整理；整理过程是独占的，会引起停顿时间变长<br>-XX:+CMSFullGCsBeforeCompaction 设置进行几次Full GC后，进行一次碎片整理<br>-XX:ParallelCMSThreads 设定CMS的线程数量（一般情况约等于可用CPU数量）<br><img src="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm15.png" alt="Alt text">   </p>
+<h4 id="G1收集器"><a href="#G1收集器" class="headerlink" title="G1收集器"></a>G1收集器</h4><p>G1是目前技术发展的最前沿成果之一，HotSpot开发团队赋予它的使命是未来可以替换掉JDK1.5中发布的CMS收集器。与CMS收集器相比G1收集器有以下特点：</p>
+<p>(1)空间整合，G1收集器采用标记整理算法，不会产生内存空间碎片。分配大对象时不会因为无法找到连续空间而提前触发下一次GC。</p>
+<p>(2)可预测停顿，这是G1的另一大优势，降低停顿时间是G1和CMS的共同关注点，但G1除了追求低停顿外，还能建立可预测的停顿时间模型，能让使用者明确指定在一个长度为N毫秒的时间片段内，消耗在垃圾收集上的时间不得超过N毫秒，这几乎已经是实时Java（RTSJ）的垃圾收集器的特征了。</p>
+<p>上面提到的垃圾收集器，收集的范围都是整个新生代或者老年代，而G1不再是这样。使用G1收集器时，Java堆的内存布局与其他收集器有很大差别，它将整个Java堆划分为多个大小相等的独立区域（Region），虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔阂了，它们都是一部分（可以不连续）Region的集合。    </p>
+<p>G1的新生代收集跟ParNew类似，当新生代占用达到一定比例的时候，开始出发收集。和CMS类似，G1收集器收集老年代对象会有短暂停顿。</p>
+<p>收集步骤：</p>
+<p>1、标记阶段，首先初始标记(Initial-Mark),这个阶段是停顿的(Stop the World Event)，并且会触发一次普通Mintor GC。对应GC log:GC pause (young) (inital-mark)</p>
+<p>2、Root Region Scanning，程序运行过程中会回收survivor区(存活到老年代)，这一过程必须在young GC之前完成。</p>
+<p>3、Concurrent Marking，在整个堆中进行并发标记(和应用程序并发执行)，此过程可能被young GC中断。在并发标记阶段，若发现区域对象中的所有对象都是垃圾，那个这个区域会被立即回收(图中打X)。同时，并发标记过程中，会计算每个区域的对象活性(区域中存活对象的比例)。    </p>
+<p>4、Remark, 再标记，会有短暂停顿(STW)。再标记阶段是用来收集 并发标记阶段 产生新的垃圾(并发阶段和应用程序一同运行)；G1中采用了比CMS更快的初始快照算法:snapshot-at-the-beginning (SATB)。</p>
+<p>5、Copy/Clean up，多线程清除失活对象，会有STW。G1将回收区域的存活对象拷贝到新区域，清除Remember Sets，并发清空回收区域并把它返回到空闲区域链表中。    </p>
+<p>6、复制/清除过程后。回收区域的活性对象已经被集中回收到深蓝色和深绿色区域。  </p>
+<h4 id="常用的收集器组合"><a href="#常用的收集器组合" class="headerlink" title="常用的收集器组合"></a>常用的收集器组合</h4><p>【新生代GC策略】 【老年代GC策略】<br><strong>组合1</strong>    【Serial】    【Serial Old】    :Serial和Serial Old都是单线程进行GC，特点就是GC时暂停所有应用线程。<br><strong>组合2</strong>    【Serial】    【CMS+Serial Old】    CMS（Concurrent Mark Sweep）是并发GC，实现GC线程和应用线程并发工作，不需要暂停所有应用线程。另外，当CMS进行GC失败时，会自动使用Serial Old策略进行GC。<br><strong>组合3</strong>    【ParNew】    【CMS】    使用 -XX:+UseParNewGC选项来开启。ParNew是Serial的并行版本，可以指定GC线程数，默认GC线程数为CPU的数量。可以使用-XX:ParallelGCThreads选项指定GC的线程数。如果指定了选项 -XX:+UseConcMarkSweepGC选项，则新生代默认使用ParNew GC策略。<br><strong>组合4</strong>【    ParNew】    【Serial Old】    使用 -XX:+UseParNewGC选项来开启。新生代使用ParNew GC策略，年老代默认使用Serial Old GC策略。<br><strong>组合5</strong>    【Parallel Scavenge】    【Serial Old】    Parallel Scavenge策略主要是关注一个可控的吞吐量：应用程序运行时间 / (应用程序运行时间 + GC时间)，可见这会使得CPU的利用率尽可能的高，适用于后台持久运行的应用程序，而不适用于交互较多的应用程序。<br><strong>组合6</strong>    【Parallel Scavenge】    【Parallel Old】    Parallel Old是Serial Old的并行版本<br><strong>组合7</strong>    【G1GC】    【G1GC】    -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC #开启； -XX:MaxGCPauseMillis=50 #暂停时间目标； -XX:GCPauseIntervalMillis=200 #暂停间隔目标； -XX:+G1YoungGenSize=512m #年轻代大小； -XX:SurvivorRatio=6 #幸存区比例</p>
 
     
 
@@ -300,7 +335,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://chengqiji.github.io/2020/05/17/JVM内存模型/" title="JVM内存模型" target="_blank">https://chengqiji.github.io/2020/05/17/JVM内存模型/</a>
+          <a href="https://chengqiji.github.io/2020/05/18/JVM垃圾回收/" title="JVM运行时数据区" target="_blank">https://chengqiji.github.io/2020/05/18/JVM垃圾回收/</a>
         </li>
         
         <li>
@@ -389,7 +424,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -404,18 +439,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          JVM运行时数据区
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM运行时数据区</div>
+    <a href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">JVM内存模型</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -442,7 +468,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#由对象推导出内存模型"><span class="toc-number">1.</span> <span class="toc-text">由对象推导出内存模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Young区"><span class="toc-number">2.</span> <span class="toc-text">Young区</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Eden区"><span class="toc-number">2.1.</span> <span class="toc-text">Eden区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Survivor区"><span class="toc-number">2.2.</span> <span class="toc-text">Survivor区</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#old区"><span class="toc-number">3.</span> <span class="toc-text">old区</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#控制参数"><span class="toc-number">3.1.</span> <span class="toc-text">控制参数</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何判断一个对象是垃圾"><span class="toc-number">1.</span> <span class="toc-text">如何判断一个对象是垃圾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垃圾收集算法"><span class="toc-number">2.</span> <span class="toc-text">垃圾收集算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#标记-清除算法"><span class="toc-number">2.1.</span> <span class="toc-text">标记 -清除算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#复制算法"><span class="toc-number">2.2.</span> <span class="toc-text">复制算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标记-压缩算法"><span class="toc-number">2.3.</span> <span class="toc-text">标记-压缩算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分代收集算法"><span class="toc-number">2.4.</span> <span class="toc-text">分代收集算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垃圾收集器"><span class="toc-number">3.</span> <span class="toc-text">垃圾收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Serial收集器"><span class="toc-number">3.1.</span> <span class="toc-text">Serial收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ParNew收集器"><span class="toc-number">3.2.</span> <span class="toc-text">ParNew收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Parallel收集器"><span class="toc-number">3.3.</span> <span class="toc-text">Parallel收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Parallel-Old-收集器"><span class="toc-number">3.4.</span> <span class="toc-text">Parallel Old 收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CMS收集器"><span class="toc-number">3.5.</span> <span class="toc-text">CMS收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#G1收集器"><span class="toc-number">3.6.</span> <span class="toc-text">G1收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#常用的收集器组合"><span class="toc-number">3.7.</span> <span class="toc-text">常用的收集器组合</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
