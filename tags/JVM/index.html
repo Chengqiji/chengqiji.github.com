@@ -6,37 +6,17 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqiji.github.io">
-  <title>泛型的自我认知 | Stephen Cheng`s blog</title>
+  <title>Tag: JVM | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="泛型的基本了解泛型的本质泛型，即”参数化类型”或者”类型参数化”。提到参数化，最熟悉的就是定义方法时有形参，然后调用此方法时传递实参。那么参数化类型怎么理解呢？顾名思义，就是将类型由原来的具体的类型参数化，类似于方法中的变量参数，此时类型也定义成参数形式（可以称之为类型形参），然后在调用时传入具体的类型（类型实参） 泛型的本质是为了参数化类型（在不创建新的类型的情况下，通过泛型指定的不同类型来控制">
-<meta property="og:type" content="article">
-<meta property="og:title" content="泛型的自我认知">
-<meta property="og:url" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Stephen Cheng&#96;s blog">
+<meta property="og:url" content="https://chengqiji.github.io/tags/JVM/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
-<meta property="og:description" content="泛型的基本了解泛型的本质泛型，即”参数化类型”或者”类型参数化”。提到参数化，最熟悉的就是定义方法时有形参，然后调用此方法时传递实参。那么参数化类型怎么理解呢？顾名思义，就是将类型由原来的具体的类型参数化，类似于方法中的变量参数，此时类型也定义成参数形式（可以称之为类型形参），然后在调用时传入具体的类型（类型实参） 泛型的本质是为了参数化类型（在不创建新的类型的情况下，通过泛型指定的不同类型来控制">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-0.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-1.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-2.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-3.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-4.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-5.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-6.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-7.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-8.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-9.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-10.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-11.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-12.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-13.png">
-<meta property="article:published_time" content="2020-05-14T15:56:14.000Z">
-<meta property="article:modified_time" content="2020-05-14T16:24:29.738Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="泛型">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-0.png">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -204,284 +184,76 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-泛型的自我认知" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
+            
+  
+  
     
-      <header class="article-header">
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	
+<a href="/2020/05/17/%E5%88%9D%E5%A7%8BJVM/" class="archive-article-date">
+        <time datetime="2020-05-17T02:30:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
+</a>
+
+        </div>
+    	 
   
+    <h1 itemprop="name">
+	
+	  <a class="archive-article-title" href="/2020/05/17/%E5%88%9D%E5%A7%8BJVM/" target="_blank">初识JVM</a>
   
-    <h1 class="article-title" itemprop="name">
-      泛型的自我认知
     </h1>
   
 
 
-  
-  
-        
-        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
-              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
-        </span>
-
-<a href="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/" class="archive-article-date">
-        <time datetime="2020-05-14T15:56:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-14</time>
-</a>
-
-  
-  
-    
-<div style="margin-top:10px;">
-  <span class="post-time">
-    <span class="post-meta-item-icon">
-      <!-- fonts.scss -->
-      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
-      <i class="icon-statistics"></i>
-      <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.5k字</span>
-    </span>
-  </span>
-
-  <span class="post-time">
-    &nbsp; | &nbsp;
-    <span class="post-meta-item-icon">
-      <i class="icon-book icon"></i>
-      <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">5分</span>
-    </span>
-  </span>
-</div>
-
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="泛型的基本了解"><a href="#泛型的基本了解" class="headerlink" title="泛型的基本了解"></a><em>泛型的基本了解</em></h3><h4 id="泛型的本质"><a href="#泛型的本质" class="headerlink" title="泛型的本质"></a>泛型的本质</h4><p>泛型，即”参数化类型”或者”类型参数化”。<br>提到参数化，最熟悉的就是定义方法时有形参，然后调用此方法时传递实参。<br>那么参数化类型怎么理解呢？顾名思义，就是将类型由原来的具体的类型参数化，类似于方法中的变量参数，此时类型也定义成参数形式（可以称之为类型形参），然后在调用时传入具体的类型（类型实参）</p>
-<p>泛型的本质是为了参数化类型（在不创建新的类型的情况下，通过泛型指定的不同类型来控制形参具体限制的类型）。也就是说在泛型使用过程中，我们要操作的数据类型被指定为一个参数，这种参数类型可以用在类、接口和方法中，分别被称为泛型类、泛型接口、泛型方法。  </p>
-<p>泛型案例:<br> <a id="more"></a><br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-0.png" alt="upload successful"><br>通过案例,我们可以知道ArrayList可以存放任意类型,但是如果我们使用泛型进行强制类型的限定则情况就不一样了</p>
-<p>我们在申明ArrayList时,指定了存储类型为String 所以在编译阶段,我们存入其他类型的元素,就会报出错误.即我们的申明强制的指定了ArrayList集合中存储的元素只能是指定的String类型.这就是泛型使用的本质意义所在,指定参数化类型.  </p>
-<h4 id="泛型的好处"><a href="#泛型的好处" class="headerlink" title="泛型的好处"></a>泛型的好处</h4><p>通过上诉案例.我们不难分析出来泛型会给我们的代码带来如下好处:<br>编译期间即确定类型，保证类型安全,避免强制类型转换异常同时也规避了强制类型转换带来的问题。<br>代码利于重用，增加通用性。</p>
-<p>上面好处中提到了编译期间确定类型..那运行期间呢?泛型不适用在运行期间吗?我通过下面的内容给大家详细分析这个问题.</p>
-<h4 id="泛型的类型擦除"><a href="#泛型的类型擦除" class="headerlink" title="泛型的类型擦除"></a>泛型的类型擦除</h4><p>泛型只在编译阶段有效,泛型类型在逻辑上可看成是多个不同的类型，但是其实质都是同一个数据类型<br>编译之后程序会采取去泛型化的措施<br>案例:<br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-1.png" alt="upload successful"><br>通过上面的例子可以证明，在编译之后程序会采取去泛型化的措施。也就是说Java中的泛型，只在编译阶段有效。在编译过程中，正确检验泛型结果后，会将泛型的相关信息擦出，并且在对象进入和离开方法的边界处添加类型检查和类型转换的方法。也就是说，泛型信息不会进入到运行时阶段。  </p>
-<h4 id="泛型通配符理解"><a href="#泛型通配符理解" class="headerlink" title="泛型通配符理解"></a>泛型通配符理解</h4><p><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-2.png" alt="upload successful"></p>
-<h5 id="无边界通配符"><a href="#无边界通配符" class="headerlink" title="无边界通配符"></a>无边界通配符</h5><p>? 通配符理解<br>前面的内容.我们知道ArrayList 是典型的泛型类.即可以限制存储的元素的元素类型.ArrayList<String>指定存入的元素时string. ArrayList<Integer>指定存储元素为Integer类型. 但是如果只有我们使用的时候才能明确知道存入类型时.我们可以使用ArrayList&lt;?&gt; 来表示通用的类型.<br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-3.png" alt="upload successful"><br>案例中的 ?  代表着限定通用类型. 或者这么理解.代表可变的参数类型.</Integer></String></p>
-<h5 id="上界通配符"><a href="#上界通配符" class="headerlink" title="上界通配符"></a>上界通配符</h5><p><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-4.png" alt="upload successful"></p>
-<h5 id="下届通配符"><a href="#下届通配符" class="headerlink" title="下届通配符"></a>下届通配符</h5><p>?  super  Integer    代表从Integer 到 Object 所有对象都是可以的.<br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-5.png" alt="upload successful"></p>
-<h4 id="泛型的使用"><a href="#泛型的使用" class="headerlink" title="泛型的使用"></a>泛型的使用</h4><p>泛型跟我们的成员属性一样,需要先声明才能使用.泛型的声明采用 &lt;&gt; 进行声明.<br>申明一般约定采用单个大写字母表示.常用的有 K  E  T  V 等等字符</p>
-<p>错误的案例:<br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-6.png" alt="upload successful"><br>编译器报错,为什么呢 因为泛型只有使用,并没有申明.</p>
-<p>正确的案例:<br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-7.png" alt="upload successful"></p>
-<p>这里我申明的泛型是RAAA.故而在方法中即可以使用RAAA的泛型.  </p>
-<h4 id="泛型类"><a href="#泛型类" class="headerlink" title="泛型类"></a>泛型类</h4><p>泛型类一般指泛型的定义与类名一起.在创建实体对象时,指定泛型的类型</p>
-<p>普通Person类:<br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-8.png" alt="upload successful"><br>新加入需求,原本的身份证不仅只记录身份证,还需要记录地址 有效期 等等信息  这时我们需要创建一个实体IdentityCard进行信息的保存.此时得需求改变带来的代码代表使得我们的灵活度并不够.<br>我们可以使用泛型类进行解决..<br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-9.png" alt="upload successful"><br>通过泛型类,我们可以提升我们程序固定逻辑的灵活度</p>
-<h4 id="泛型方法"><a href="#泛型方法" class="headerlink" title="泛型方法"></a>泛型方法</h4><p>方法的泛型有两种:<br>实体方法<br>实体方法可以使用在类中定义的泛型或者方法中定义的泛型.<br>静态方法<br>不可以使用在类中定义的泛型,只能使用在静态方法上定义的泛型.<br>案例:<br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-10.png" alt="upload successful">  </p>
-<h4 id="泛型接口"><a href="#泛型接口" class="headerlink" title="泛型接口"></a>泛型接口</h4><p>指在接口的定义时进行泛型的申明.<br>接口是标准的指定者,指实现该接口的类必须实现其标准定义(即抽象方法).<br>所以在接口上进行泛型的申明,或者说使用泛型接口,可以让我们的程序代码更加简洁,更加多变.<br>案例:<br>计算接口的定义<br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-11.png" alt="upload successful"><br>但是大家会发现他的程序灵活度会很差..当前结算接口的实现者,只能满足int类型数字计算..如果想满足其他数字类型的计算,需在接口中定义额外的方法.<br>此时,如果采用泛型接口即可完美解决问题.  </p>
-<p>计算泛型接口的定义:<br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-12.png" alt="upload successful"><br>计算泛型接口的实现者:<br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-13.png" alt="upload successful"><br>如果我想实现float类型的计算需求. 我只需要实现CalGeneric<Float>即可..可以大大的提升代码的复用和改善程序的灵活度。  </Float></p>
-<hr>
-<p><strong>如有不足，会持续补充，谢谢你的耐心阅读</strong></p>
-
-    
-
-    
-    <div class="page-reward">
-      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
-        <div class="tooltip tooltip-east">
-          <span class="tooltip-item">
-            赏
-          </span>
-          <span class="tooltip-content">
-            <span class="tooltip-text">
-              <span class="tooltip-inner">
-                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
-                    class="icon icon-quo-right"></i></p>
-                <div class="reward-box">
-                  
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/Wechat.jpg">
-                    <span class="reward-type">微信</span>
-                  </div>
-                  
-                </div>
-              </span>
-            </span>
-          </span>
-        </div>
-      </a>
-    </div>
-    
-
-    
-    <div class="declare"> 
-      <ul class="post-copyright">
-        <li>
-          <strong>本文作者：</strong>
-          Stephen Cheng
-        </li>
-        <li>
-          <strong>本文链接：</strong>
-          <a href="https://chengqiji.github.io/2020/05/14/泛型的自我认知/" title="泛型的自我认知" target="_blank">https://chengqiji.github.io/2020/05/14/泛型的自我认知/</a>
-        </li>
-        
-        <li>
-          <strong>版权声明： </strong>
+        <div class="article-info info-on-right">
           
-          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
-        </li>
-        
-      </ul>
-    </div>
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">泛型</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
         		</li>
       		
 		</ul>
 	</div>
 
-    
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/泛型//" class="article-tag-list-link color3">泛型</a>
+        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-    
-
-    
-    
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a> -->
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/" alt="微信分享二维码"> -->
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-
-    
-    <div class="clearfix"></div>
-  </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-
-<nav id="article-nav">
-  
-    <a href="/2020/05/17/%E5%88%9D%E5%A7%8BJVM/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          初识JVM
-        
-      </div>
-    </a>
   
   
-    <a href="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">哈希表的前世今生</div>
-      <i class="icon-circle-right"></i>
-    </a>
+    </div></section>
   
-</nav>
 
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#泛型的基本了解"><span class="toc-number">1.</span> <span class="toc-text">泛型的基本了解</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#泛型的本质"><span class="toc-number">1.1.</span> <span class="toc-text">泛型的本质</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#泛型的好处"><span class="toc-number">1.2.</span> <span class="toc-text">泛型的好处</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#泛型的类型擦除"><span class="toc-number">1.3.</span> <span class="toc-text">泛型的类型擦除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#泛型通配符理解"><span class="toc-number">1.4.</span> <span class="toc-text">泛型通配符理解</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#无边界通配符"><span class="toc-number">1.4.1.</span> <span class="toc-text">无边界通配符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#上界通配符"><span class="toc-number">1.4.2.</span> <span class="toc-text">上界通配符</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#下届通配符"><span class="toc-number">1.4.3.</span> <span class="toc-text">下届通配符</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#泛型的使用"><span class="toc-number">1.5.</span> <span class="toc-text">泛型的使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#泛型类"><span class="toc-number">1.6.</span> <span class="toc-text">泛型类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#泛型方法"><span class="toc-number">1.7.</span> <span class="toc-text">泛型方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#泛型接口"><span class="toc-number">1.8.</span> <span class="toc-text">泛型接口</span></a></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-
-
-
-
+    
 
 
           </div>
@@ -522,9 +294,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
-		isTag: false,
+		isTag: true,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
