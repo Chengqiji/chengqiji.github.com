@@ -6,13 +6,13 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqiji.github.io">
-  <title>JVM运行时数据区 | Stephen Cheng`s blog</title>
+  <title>JVM垃圾回收 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta name="description" content="如何判断一个对象是垃圾判断对象是否存活一般有两种方式： 引用计数：每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。可达性分析（Reachability Analysis）：从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。不可达">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JVM运行时数据区">
+<meta property="og:title" content="JVM垃圾回收">
 <meta property="og:url" content="https://chengqiji.github.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:description" content="如何判断一个对象是垃圾判断对象是否存活一般有两种方式： 引用计数：每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。可达性分析（Reachability Analysis）：从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。不可达">
@@ -21,7 +21,7 @@
 <meta property="og:image" content="https://chengqiji.github.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm14.png">
 <meta property="og:image" content="https://chengqiji.github.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm15.png">
 <meta property="article:published_time" content="2020-05-17T16:05:50.000Z">
-<meta property="article:modified_time" content="2020-05-17T16:04:15.408Z">
+<meta property="article:modified_time" content="2020-05-18T01:07:58.182Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
@@ -200,7 +200,7 @@
   
   
     <h1 class="article-title" itemprop="name">
-      JVM运行时数据区
+      JVM垃圾回收
     </h1>
   
 
@@ -335,7 +335,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://chengqiji.github.io/2020/05/18/JVM垃圾回收/" title="JVM运行时数据区" target="_blank">https://chengqiji.github.io/2020/05/18/JVM垃圾回收/</a>
+          <a href="https://chengqiji.github.io/2020/05/18/JVM垃圾回收/" title="JVM垃圾回收" target="_blank">https://chengqiji.github.io/2020/05/18/JVM垃圾回收/</a>
         </li>
         
         <li>
