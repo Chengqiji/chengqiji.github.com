@@ -6,22 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqiji.github.io">
-  <title>三大工厂模式 | Stephen Cheng`s blog</title>
+  <title>IO模型简介 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="Simple Factory Pattern 简单工厂模式定义简单工厂模式（Simple Factory Pattern）是指由一个工厂对象决定创建出哪一种产品类的实例。   属于创建型模式，但它不属于GOF 23种设计模式。   适用场景（1）工厂类创建的对象较少。（2）客户端只需要传入工厂类的参数，对于如何创建对象的逻辑不需要关心。   优点只需要传入一个正确的参数就可以获取你想需要的对象，无">
+  <meta name="description" content="阻塞IO模型最传统的一种 IO 模型，即在读写数据过程中会发生阻塞现象。当用户线程发出 IO 请求之后，内核会去查看数据是否就绪，如果没有就绪就会等待数据就绪，而用户线程就会处于阻塞状态，用户线程交出 CPU。当数据就绪之后，内核会将数据拷贝到用户线程，并返回结果给用户线程，用户线程才解除 block 状态。典型的阻塞 IO 模型的例子为：data &#x3D; socket.read();如果数据没有就绪">
 <meta property="og:type" content="article">
-<meta property="og:title" content="三大工厂模式">
-<meta property="og:url" content="https://chengqiji.github.io/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:title" content="IO模型简介">
+<meta property="og:url" content="https://chengqiji.github.io/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
-<meta property="og:description" content="Simple Factory Pattern 简单工厂模式定义简单工厂模式（Simple Factory Pattern）是指由一个工厂对象决定创建出哪一种产品类的实例。   属于创建型模式，但它不属于GOF 23种设计模式。   适用场景（1）工厂类创建的对象较少。（2）客户端只需要传入工厂类的参数，对于如何创建对象的逻辑不需要关心。   优点只需要传入一个正确的参数就可以获取你想需要的对象，无">
+<meta property="og:description" content="阻塞IO模型最传统的一种 IO 模型，即在读写数据过程中会发生阻塞现象。当用户线程发出 IO 请求之后，内核会去查看数据是否就绪，如果没有就绪就会等待数据就绪，而用户线程就会处于阻塞状态，用户线程交出 CPU。当数据就绪之后，内核会将数据拷贝到用户线程，并返回结果给用户线程，用户线程才解除 block 状态。典型的阻塞 IO 模型的例子为：data &#x3D; socket.read();如果数据没有就绪">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2020-05-19T07:11:50.000Z">
-<meta property="article:modified_time" content="2020-05-19T07:21:51.187Z">
+<meta property="og:image" content="https://chengqiji.github.io/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/io.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/javaio.jpg">
+<meta property="og:image" content="https://chengqiji.github.io/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/javaio2.jpg">
+<meta property="article:published_time" content="2020-05-19T14:44:50.000Z">
+<meta property="article:modified_time" content="2020-05-19T14:42:36.854Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="IO模型">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chengqiji.github.io/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/io.png">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -189,14 +193,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-三大工厂模式" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-IO模型简介" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      三大工厂模式
+      IO模型简介
     </h1>
   
 
@@ -208,8 +212,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-        <time datetime="2020-05-19T07:11:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-19</time>
+<a href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" class="archive-article-date">
+        <time datetime="2020-05-19T14:44:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-19</time>
 </a>
 
   
@@ -222,7 +226,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.7k字</span>
+      <span class="post-count">1.5k字</span>
     </span>
   </span>
 
@@ -231,7 +235,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">6分</span>
+      <span class="post-count">5分</span>
     </span>
   </span>
 </div>
@@ -242,244 +246,26 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h3 id="Simple-Factory-Pattern-简单工厂模式"><a href="#Simple-Factory-Pattern-简单工厂模式" class="headerlink" title="Simple Factory Pattern 简单工厂模式"></a>Simple Factory Pattern 简单工厂模式</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>简单工厂模式（Simple Factory Pattern）是指由一个工厂对象决定创建出哪一种产品类的实例。  </p>
-<p>属于创建型模式，但它不属于GOF 23种设计模式。  </p>
-<h4 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h4><p>（1）工厂类创建的对象较少。<br>（2）客户端只需要传入工厂类的参数，对于如何创建对象的逻辑不需要关心。  </p>
-<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>只需要传入一个正确的参数就可以获取你想需要的对象，无需关心其创建细节。  </p>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4> <a id="more"></a>
-<p>（1）工厂类的职责相对过重，增加新产品时需要修改工厂类相应的判断逻辑，违背开闭原则。<br>（2）不易于扩展过于复杂的产品结构。  </p>
-<h4 id="举例代码说明"><a href="#举例代码说明" class="headerlink" title="举例代码说明"></a>举例代码说明</h4><p><strong>创建一个CourseFactory工厂：</strong></p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CourseFactory</span> </span>{
-
-<span class="comment">//    public ICourse create(String name){</span>
-<span class="comment">//        if("java".equals(name)){</span>
-<span class="comment">//            return new JavaCourse();</span>
-<span class="comment">//        }else if("python".equals(name)){</span>
-<span class="comment">//            return new PythonCourse();</span>
-<span class="comment">//        }else {</span>
-<span class="comment">//            return null;</span>
-<span class="comment">//        }</span>
-<span class="comment">//    }</span>
-
-<span class="comment">//    public ICourse create(String className){</span>
-<span class="comment">//        try {</span>
-<span class="comment">//            if (!(null == className || "".equals(className))) {</span>
-<span class="comment">//                return (ICourse) Class.forName(className).newInstance();</span>
-<span class="comment">//            }</span>
-<span class="comment">//</span>
-<span class="comment">//        }catch (Exception e){</span>
-<span class="comment">//            e.printStackTrace();</span>
-<span class="comment">//        }</span>
-<span class="comment">//        return null;</span>
-<span class="comment">//    }</span>
-
-    <span class="function"><span class="keyword">public</span> ICourse <span class="title">create</span><span class="params">(Class&lt;? extends ICourse&gt; clazz)</span></span>{
-        <span class="keyword">try</span> {
-            <span class="keyword">if</span> (<span class="keyword">null</span> != clazz) {
-                <span class="keyword">return</span> clazz.newInstance();
-            }
-        }<span class="keyword">catch</span> (Exception e){
-            e.printStackTrace();
-        }
-        <span class="keyword">return</span> <span class="keyword">null</span>;
-    }
-
-}</code></pre>
-<p><strong>创建一个ICourse接口</strong>    </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ICourse</span> </span>{
-    <span class="comment">/**</span>
-<span class="comment">     * 录制视频</span>
-<span class="comment">     * <span class="doctag">@return</span></span>
-<span class="comment">     */</span>
-    <span class="function"><span class="keyword">void</span> <span class="title">record</span><span class="params">()</span></span>;
-}</code></pre>
-<p><strong>创建两个课程分别实现这个接口</strong>    </p>
-<pre><code class="java"><span class="comment">//产品一号类</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaCourse</span> <span class="keyword">implements</span> <span class="title">ICourse</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"录制Java课程"</span>);
-    }
-}  
-<span class="comment">//产品二号类</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonCourse</span> <span class="keyword">implements</span> <span class="title">ICourse</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"录制Python课程"</span>);
-    }
-}</code></pre>
-<p><strong>工厂测试类</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleFactoryTest</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-
-<span class="comment">//        ICourse course = new JavaCourse();</span>
-<span class="comment">//        course.record();</span>
-
-<span class="comment">//        ICourseFactory factory = new ICourseFactory();</span>
-<span class="comment">//        ICourse course = factory.create("com.gupaoedu.vip.pattern.factory.JavaCourse");</span>
-<span class="comment">//        course.record();</span>
-
-        CourseFactory factory = <span class="keyword">new</span> CourseFactory();
-        ICourse course = factory.create(JavaCourse<span class="class">.<span class="keyword">class</span>)</span>;
-        course.record();
-
-    }
-}</code></pre>
-<h3 id="Factory-Method-Pattern-工厂方法模式"><a href="#Factory-Method-Pattern-工厂方法模式" class="headerlink" title="Factory Method Pattern 工厂方法模式"></a>Factory Method Pattern 工厂方法模式</h3><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><p>工厂方法模式（Factory Method Pattern）指的是定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类，工厂方法让实例化类推迟到子类中进行。在工厂方法模式中用户只需关心所需产品对应的工厂，无心关心创建细节，而且增加产品时符合开闭原则。  </p>
-<p> 工厂方法模式主要解决产品扩展的问题，在简单工厂中，随着产品链的丰富，如果每个产品的创建逻辑有区别的话，工厂的职责会变得越来愈多，有点像万能工厂，并不便于维护。根据单一职责原则，我们将职能继续拆分，专人干专事。java课程由java工厂创建，python课程由python工厂创建，对工厂本身也做一个抽象。  </p>
-<h4 id="适用场景-1"><a href="#适用场景-1" class="headerlink" title="适用场景"></a>适用场景</h4><p>   （1）创建对象需要大量重复的代码。<br>   （2）客户端（应用层）不依赖于产品类实例如何创建，实现等细节。<br>   （3）一个类通过其子类来指定创建哪个对象。</p>
-<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><p>（1）用户只需关心产品对应的工厂，无需关心其创建细节。<br>（2）加入新产品符合开闭原则，提高了可扩展性。  </p>
-<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p>（1）类的个数增多，增加了代码结构的复杂度。<br>（2）增加了系统的抽象性和理解难度。  </p>
-<h4 id="举例代码说明-1"><a href="#举例代码说明-1" class="headerlink" title="举例代码说明"></a>举例代码说明</h4><p><strong>先创建ICourseFactory接口</strong>   </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ICourseFactory</span> </span>{
-
-    <span class="function">ICourse <span class="title">create</span><span class="params">()</span></span>;
-
-}</code></pre>
-<p><strong>再分别创建其子工厂</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaCourseFactory</span> <span class="keyword">implements</span> <span class="title">ICourseFactory</span> </span>{
-    <span class="function"><span class="keyword">public</span> ICourse <span class="title">create</span><span class="params">()</span> </span>{
-        <span class="keyword">return</span> <span class="keyword">new</span> JavaCourse();
-    }
-}
-<span class="comment">//</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonCourseFactory</span> <span class="keyword">implements</span> <span class="title">ICourseFactory</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> ICourse <span class="title">create</span><span class="params">()</span> </span>{
-        <span class="keyword">return</span> <span class="keyword">new</span> PythonCourse();
-    }
-}</code></pre>
-<p><strong>创建一个产品接口，在创建两个产品分别实现此接口</strong>   </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ICourse</span> </span>{
-    <span class="comment">/**</span>
-<span class="comment">     * 录制视频</span>
-<span class="comment">     * <span class="doctag">@return</span></span>
-<span class="comment">     */</span>
-    <span class="function"><span class="keyword">void</span> <span class="title">record</span><span class="params">()</span></span>;
-}
-<span class="comment">//</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaCourse</span> <span class="keyword">implements</span> <span class="title">ICourse</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"录制Java课程"</span>);
-    }
-}
-<span class="comment">//</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonCourse</span> <span class="keyword">implements</span> <span class="title">ICourse</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"录制Python课程"</span>);
-    }
-}</code></pre>
-<p><strong>测试类测试</strong>    </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FactoryMethodTest</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-
-        ICourseFactory factory = <span class="keyword">new</span> PythonCourseFactory();
-        ICourse course = factory.create();
-        course.record();
-
-        factory = <span class="keyword">new</span> JavaCourseFactory();
-        course = factory.create();
-        course.record();
-    }
-}</code></pre>
-<h3 id="Abstract-Factory-Paterrn-抽象工厂模式"><a href="#Abstract-Factory-Paterrn-抽象工厂模式" class="headerlink" title="Abstract Factory Paterrn 抽象工厂模式"></a>Abstract Factory Paterrn 抽象工厂模式</h3><h4 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h4><p>抽象工厂模式（Abstract Factory Paterrn）是一种为访问类提供一个创建一组相关或相互依赖对象的接口，且访问类无须指定所要产品的具体类就能得到同族的不同等级的产品的模式结构。</p>
-<p>抽象工厂模式是工厂方法模式的升级版本，工厂方法模式只生产一个等级的产品，而抽象工厂模式可生产多个等级的产品。  </p>
-<h4 id="适用场景-2"><a href="#适用场景-2" class="headerlink" title="适用场景"></a>适用场景</h4><p>（1）当需要创建的对象是一系列相互关联或相互依赖的产品族时，如电器工厂中的电视机、洗衣机、空调等。<br>（2）系统中有多个产品族，但每次只使用其中的某一族产品。如有人只喜欢穿某一个品牌的衣服和鞋。<br>（3）系统中提供了产品的类库，且所有产品的接口相同，客户端不依赖产品实例的创建细节和内部结构。</p>
-<h4 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h4><p>抽象工厂模式除了具有工厂方法模式的优点外，其他主要优点如下。<br>可以在类的内部对产品族中相关联的多等级产品共同管理，而不必专门引入多个新的类来进行管理。<br>当增加一个新的产品族时不需要修改原代码，满足开闭原则。</p>
-<h4 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h4><p>其缺点是：当产品族中需要增加一个新的产品时，所有的工厂类都需要进行修改。  </p>
-<h4 id="代码举例说明"><a href="#代码举例说明" class="headerlink" title="代码举例说明"></a>代码举例说明</h4><p><strong>在产品等级中增加两个产品</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">INote</span> </span>{
-    <span class="function"><span class="keyword">void</span> <span class="title">edit</span><span class="params">()</span></span>;
-}
-<span class="comment">//</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IVideo</span> </span>{
-    <span class="function"><span class="keyword">void</span> <span class="title">record</span><span class="params">()</span></span>;
-}</code></pre>
-<p><strong>然后再创建一个抽象工厂</strong>  </p>
-<pre><code class="java"><span class="comment">/**</span>
-<span class="comment"> * 抽象工厂是用户的主入口</span>
-<span class="comment"> * 在Spring中应用得最为广泛的一种设计模式</span>
-<span class="comment"> * 易于扩展</span>
-<span class="comment"> */</span>
-<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CourseFactory</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>{
-        System.out.println(<span class="string">"初始化基础数据"</span>);
-    }
-
-    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> INote <span class="title">createNote</span><span class="params">()</span></span>;
-
-    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> IVideo <span class="title">createVideo</span><span class="params">()</span></span>;
-}</code></pre>
-<p><strong>接下来，创建java产品族</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaNote</span> <span class="keyword">implements</span> <span class="title">INote</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">edit</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"编写Java笔记"</span>);
-    }
-}
-<span class="comment">//</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaVideo</span> <span class="keyword">implements</span> <span class="title">IVideo</span> </span>{
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"录制Java视频"</span>);
-    }
-}</code></pre>
-<p><strong>创建java产品族的具体工厂</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaCourseFactory</span> <span class="keyword">extends</span> <span class="title">CourseFactory</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> INote <span class="title">createNote</span><span class="params">()</span> </span>{
-        <span class="keyword">super</span>.init();
-        <span class="keyword">return</span> <span class="keyword">new</span> JavaNote();
-    }
-
-    <span class="function"><span class="keyword">public</span> IVideo <span class="title">createVideo</span><span class="params">()</span> </span>{
-        <span class="keyword">super</span>.init();
-        <span class="keyword">return</span> <span class="keyword">new</span> JavaVideo();
-    }
-}</code></pre>
-<p><strong>接下来，创建python产品族</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonNote</span> <span class="keyword">implements</span> <span class="title">INote</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">edit</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"编写Python笔记"</span>);
-    }
-}
-<span class="comment">//</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonVideo</span> <span class="keyword">implements</span> <span class="title">IVideo</span> </span>{
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"录制Python视频"</span>);
-    }
-}</code></pre>
-<p><strong>创建python产品族的具体工厂</strong></p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonCourseFactory</span> <span class="keyword">extends</span> <span class="title">CourseFactory</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> INote <span class="title">createNote</span><span class="params">()</span> </span>{
-        <span class="keyword">super</span>.init();
-        <span class="keyword">return</span> <span class="keyword">new</span> PythonNote();
-    }
-
-
-    <span class="function"><span class="keyword">public</span> IVideo <span class="title">createVideo</span><span class="params">()</span> </span>{
-        <span class="keyword">super</span>.init();
-        <span class="keyword">return</span> <span class="keyword">new</span> PythonVideo();
-    }
-}</code></pre>
-<p><strong>来看客户端的调用</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFactoryTest</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-
-        JavaCourseFactory factory = <span class="keyword">new</span> JavaCourseFactory();
-
-        factory.createNote().edit();
-        factory.createVideo().record();
-    }
-}</code></pre>
-<p>上面的代码完整的诠释了两个产品族Java和python，也描述了两个产品等级视频和笔记。抽象工厂非常完美清晰的描述了这样一层复杂的关系。但是，当我们需要新增一个产品等级：产品三号的话。那么我们从抽象工厂到具体工厂都要全部调整，很显然不符合开闭原则，这也是它缺点之一。</p>
+    <h3 id="阻塞IO模型"><a href="#阻塞IO模型" class="headerlink" title="阻塞IO模型"></a>阻塞IO模型</h3><p>最传统的一种 IO 模型，即在读写数据过程中会发生阻塞现象。<br>当用户线程发出 IO 请求之后，内核会去查看数据是否就绪，如果没有就绪就会等待数据就绪，而用户线程就会处于阻塞状态，用户线程交出 CPU。当数据就绪之后，内核会将数据拷贝到用户线程，并返回结果给用户线程，用户线程才解除 block 状态。<br>典型的阻塞 IO 模型的例子为：<br>data = socket.read();如果数据没有就绪，就会一直阻塞在 read 方法。   </p>
+<h3 id="非阻塞IO模型"><a href="#非阻塞IO模型" class="headerlink" title="非阻塞IO模型"></a>非阻塞IO模型</h3><p> 当用户线程发起一个 read 操作后，并不需要等待，而是马上就得到了一个结果。如果结果是一个<br>error 时，它就知道数据还没有准备好，于是它可以再次发送 read 操作。一旦内核中的数据准备<br>好了，并且又再次收到了用户线程的请求，那么它马上就将数据拷贝到了用户线程，然后返回。<br>所以事实上，在非阻塞 IO 模型中，用户线程需要不断地询问内核数据是否就绪，也就说非阻塞 IO<br>不会交出 CPU，而会一直占用 CPU。    </p>
+<p>典型的非阻塞 IO 模型一般如下：<br> <a id="more"></a> </p>
+<pre><code class="java"><span class="keyword">while</span>(<span class="keyword">true</span>){
+data = socket.read();
+<span class="keyword">if</span>(data!= error){
+处理数据
+<span class="keyword">break</span>;
+}}</code></pre>
+<p>但是对于非阻塞 IO 就有一个非常严重的问题，在 while 循环中需要不断地去询问内核数据是否就<br>绪，这样会导致 CPU 占用率非常高，因此一般情况下很少使用 while 循环这种方式来读取数据。  </p>
+<h3 id="多路复用IO模型"><a href="#多路复用IO模型" class="headerlink" title="多路复用IO模型"></a>多路复用IO模型</h3><p>多路复用 IO 模型是目前使用得比较多的模型。Java NIO 实际上就是多路复用 IO。在多路复用 IO<br>模型中，会有一个线程不断去<strong>轮询</strong>多个 socket 的状态，只有当 socket 真正有读写事件时，才真<br>正调用实际的 IO 读写操作。因为在多路复用 IO 模型中，只需要使用一个线程就可以管理多个<br>socket，系统不需要建立新的进程或者线程，也不必维护这些线程和进程，<code>并且只有在真正有
+socket 读写事件进行时，才会使用 IO 资源，</code>所以它大大减少了资源占用。在 Java NIO 中，是通<br>过 selector.select()去查询每个通道是否有到达事件，如果没有事件，则一直阻塞在那里，因此这<br>种方式会导致用户线程的阻塞。多路复用 IO 模式，通过一个线程就可以管理多个 socket，只有当<br>socket 真正有读写事件发生才会占用资源来进行实际的读写操作。因此，多路复用 IO 比较适合连<br>接数比较多的情况。  </p>
+<p>另外多路复用 IO 为何比非阻塞 IO 模型的效率高是因为在非阻塞 IO 中，不断地询问 socket 状态<br>时通过<code>用户线程</code>去进行的，而在多路复用 IO 中，轮询每个 socket 状态是<code>内核</code>在进行的，这个效<br>率要比用户线程要高的多。  </p>
+<p>不过要注意的是，多路复用 IO 模型是通过轮询的方式来检测是否有事件到达，并且对到达的事件<br>逐一进行响应。因此对于多路复用 IO 模型来说，一旦事件响应体很大，那么就会导致后续的事件<br>迟迟得不到处理，并且会影响新的事件轮询。  </p>
+<h3 id="信号驱动-IO-模型"><a href="#信号驱动-IO-模型" class="headerlink" title="信号驱动 IO 模型"></a>信号驱动 IO 模型</h3><p>在信号驱动 IO 模型中，当用户线程发起一个 IO 请求操作，会给对应的 socket 注册一个信号函<br>数，然后用户线程会继续执行，当内核数据就绪时会发送一个信号给用户线程，用户线程接收到<br>信号之后，便在信号函数中调用 IO 读写操作来进行实际的 IO 请求操作。  </p>
+<h3 id="异步-IO-模型"><a href="#异步-IO-模型" class="headerlink" title="异步 IO 模型"></a>异步 IO 模型</h3><p>异步 IO 模型才是最理想的 IO 模型，在异步 IO 模型中，当用户线程发起 read 操作之后，立刻就<br>可以开始去做其它的事。而另一方面，从内核的角度，当它受到一个 asynchronous read 之后，<br>它会立刻返回，说明 read 请求已经成功发起了，因此不会对用户线程产生任何 block。然后，内<br>核会等待数据准备完成，然后将数据拷贝到用户线程，当这一切都完成之后，内核会给用户线程<br>发送一个信号，告诉它 read 操作完成了。也就说用户线程完全不需要实际的整个 IO 操作是如何<br>进行的，只需要先发起一个请求，当接收内核返回的成功信号时表示 IO 操作已经完成，可以直接<br>去使用数据了。  </p>
+<p>也就说在异步 IO 模型中，IO 操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完<br>成，然后发送一个信号告知用户线程操作已完成。用户线程中不需要再次调用 IO 函数进行具体的<br>读写。这点是和信号驱动模型有所不同的，在信号驱动模型中，当用户线程接收到信号表示数据<br>已经就绪，然后需要用户线程调用 IO 函数进行实际的读写操作；而在异步 IO 模型中，收到信号<br>表示 IO 操作已经完成，不需要再在用户线程中调用 IO 函数进行实际的读写操作。  </p>
+<p>注意，异步 IO 是需要操作系统的底层支持，在 Java 7 中，提供了 Asynchronous IO。  </p>
+<p>更多参考： <a href="http://www.importnew.com/19816.html" target="_blank" rel="noopener">http://www.importnew.com/19816.html</a>  </p>
+<h3 id="IO包"><a href="#IO包" class="headerlink" title="IO包"></a>IO包</h3><p><img src="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/io.png" alt="Alt text"><br><img src="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/javaio.jpg" alt="Alt text"><br><img src="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/javaio2.jpg" alt="Alt text">  </p>
 
     
 
@@ -521,7 +307,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://chengqiji.github.io/2020/05/19/三大工厂模式/" title="三大工厂模式" target="_blank">https://chengqiji.github.io/2020/05/19/三大工厂模式/</a>
+          <a href="https://chengqiji.github.io/2020/05/19/IO模型简介/" title="IO模型简介" target="_blank">https://chengqiji.github.io/2020/05/19/IO模型简介/</a>
         </li>
         
         <li>
@@ -543,7 +329,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">IO模型</a>
         		</li>
       		
 		</ul>
@@ -555,7 +341,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        			<a href="/categories/IO模型//" class="article-tag-list-link color5">IO模型</a>
         		</li>
       		
 		</ul>
@@ -610,7 +396,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -625,18 +411,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          IO模型简介
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM常用命令</div>
+    <a href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">三大工厂模式</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -663,7 +440,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Simple-Factory-Pattern-简单工厂模式"><span class="toc-number">1.</span> <span class="toc-text">Simple Factory Pattern 简单工厂模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义"><span class="toc-number">1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#适用场景"><span class="toc-number">1.2.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优点"><span class="toc-number">1.3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺点"><span class="toc-number">1.4.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#举例代码说明"><span class="toc-number">1.5.</span> <span class="toc-text">举例代码说明</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Factory-Method-Pattern-工厂方法模式"><span class="toc-number">2.</span> <span class="toc-text">Factory Method Pattern 工厂方法模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义-1"><span class="toc-number">2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#适用场景-1"><span class="toc-number">2.2.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优点-1"><span class="toc-number">2.3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺点-1"><span class="toc-number">2.4.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#举例代码说明-1"><span class="toc-number">2.5.</span> <span class="toc-text">举例代码说明</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Abstract-Factory-Paterrn-抽象工厂模式"><span class="toc-number">3.</span> <span class="toc-text">Abstract Factory Paterrn 抽象工厂模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义-2"><span class="toc-number">3.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#适用场景-2"><span class="toc-number">3.2.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优点-2"><span class="toc-number">3.3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺点-2"><span class="toc-number">3.4.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码举例说明"><span class="toc-number">3.5.</span> <span class="toc-text">代码举例说明</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#阻塞IO模型"><span class="toc-number">1.</span> <span class="toc-text">阻塞IO模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非阻塞IO模型"><span class="toc-number">2.</span> <span class="toc-text">非阻塞IO模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多路复用IO模型"><span class="toc-number">3.</span> <span class="toc-text">多路复用IO模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#信号驱动-IO-模型"><span class="toc-number">4.</span> <span class="toc-text">信号驱动 IO 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异步-IO-模型"><span class="toc-number">5.</span> <span class="toc-text">异步 IO 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IO包"><span class="toc-number">6.</span> <span class="toc-text">IO包</span></a></li></ol>
                     </div>
                 </span>
             </div>
