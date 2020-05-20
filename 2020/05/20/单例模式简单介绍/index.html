@@ -6,26 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqiji.github.io">
-  <title>IO模型简介 | Stephen Cheng`s blog</title>
+  <title>单例模式简单介绍 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="阻塞IO模型最传统的一种 IO 模型，即在读写数据过程中会发生阻塞现象。当用户线程发出 IO 请求之后，内核会去查看数据是否就绪，如果没有就绪就会等待数据就绪，而用户线程就会处于阻塞状态，用户线程交出 CPU。当数据就绪之后，内核会将数据拷贝到用户线程，并返回结果给用户线程，用户线程才解除 block 状态。典型的阻塞 IO 模型的例子为：data &#x3D; socket.read();如果数据没有就绪">
+  <meta name="description" content="单例模式的定义及应用场景单例模式（Singleton Pattern)是指确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点，也就是隐藏所有的构造方法，属于创建型模式。    那么为什么要单例呢？   为了防止出现重复的创建，这个类本独有一份，多份会带来麻烦，出现新的问题。例如，Windows 中只能打开一个任务管理器，这样可以避免因打开多个任务管理器窗口而造成内存资源的浪费，或出现各">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IO模型简介">
-<meta property="og:url" content="https://chengqiji.github.io/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/index.html">
+<meta property="og:title" content="单例模式简单介绍">
+<meta property="og:url" content="https://chengqiji.github.io/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
-<meta property="og:description" content="阻塞IO模型最传统的一种 IO 模型，即在读写数据过程中会发生阻塞现象。当用户线程发出 IO 请求之后，内核会去查看数据是否就绪，如果没有就绪就会等待数据就绪，而用户线程就会处于阻塞状态，用户线程交出 CPU。当数据就绪之后，内核会将数据拷贝到用户线程，并返回结果给用户线程，用户线程才解除 block 状态。典型的阻塞 IO 模型的例子为：data &#x3D; socket.read();如果数据没有就绪">
+<meta property="og:description" content="单例模式的定义及应用场景单例模式（Singleton Pattern)是指确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点，也就是隐藏所有的构造方法，属于创建型模式。    那么为什么要单例呢？   为了防止出现重复的创建，这个类本独有一份，多份会带来麻烦，出现新的问题。例如，Windows 中只能打开一个任务管理器，这样可以避免因打开多个任务管理器窗口而造成内存资源的浪费，或出现各">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/io.png">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/javaio.jpg">
-<meta property="og:image" content="https://chengqiji.github.io/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/javaio2.jpg">
-<meta property="article:published_time" content="2020-05-19T14:44:50.000Z">
-<meta property="article:modified_time" content="2020-05-19T14:42:36.854Z">
+<meta property="article:published_time" content="2020-05-20T07:45:50.000Z">
+<meta property="article:modified_time" content="2020-05-20T07:43:54.004Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="IO模型">
+<meta property="article:tag" content="设计模式">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chengqiji.github.io/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/io.png">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -193,14 +189,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-IO模型简介" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-单例模式简单介绍" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      IO模型简介
+      单例模式简单介绍
     </h1>
   
 
@@ -212,8 +208,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" class="archive-article-date">
-        <time datetime="2020-05-19T14:44:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-19</time>
+<a href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
+        <time datetime="2020-05-20T07:45:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-20</time>
 </a>
 
   
@@ -226,7 +222,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.5k字</span>
+      <span class="post-count">2.2k字</span>
     </span>
   </span>
 
@@ -235,7 +231,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">5分</span>
+      <span class="post-count">8分</span>
     </span>
   </span>
 </div>
@@ -246,26 +242,199 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h3 id="阻塞IO模型"><a href="#阻塞IO模型" class="headerlink" title="阻塞IO模型"></a>阻塞IO模型</h3><p>最传统的一种 IO 模型，即在读写数据过程中会发生阻塞现象。<br>当用户线程发出 IO 请求之后，内核会去查看数据是否就绪，如果没有就绪就会等待数据就绪，而用户线程就会处于阻塞状态，用户线程交出 CPU。当数据就绪之后，内核会将数据拷贝到用户线程，并返回结果给用户线程，用户线程才解除 block 状态。<br>典型的阻塞 IO 模型的例子为：<br>data = socket.read();如果数据没有就绪，就会一直阻塞在 read 方法。   </p>
-<h3 id="非阻塞IO模型"><a href="#非阻塞IO模型" class="headerlink" title="非阻塞IO模型"></a>非阻塞IO模型</h3><p> 当用户线程发起一个 read 操作后，并不需要等待，而是马上就得到了一个结果。如果结果是一个<br>error 时，它就知道数据还没有准备好，于是它可以再次发送 read 操作。一旦内核中的数据准备<br>好了，并且又再次收到了用户线程的请求，那么它马上就将数据拷贝到了用户线程，然后返回。<br>所以事实上，在非阻塞 IO 模型中，用户线程需要不断地询问内核数据是否就绪，也就说非阻塞 IO<br>不会交出 CPU，而会一直占用 CPU。    </p>
-<p>典型的非阻塞 IO 模型一般如下：<br> <a id="more"></a> </p>
-<pre><code class="java"><span class="keyword">while</span>(<span class="keyword">true</span>){
-data = socket.read();
-<span class="keyword">if</span>(data!= error){
-处理数据
-<span class="keyword">break</span>;
-}}</code></pre>
-<p>但是对于非阻塞 IO 就有一个非常严重的问题，在 while 循环中需要不断地去询问内核数据是否就<br>绪，这样会导致 CPU 占用率非常高，因此一般情况下很少使用 while 循环这种方式来读取数据。  </p>
-<h3 id="多路复用IO模型"><a href="#多路复用IO模型" class="headerlink" title="多路复用IO模型"></a>多路复用IO模型</h3><p>多路复用 IO 模型是目前使用得比较多的模型。Java NIO 实际上就是多路复用 IO。在多路复用 IO<br>模型中，会有一个线程不断去<strong>轮询</strong>多个 socket 的状态，只有当 socket 真正有读写事件时，才真<br>正调用实际的 IO 读写操作。因为在多路复用 IO 模型中，只需要使用一个线程就可以管理多个<br>socket，系统不需要建立新的进程或者线程，也不必维护这些线程和进程，<code>并且只有在真正有
-socket 读写事件进行时，才会使用 IO 资源，</code>所以它大大减少了资源占用。在 Java NIO 中，是通<br>过 selector.select()去查询每个通道是否有到达事件，如果没有事件，则一直阻塞在那里，因此这<br>种方式会导致用户线程的阻塞。多路复用 IO 模式，通过一个线程就可以管理多个 socket，只有当<br>socket 真正有读写事件发生才会占用资源来进行实际的读写操作。因此，多路复用 IO 比较适合连<br>接数比较多的情况。  </p>
-<p>另外多路复用 IO 为何比非阻塞 IO 模型的效率高是因为在非阻塞 IO 中，不断地询问 socket 状态<br>时通过<code>用户线程</code>去进行的，而在多路复用 IO 中，轮询每个 socket 状态是<code>内核</code>在进行的，这个效<br>率要比用户线程要高的多。  </p>
-<p>不过要注意的是，多路复用 IO 模型是通过轮询的方式来检测是否有事件到达，并且对到达的事件<br>逐一进行响应。因此对于多路复用 IO 模型来说，一旦事件响应体很大，那么就会导致后续的事件<br>迟迟得不到处理，并且会影响新的事件轮询。  </p>
-<h3 id="信号驱动-IO-模型"><a href="#信号驱动-IO-模型" class="headerlink" title="信号驱动 IO 模型"></a>信号驱动 IO 模型</h3><p>在信号驱动 IO 模型中，当用户线程发起一个 IO 请求操作，会给对应的 socket 注册一个信号函<br>数，然后用户线程会继续执行，当内核数据就绪时会发送一个信号给用户线程，用户线程接收到<br>信号之后，便在信号函数中调用 IO 读写操作来进行实际的 IO 请求操作。  </p>
-<h3 id="异步-IO-模型"><a href="#异步-IO-模型" class="headerlink" title="异步 IO 模型"></a>异步 IO 模型</h3><p>异步 IO 模型才是最理想的 IO 模型，在异步 IO 模型中，当用户线程发起 read 操作之后，立刻就<br>可以开始去做其它的事。而另一方面，从内核的角度，当它受到一个 asynchronous read 之后，<br>它会立刻返回，说明 read 请求已经成功发起了，因此不会对用户线程产生任何 block。然后，内<br>核会等待数据准备完成，然后将数据拷贝到用户线程，当这一切都完成之后，内核会给用户线程<br>发送一个信号，告诉它 read 操作完成了。也就说用户线程完全不需要实际的整个 IO 操作是如何<br>进行的，只需要先发起一个请求，当接收内核返回的成功信号时表示 IO 操作已经完成，可以直接<br>去使用数据了。  </p>
-<p>也就说在异步 IO 模型中，IO 操作的两个阶段都不会阻塞用户线程，这两个阶段都是由内核自动完<br>成，然后发送一个信号告知用户线程操作已完成。用户线程中不需要再次调用 IO 函数进行具体的<br>读写。这点是和信号驱动模型有所不同的，在信号驱动模型中，当用户线程接收到信号表示数据<br>已经就绪，然后需要用户线程调用 IO 函数进行实际的读写操作；而在异步 IO 模型中，收到信号<br>表示 IO 操作已经完成，不需要再在用户线程中调用 IO 函数进行实际的读写操作。  </p>
-<p>注意，异步 IO 是需要操作系统的底层支持，在 Java 7 中，提供了 Asynchronous IO。  </p>
-<p>更多参考： <a href="http://www.importnew.com/19816.html" target="_blank" rel="noopener">http://www.importnew.com/19816.html</a>  </p>
-<h3 id="IO包"><a href="#IO包" class="headerlink" title="IO包"></a>IO包</h3><p><img src="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/io.png" alt="Alt text"><br><img src="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/javaio.jpg" alt="Alt text"><br><img src="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/javaio2.jpg" alt="Alt text">  </p>
+    <h3 id="单例模式的定义及应用场景"><a href="#单例模式的定义及应用场景" class="headerlink" title="单例模式的定义及应用场景"></a>单例模式的定义及应用场景</h3><p>单例模式（Singleton Pattern)是指确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点，也就是隐藏所有的构造方法，属于创建型模式。   </p>
+<p>那么为什么要单例呢？  </p>
+<p>为了防止出现重复的创建，这个类本独有一份，多份会带来麻烦，出现新的问题。<br>例如，Windows 中只能打开一个任务管理器，这样可以避免因打开多个任务管理器窗口而造成内存资源的浪费，或出现各个窗口显示内容的不一致等错误。</p>
+<p>在计算机系统中，还有 Windows 的回收站、操作系统中的文件系统、多线程中的线程池、显卡的驱动程序对象、打印机的后台处理服务、应用程序的日志对象、数据库的连接池、网站的计数器、Web 应用的配置对象、应用程序中的对话框、系统中的缓存等常常被设计成单例。  </p>
+<p>单例模式有 3 个特点：<br> <a id="more"></a><br>（1）单例类只有一个实例对象；<br>（2）该单例对象必须由单例类自行创建；<br>（3）单例类对外提供一个访问该单例的全局访问点；    </p>
+<p>适用场景：<br>确保任何情况下都绝对只有一个实例；  </p>
+<p>  常见写法：<br>  （1）饿汉式单例<br>  （2）懒汉式单例<br>  （3）注册式单例<br>  （4）ThreedLocal单例  </p>
+<h3 id="饿汉式单例的优缺点分析"><a href="#饿汉式单例的优缺点分析" class="headerlink" title="饿汉式单例的优缺点分析"></a>饿汉式单例的优缺点分析</h3><p>在单例类首次加载时就创建实例。保证在调用 getInstance 方法之前单例已经存在了。  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HungrySingleton</span></span>
+<span class="class"></span>{
+ <span class="comment">//private static final HungrySingleton hungrySingleTon=new HungrySingleton();  </span>
+    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> HungrySingleton hungrySingleTon;    
+
+    <span class="keyword">static</span>{
+        hungrySingleTon=<span class="keyword">new</span> HungrySingleton();
+    }  
+
+    <span class="function"><span class="keyword">private</span> <span class="title">HungrySingleton</span><span class="params">()</span></span>{} <span class="comment">//构造方法私有化</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> HungrySingleton <span class="title">getInstance</span><span class="params">()</span><span class="comment">//提供访问点</span></span>
+<span class="function">    </span>{
+        <span class="keyword">return</span> hungrySingleTon;
+    }
+}</code></pre>
+<p>我们可以看出，它用static 和 final修饰，在我们类加载的时候就已经初始化了，并且创建了这个单例对象。  在多线程的情况下保证线程安全。</p>
+<p>优点：<br>执行效率高，性能高，没有任何锁。<br>缺点：<br>一上来就创建对象了，如果自始至终都没有被使用过，则会浪费内存。<br>某些情况下可能会造成内存浪费。（大量使用的时候） （占着茅坑不拉shi） </p>
+<h3 id="懒汉式单例"><a href="#懒汉式单例" class="headerlink" title="懒汉式单例"></a>懒汉式单例</h3><p>类加载时没有生成单例，只有当外部类第一次调用 getlnstance 方法时才去创建这个单例。否则只作声明，不作创建。<br>这里直接列出双重检测机制（DCL）懒汉式代码：   </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">LazySingleton</span></span>
+<span class="class"></span>{  
+    <span class="comment">//保证 instance 在所有线程中同步</span>
+    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">volatile</span> LazySingleton instance=<span class="keyword">null</span>;   
+    <span class="function"><span class="keyword">private</span> <span class="title">LazySingleton</span><span class="params">()</span></span>{}    <span class="comment">//private 避免类在外部被实例化  </span>
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazySingleton <span class="title">getInstance</span><span class="params">()</span></span>{
+        <span class="comment">//检查是否要阻塞，提高性能</span>
+        <span class="keyword">if</span>(instance==<span class="keyword">null</span>){  
+           <span class="keyword">synchronized</span>（LazySingleton<span class="class">.<span class="keyword">class</span>)</span>{  
+                <span class="comment">//检查是否要重新创建实例</span>
+                <span class="keyword">if</span>(instance == <span class="keyword">null</span>){
+                   instance=<span class="keyword">new</span> LazySingleton();  
+                    <span class="comment">//指令重排序的问题</span>
+                }
+           }
+        }
+         <span class="keyword">return</span> instance;
+    }
+}</code></pre>
+<p>优点：节省了内存    </p>
+<p>缺点：注意：如果编写的是多线程程序，则不要删除上例代码中的关键字 volatile 和 synchronized，否则将存在线程非安全的问题。如果不删除这两个关键字就能保证线程安全，但会影响性能，且消耗更多的资源，这是懒汉式单例的缺点。可读性也不够优雅。  那么有没有更加优雅的呢？ 有，看下面。  </p>
+<h3 id="静态内部类懒汉式单例模式"><a href="#静态内部类懒汉式单例模式" class="headerlink" title="静态内部类懒汉式单例模式"></a>静态内部类懒汉式单例模式</h3><p>直接上代码先：  </p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> class <span class="title">LazyStaticInnerClassSingleTon</span><span class="params">()</span></span>{  
+
+    <span class="function"><span class="keyword">private</span> <span class="title">LazyStaticInnerClassSingleTon</span><span class="params">()</span></span>{}
+    <span class="comment">//获取对象</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> LazyStaticInnerClassSingleTon <span class="title">getInstance</span><span class="params">()</span></span>{
+        <span class="keyword">return</span> Lazyholder.INSTANCE;
+    }  
+    <span class="comment">//使用内部类来实现懒加载 也就是延迟加载</span>
+    <span class="keyword">private</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Lazyholder</span></span>{
+        <span class="comment">//创建单例对象</span>
+        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> LazyStaticInnerClassSingleTon INSTANCE =  
+                                    <span class="keyword">new</span> LazyStaticInnerClassSingleTon();
+    }
+}</code></pre>
+<p><strong>原理：</strong><br>（1）当任何一个线程去调用getInstance方法时，都会使静态内部类被加载和被初始化，，此时静态初始化器执行SingleTon的初始化操作。<br>（2）初始化静态数据时，java提供了的线程安全性保证，所以不需要任何同步。  </p>
+<p>优点：写法优雅，利用了java本身的语法特性，避免了内存浪费。<br>缺点：能够被反射破坏  </p>
+<pre><code class="java"><span class="keyword">public</span> calss ReflecTest{ 
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>{
+        <span class="keyword">try</span>{
+            Class&lt;?&gt; clazz = LazyStaticInnerClassSingleTon<span class="class">.<span class="keyword">class</span></span>;
+            Constructor c = clazz.getDeclaredConstructor(<span class="keyword">null</span>);  
+            c.setAccessible(<span class="keyword">true</span>);
+            Object instance1 = c.newInstance();
+            Object instance2 = c.newInstance();
+            System.out.println(instance1 == instance2);
+        }<span class="keyword">catch</span>(Exception e){e.printStackTrace();}
+
+    }
+}</code></pre>
+<p>当然返回值很明显：<strong>false</strong><br>我们通过反射成功绕开单例模式的全局访问点，并且实例化出了不同的实例。  </p>
+<p>如何解决反射破坏这个问题呢？<br>很简单，我们只需要在单例模式的构造方法中加入一个判断语句：  </p>
+<pre><code class="java"><span class="function"><span class="keyword">private</span> <span class="title">LazyStaticInnerClassSingleTon</span><span class="params">()</span></span>{
+    <span class="keyword">if</span>(Lazyholder.INSTANCE != <span class="keyword">null</span>){
+        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"已存在，不允许非法访问!"</span>)
+    }
+}</code></pre>
+<p>那么这样一来，又变的不优雅了。。。  </p>
+<h3 id="注册式单例"><a href="#注册式单例" class="headerlink" title="注册式单例"></a>注册式单例</h3><p>将每一个实例都缓存到统一的容器中，使用唯一标识获取实例。<br><strong>枚举式属于注册式中的一种</strong>  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="keyword">enum</span> EnumSingleTon {
+
+    INSTANCE;
+
+    <span class="comment">//我们可以注入自定义的属性</span>
+    <span class="keyword">private</span> Object data;
+
+    <span class="function"><span class="keyword">public</span> Object <span class="title">getData</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> data;
+    }
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setData</span><span class="params">(Object data)</span> </span>{
+        <span class="keyword">this</span>.data = data;
+    }
+    <span class="comment">//全局访问点</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> EnumSingleTon <span class="title">getInstance</span><span class="params">()</span></span>{<span class="keyword">return</span> INSTANCE;}
+}</code></pre>
+<p>那么为什么说枚举单例模式可以提高性能，防止被反射破坏，被线程破坏呢？<br>那么我们先来看看反射区尝试破坏：  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EnumSingleTonTest</span> </span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+
+        <span class="keyword">try</span> {
+            Class clazz = EnumSingleTon<span class="class">.<span class="keyword">class</span></span>;
+            Constructor c =  
+                       clazz.getDeclaredConstructor(String<span class="class">.<span class="keyword">class</span>,<span class="title">int</span>.<span class="title">class</span>)</span>;
+            c.setAccessible(<span class="keyword">true</span>);
+            Object o = c.newInstance();
+            System.out.println(o);
+        } <span class="keyword">catch</span> (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+<p>枚举没有无参的构造方法：  </p>
+<pre><code class="java"><span class="function"><span class="keyword">protected</span> <span class="title">Enum</span><span class="params">(String name, <span class="keyword">int</span> ordinal)</span> </span>{
+       <span class="keyword">this</span>.name = name;
+       <span class="keyword">this</span>.ordinal = ordinal;
+   }</code></pre>
+<p>然后我们运行测试，将会报出异常，原因在于：  </p>
+<pre><code class="java"><span class="keyword">if</span> ((clazz.getModifiers() &amp; Modifier.ENUM) != <span class="number">0</span>)
+          <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Cannot reflectively create enum objects"</span>);  </code></pre>
+<p>枚举在JDK中的底层就给我们规定了，不能用反射去创建枚举对象。当我们去声明这个枚举的时候，它就把它作为一个常量放入map里面存着，是不是有点像饿汉式单例？（不管你用不用，我就先放着给你存在那里，只不过饿汉式只传了一个），虽然一开始就声明好了，所以并不存在线程安全的问题，但是它也带来一个问题呀，就是不能大批的创建对象，大批的创建又会造成内存浪费。  </p>
+<p>Spring借鉴了枚举单例的优点，进行了改良，提出了容器式单例，应对大批创建实例。  </p>
+<h3 id="容器式单例"><a href="#容器式单例" class="headerlink" title="容器式单例"></a>容器式单例</h3><p>直接上代码：  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ContainerSingleTon</span></span>{
+    <span class="function"><span class="keyword">private</span> <span class="title">ContainerSingleTon</span><span class="params">()</span></span>{}  
+    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String,Object&gt; ioc =   
+            <span class="keyword">new</span> ConcurrentHashMap&lt;String,Object&gt;();  
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Object <span class="title">getInstance</span><span class="params">(String className)</span></span>{
+        Object instance = <span class="keyword">null</span>;
+        <span class="keyword">if</span>(! ioc.containskey(className)){
+          <span class="keyword">try</span>{
+              instance = Class.forName(className).newInstance();  
+              ioc.put(className,instance);
+          }<span class="keyword">catch</span>(Exception e){
+            e.printStackTrace();
+            }  
+            <span class="keyword">return</span> instance;
+        }<span class="keyword">else</span>{
+          <span class="keyword">return</span> ioc.get(className);
+          }
+    }
+}  
+<span class="comment">//测试一下  </span>
+Object instance1 = ContainerSingleTon.getInstance(<span class="string">"com.study.Test"</span>);  
+Object instance2 = ContainerSingleTon.getInstance(<span class="string">"com.study.Test"</span>);  
+System.out.println(instance1 == instance2);  
+<span class="comment">//输出：  </span>
+<span class="keyword">true</span></code></pre>
+<p>因为是在MarkDown编辑器上手敲的 所以代码排版很有问题 不美观，还请谅解！！！<br>虽然解决了大批实例创建浪费内存的问题，但是又有了线程安全性的问题。   </p>
+<p><strong>除了多线程和反射外，还有一种场景能过够破坏单例，就是序列化和反序列化。</strong>    </p>
+<p>简单介绍一下序列化和反序列化：    </p>
+<p>（1）序列化：把内存中对象的状态转换为字节码的形式，把字节码通过IO输出流写到磁盘上，永久保存下来，持久化。    </p>
+<p>（2）反序列化：将持久化的字节码内容，通过IO输入流读到内存中来，转换成一个JAVA对象。   </p>
+<p><strong>如何解决呢？</strong><br>我们可以举个例子 在饿汉式单例模式中添加一个方法：  </p>
+<pre><code class="java"><span class="function"><span class="keyword">private</span> Object <span class="title">readResolve</span><span class="params">()</span></span>{ <span class="keyword">return</span> INSTANCE; }</code></pre>
+<p>其实这个方法用到了桥接模式。<br>我们从ObjectInputStream中的readObject方法的源码中分析：<br>    里面有一个调用 readObject0();<br>     readObject0里面在众多判断语句里面有一个:  </p>
+<blockquote>
+<p> case TC_Object:<br>  return checkResolve(readOrdinaryObject(unshared));  </p>
+</blockquote>
+<p> 如果对源码有兴趣可以一步一步点进去看，其实它最后就是判断你有没有写readResolve方法，如果有，它就进行返回。返回的就是INSTANCE,不会去重新给你创建对象。如果你没有写的话，它就会去调用newInstance方法，去创建一个新的对象。    </p>
+<h3 id="ThreadLocal单例模式-简单介绍"><a href="#ThreadLocal单例模式-简单介绍" class="headerlink" title="ThreadLocal单例模式 简单介绍"></a>ThreadLocal单例模式 简单介绍</h3><p> 保证线程内部的全局唯一，且天生线程安全。  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadLocalSingleTon</span></span>{
+    <span class="function"><span class="keyword">private</span> <span class="title">ThreadLocalSingleTon</span><span class="params">()</span></span>{}  
+
+      <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span>   
+          ThreadLocal&lt;ThreadLocalSingleTon&gt; threadloaclInsatance =  
+                      <span class="keyword">new</span> ThreadLocal&lt;ThreadLocalSingleTon&gt;(){
+                        <span class="meta">@Override</span>
+                        <span class="function">protect ThreadLocalSingleTon <span class="title">initialValue</span><span class="params">()</span></span>{
+                          <span class="keyword">return</span> <span class="keyword">new</span> ThreadLocalSingleTon;
+                          }
+                        }  
+        <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ThreadLocalSingleTon <span class="title">getInstance</span><span class="params">()</span></span>{
+          <span class="keyword">return</span> threadloaclInsatance.get();
+          }
+
+}  
+<span class="comment">//测试  直接调用</span>
+System.out.println(ThreadLocalSingleTon.getInstance);  
+System.out.println(ThreadLocalSingleTon.getInstance);  
+<span class="comment">//输出都是同一对象</span></code></pre>
+<p>实际上是ThreadLocal的get方法起的作用，get方法里面有一个ThreadLoaclMap对象，从map里面去获得一个值value，而这个值就是我们赋予的自己本身，而它的key呢，就是this,就是当前对象的所在线程。达到线程间隔离的目的。  </p>
+<p><strong>最后，今天是5.20，祝天下有情人终成眷属！</strong></p>
 
     
 
@@ -307,7 +476,7 @@ socket 读写事件进行时，才会使用 IO 资源，</code>所以它大大�
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://chengqiji.github.io/2020/05/19/IO模型简介/" title="IO模型简介" target="_blank">https://chengqiji.github.io/2020/05/19/IO模型简介/</a>
+          <a href="https://chengqiji.github.io/2020/05/20/单例模式简单介绍/" title="单例模式简单介绍" target="_blank">https://chengqiji.github.io/2020/05/20/单例模式简单介绍/</a>
         </li>
         
         <li>
@@ -329,7 +498,7 @@ socket 读写事件进行时，才会使用 IO 资源，</code>所以它大大�
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">IO模型</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
         		</li>
       		
 		</ul>
@@ -341,7 +510,7 @@ socket 读写事件进行时，才会使用 IO 资源，</code>所以它大大�
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/IO模型//" class="article-tag-list-link color5">IO模型</a>
+        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
         		</li>
       		
 		</ul>
@@ -396,7 +565,7 @@ socket 读写事件进行时，才会使用 IO 资源，</code>所以它大大�
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -411,18 +580,9 @@ socket 读写事件进行时，才会使用 IO 资源，</code>所以它大大�
 
 <nav id="article-nav">
   
-    <a href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          单例模式简单介绍
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">三大工厂模式</div>
+    <a href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">IO模型简介</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -449,7 +609,7 @@ socket 读写事件进行时，才会使用 IO 资源，</code>所以它大大�
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#阻塞IO模型"><span class="toc-number">1.</span> <span class="toc-text">阻塞IO模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#非阻塞IO模型"><span class="toc-number">2.</span> <span class="toc-text">非阻塞IO模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#多路复用IO模型"><span class="toc-number">3.</span> <span class="toc-text">多路复用IO模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#信号驱动-IO-模型"><span class="toc-number">4.</span> <span class="toc-text">信号驱动 IO 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#异步-IO-模型"><span class="toc-number">5.</span> <span class="toc-text">异步 IO 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IO包"><span class="toc-number">6.</span> <span class="toc-text">IO包</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#单例模式的定义及应用场景"><span class="toc-number">1.</span> <span class="toc-text">单例模式的定义及应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#饿汉式单例的优缺点分析"><span class="toc-number">2.</span> <span class="toc-text">饿汉式单例的优缺点分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#懒汉式单例"><span class="toc-number">3.</span> <span class="toc-text">懒汉式单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#静态内部类懒汉式单例模式"><span class="toc-number">4.</span> <span class="toc-text">静态内部类懒汉式单例模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#注册式单例"><span class="toc-number">5.</span> <span class="toc-text">注册式单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#容器式单例"><span class="toc-number">6.</span> <span class="toc-text">容器式单例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ThreadLocal单例模式-简单介绍"><span class="toc-number">7.</span> <span class="toc-text">ThreadLocal单例模式 简单介绍</span></a></li></ol>
                     </div>
                 </span>
             </div>
