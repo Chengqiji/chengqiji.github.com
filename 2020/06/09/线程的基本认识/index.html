@@ -6,17 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqiji.github.io">
-  <title>Tag: JVM | Stephen Cheng`s blog</title>
+  <title>线程的基本认识 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Stephen Cheng&#96;s blog">
-<meta property="og:url" content="https://chengqiji.github.io/tags/JVM/index.html">
+  <meta name="description" content="线程的基本介绍线程基本概念线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。   为什么会有线程（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。（3）线程可以认为是一种轻">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程的基本认识">
+<meta property="og:url" content="https://chengqiji.github.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
+<meta property="og:description" content="线程的基本介绍线程基本概念线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。   为什么会有线程（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。（3）线程可以认为是一种轻">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/thread01.png">
+<meta property="article:published_time" content="2020-06-09T11:15:50.000Z">
+<meta property="article:modified_time" content="2020-06-09T11:15:32.778Z">
 <meta property="article:author" content="Stephen Cheng">
+<meta property="article:tag" content="并发编程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chengqiji.github.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/thread01.png">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -184,292 +191,323 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-线程的基本认识" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-        <time datetime="2020-05-18T03:29:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" target="_blank">JVM常用命令</a>
   
+    <h1 class="article-title" itemprop="name">
+      线程的基本认识
     </h1>
   
 
 
-        <div class="article-info info-on-right">
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
+<a href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" class="archive-article-date">
+        <time datetime="2020-06-09T11:15:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-09</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.8k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">6分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h3 id="线程的基本介绍"><a href="#线程的基本介绍" class="headerlink" title="线程的基本介绍"></a>线程的基本介绍</h3><h5 id="线程基本概念"><a href="#线程基本概念" class="headerlink" title="线程基本概念"></a>线程基本概念</h5><p>线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。  </p>
+<h5 id="为什么会有线程"><a href="#为什么会有线程" class="headerlink" title="为什么会有线程"></a>为什么会有线程</h5><p>（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。<br>（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。<br>（3）线程可以认为是一种轻量级的进程，因此线程的创建、销毁比进程快。  </p>
+<h5 id="为什么要用多线程"><a href="#为什么要用多线程" class="headerlink" title="为什么要用多线程"></a>为什么要用多线程</h5><p>（1）异步执行<br>（2）利用多CPU资源实现真正意义上的并行执行<br> <a id="more"></a><br>（3）线程作为调度和执行的单位，每个线程拥有独立的运行栈和程序计数器(pc)，线程切换的开<br>销小<br>（4）一个进程中的多个线程共享相同的内存单元/内存地址空间它们从同一堆中分配对象，可以<br>访问相同的变量和对象。这就使得线程间通信更简便、高效。但多个线程操作共享的系统资<br>源可能就会带来安全的隐患。  </p>
+<h5 id="多线程应用场景"><a href="#多线程应用场景" class="headerlink" title="多线程应用场景"></a>多线程应用场景</h5><p>（1）使用多线程实现文件下载<br>（2）后台任务：如定时向大量用户发送邮件<br>（3）异步处理：记录日志<br>（4）多步骤的任务处理，可根据任务步骤的特征选用不用个数和特征的线程来协作处理，多任务的分割，由一个主线程分割给多个线程去完成。  </p>
+<h5 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h5><p>多线程的本质是：合理的利用多核心CPU资源来实现线程的并行处理，来实现同一个进程内不同任务的并行执行，同时基于线程本身的异步执行特性，提升任务处理的效率。  </p>
+<h3 id="Java线程的生命周期"><a href="#Java线程的生命周期" class="headerlink" title="Java线程的生命周期"></a>Java线程的生命周期</h3><p><strong>Java线程从创建到销毁，一共可能经历六种状态：</strong><br><code>NEW：</code>  初始状态，线程被构建，当一个Thread类或其子类的对象被声明并创建时，新生的线程对象处于新建状态。但是还没有调用start方法     </p>
+<p><code>RUNNABLED：</code> 运行状态，Java线程把操作系统中的就绪和运行两种状态统一称为“运行中”  。线程对象创建后，其他线程(比如main线程）调用了该对象的start()方法。该状态的线程位于可运行线程池中，等待被线程调度选中，获取CPU的使用权，此时处于就绪状态（ready）。就绪状态的线程在获得CPU时间片后变为运行中状态（running）。也就是start方法调用之后，线程并没有立即运行，线程的运行是需要OS去调度的（抢占式或者时间片）。<br>1.调用线程的start()方法，此线程进入就绪状态。<br>2.当前线程sleep()方法结束，其他线程join()结束，等待用户输入完毕，某个线程拿到对象锁，这些线程也将进入就绪状态。<br>3.当前线程时间片用完了，调用当前线程的yield()方法，当前线程进入就绪状态。<br>4.锁池里的线程拿到对象锁后，进入就绪状态。<br>5.运行中状态是线程调度程序从可运行池中选择一个线程作为当前线程时所处的状态。这也是线程进入运行状态的唯一一种方式。  </p>
+<p><code>BLOCKED：</code>   阻塞状态，表示线程进入等待状态，也就是线程因为某种原因放弃了CPU的使用权，阻塞状态是线程被阻塞在进入synchronized关键字修饰的方法或代码块时的状态。<br><code>WAITING</code>  等待状态，进入该状态的线程需要等待其他线程做出一些特定动作（通知或中断）。  它们不会被分配CPU时间，要等待被显示的唤醒，否则处于无限期等待状态。<br><code>TIME_WAITING</code>  超时等待状态，超时以后自动返回 ，该状态不同于WAITING，处于这种状态的线程不会被分配CPU执行时间，不过无须无限期等待被其他线程显示地唤醒，在达到一定时间后它们会自动唤醒。<br><code>RERMINATED</code>  终止状态，表示当前线程的run方法执行结束或者主线程的main方法完成时，我们就认为它终止了，而且不能复生。<br><img src="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/thread01.png" alt="图片加载中">  </p>
+<h3 id="如何在Java中应用多线程"><a href="#如何在Java中应用多线程" class="headerlink" title="如何在Java中应用多线程"></a>如何在Java中应用多线程</h3><p>使用多线程的方式：<br>（1）继承Thread类 （本质上Thread类里面也实现了Runnable接口）<br>-&gt; 定义Thread类的子类，并重写该类的run方法，也被称为线程执行体。<br>-&gt; 创建Thread类的子类实例，也就是创建了线程对象。<br>-&gt; 调用start方法，启动线程。  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>{
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>{
+        System.out.println(<span class="string">"当前线程："</span>+Thread.currentThread().getName());
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+        ThreadDemo demo1 = <span class="keyword">new</span> ThreadDemo();
+        demo1.start();
+    }
+} 
+--------------------------------------------------------------------
+lamoda表达式：  
+
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> </span>{
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+        <span class="keyword">new</span> Thread(() -&gt; {
+            System.out.println(<span class="string">"当前线程："</span> + Thread.currentThread().getName());
+        }, <span class="string">"thread1"</span>).start();
+    }
+}</code></pre>
+<p>（2）实现Runnable接口<br>-&gt;  定义Runnable接口的实现类，重写run方法。<br>-&gt;  创建Runnable实现类的实例，并用这个实例作为Thread的target来创建Thread对象，这个Thread对象才是真正的线程对象。<br>-&gt;  调用线程对象的start方法，启动线程。  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>{
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>{
+        System.out.println(<span class="string">"当前线程："</span>+Thread.currentThread().getName());
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+        ThreadDemo demo1 = <span class="keyword">new</span> ThreadDemo();
+        Thread thread1 = <span class="keyword">new</span> Thread(demo1);
+        thread1.start();
+    }
+}</code></pre>
+<p>两者输出： </p>
+<pre><code class="java">当前线程：Thread-<span class="number">0</span>
+
+Process finished with exit code <span class="number">0</span></code></pre>
+<p>（3）实现Callable接口（想要得到返回值）<br>-&gt; 创建Callable接口的实现类，并实现call()方法，<br>-&gt; 创建线程池对象<br>-&gt; 将Callable实现类的实例对象传入submit()参数中，得到Future返回值对象。<br>-&gt; 调用get（）方法得到返回值。  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">String</span>&gt; </span>{
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>{
+        System.out.println(<span class="string">"当前线程："</span>+Thread.currentThread().getName());
+        Thread.sleep(<span class="number">1000</span>);
+        <span class="keyword">return</span> <span class="string">"Hello Callable"</span>;
+    }
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>{
+      ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">1</span>);
+      Future&lt;String&gt; future = executorService.submit(<span class="keyword">new</span> ThreadDemo());
+        <span class="comment">//future.get()是一个阻塞方法，阻塞在返回值之前</span>
+   System.out.println(Thread.currentThread().getName()+<span class="string">"-"</span>+future.get());
+    }
+}</code></pre>
+<p>————三者的简单区别————    </p>
+<p>实现Runnable和实现Callable接口的方式基本相同，不过后者执行call()方法有返回值，前者线程执行体run()方法无返回值，因此可以把这两种方式归为一种方式与继承Thread类的方法之间的差别如下：</p>
+<p>1、线程只是实现Runnable或实现Callable接口，还可以继承其他类。</p>
+<p>2、实现接口的方式时，多个线程可以共享一个target对象，非常适合多线程处理同一份资源的情形。</p>
+<p>3、但是编程稍微复杂，如果需要访问当前线程，必须调用Thread.currentThread()方法。</p>
+<p>4、继承Thread类的线程类不能再继承其他父类（Java单继承决定）。</p>
+<p>注：一般推荐采用实现接口的方式来创建多线程</p>
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/Wechat.jpg">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Stephen Cheng
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://chengqiji.github.io/2020/06/09/线程的基本认识/" title="线程的基本认识" target="_blank">https://chengqiji.github.io/2020/06/09/线程的基本认识/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
+        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="archive-article-date">
-        <time datetime="2020-05-17T16:05:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">单例模式简单介绍</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" target="_blank">JVM垃圾回收</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#线程的基本介绍"><span class="toc-number">1.</span> <span class="toc-text">线程的基本介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#线程基本概念"><span class="toc-number">1.0.1.</span> <span class="toc-text">线程基本概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么会有线程"><span class="toc-number">1.0.2.</span> <span class="toc-text">为什么会有线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么要用多线程"><span class="toc-number">1.0.3.</span> <span class="toc-text">为什么要用多线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#多线程应用场景"><span class="toc-number">1.0.4.</span> <span class="toc-text">多线程应用场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#本质"><span class="toc-number">1.0.5.</span> <span class="toc-text">本质</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java线程的生命周期"><span class="toc-number">2.</span> <span class="toc-text">Java线程的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何在Java中应用多线程"><span class="toc-number">3.</span> <span class="toc-text">如何在Java中应用多线程</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
-        <time datetime="2020-05-17T14:28:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" target="_blank">JVM内存模型</a>
-  
-    </h1>
-  
+        
+    </div>
+</aside>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" class="archive-article-date">
-        <time datetime="2020-05-17T13:18:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" target="_blank">JVM运行时数据区</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/17/%E5%88%9D%E5%A7%8BJVM/" class="archive-article-date">
-        <time datetime="2020-05-17T02:30:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/17/%E5%88%9D%E5%A7%8BJVM/" target="_blank">初识JVM</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -510,9 +548,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
