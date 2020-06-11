@@ -6,24 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqiji.github.io">
-  <title>线程的基本认识 | Stephen Cheng`s blog</title>
+  <title>线程的基本操作 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="线程的基本介绍线程基本概念线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。   为什么会有线程（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。（3）线程可以认为是一种轻">
+  <meta name="description" content="Thread.join的使用以及原理作用Thread.join的作用就是保证线程执行结果的可见性。   代码演示">
 <meta property="og:type" content="article">
-<meta property="og:title" content="线程的基本认识">
-<meta property="og:url" content="https://chengqiji.github.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/index.html">
+<meta property="og:title" content="线程的基本操作">
+<meta property="og:url" content="https://chengqiji.github.io/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
-<meta property="og:description" content="线程的基本介绍线程基本概念线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。   为什么会有线程（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。（3）线程可以认为是一种轻">
+<meta property="og:description" content="Thread.join的使用以及原理作用Thread.join的作用就是保证线程执行结果的可见性。   代码演示">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://chengqiji.github.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/thread01.png">
-<meta property="article:published_time" content="2020-06-09T11:15:50.000Z">
-<meta property="article:modified_time" content="2020-06-09T11:15:32.778Z">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/thread02.png">
+<meta property="article:published_time" content="2020-06-10T15:15:50.000Z">
+<meta property="article:modified_time" content="2020-06-11T15:15:36.367Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta property="article:tag" content="并发编程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chengqiji.github.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/thread01.png">
+<meta name="twitter:image" content="https://chengqiji.github.io/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/thread02.png">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -191,14 +191,14 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-线程的基本认识" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-线程的基本操作" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
     <h1 class="article-title" itemprop="name">
-      线程的基本认识
+      线程的基本操作
     </h1>
   
 
@@ -210,8 +210,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" class="archive-article-date">
-        <time datetime="2020-06-09T11:15:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-09</time>
+<a href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="archive-article-date">
+        <time datetime="2020-06-10T15:15:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-10</time>
 </a>
 
   
@@ -224,7 +224,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.8k字</span>
+      <span class="post-count">3.4k字</span>
     </span>
   </span>
 
@@ -233,7 +233,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">6分</span>
+      <span class="post-count">12分</span>
     </span>
   </span>
 </div>
@@ -244,76 +244,220 @@
   
   <div class="article-entry" itemprop="articleBody">
     
-    <h3 id="线程的基本介绍"><a href="#线程的基本介绍" class="headerlink" title="线程的基本介绍"></a>线程的基本介绍</h3><h5 id="线程基本概念"><a href="#线程基本概念" class="headerlink" title="线程基本概念"></a>线程基本概念</h5><p>线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。  </p>
-<h5 id="为什么会有线程"><a href="#为什么会有线程" class="headerlink" title="为什么会有线程"></a>为什么会有线程</h5><p>（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。<br>（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。<br>（3）线程可以认为是一种轻量级的进程，因此线程的创建、销毁比进程快。  </p>
-<h5 id="为什么要用多线程"><a href="#为什么要用多线程" class="headerlink" title="为什么要用多线程"></a>为什么要用多线程</h5><p>（1）异步执行<br>（2）利用多CPU资源实现真正意义上的并行执行<br> <a id="more"></a><br>（3）线程作为调度和执行的单位，每个线程拥有独立的运行栈和程序计数器(pc)，线程切换的开<br>销小<br>（4）一个进程中的多个线程共享相同的内存单元/内存地址空间它们从同一堆中分配对象，可以<br>访问相同的变量和对象。这就使得线程间通信更简便、高效。但多个线程操作共享的系统资<br>源可能就会带来安全的隐患。  </p>
-<h5 id="多线程应用场景"><a href="#多线程应用场景" class="headerlink" title="多线程应用场景"></a>多线程应用场景</h5><p>（1）使用多线程实现文件下载<br>（2）后台任务：如定时向大量用户发送邮件<br>（3）异步处理：记录日志<br>（4）多步骤的任务处理，可根据任务步骤的特征选用不用个数和特征的线程来协作处理，多任务的分割，由一个主线程分割给多个线程去完成。  </p>
-<h5 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h5><p>多线程的本质是：合理的利用多核心CPU资源来实现线程的并行处理，来实现同一个进程内不同任务的并行执行，同时基于线程本身的异步执行特性，提升任务处理的效率。  </p>
-<h3 id="Java线程的生命周期"><a href="#Java线程的生命周期" class="headerlink" title="Java线程的生命周期"></a>Java线程的生命周期</h3><p><strong>Java线程从创建到销毁，一共可能经历六种状态：</strong><br><code>NEW：</code>  初始状态，线程被构建，当一个Thread类或其子类的对象被声明并创建时，新生的线程对象处于新建状态。但是还没有调用start方法     </p>
-<p><code>RUNNABLED：</code> 运行状态，Java线程把操作系统中的就绪和运行两种状态统一称为“运行中”  。线程对象创建后，其他线程(比如main线程）调用了该对象的start()方法。该状态的线程位于可运行线程池中，等待被线程调度选中，获取CPU的使用权，此时处于就绪状态（ready）。就绪状态的线程在获得CPU时间片后变为运行中状态（running）。也就是start方法调用之后，线程并没有立即运行，线程的运行是需要OS去调度的（抢占式或者时间片）。<br>1.调用线程的start()方法，此线程进入就绪状态。<br>2.当前线程sleep()方法结束，其他线程join()结束，等待用户输入完毕，某个线程拿到对象锁，这些线程也将进入就绪状态。<br>3.当前线程时间片用完了，调用当前线程的yield()方法，当前线程进入就绪状态。<br>4.锁池里的线程拿到对象锁后，进入就绪状态。<br>5.运行中状态是线程调度程序从可运行池中选择一个线程作为当前线程时所处的状态。这也是线程进入运行状态的唯一一种方式。  </p>
-<p><code>BLOCKED：</code>   阻塞状态，表示线程进入等待状态，也就是线程因为某种原因放弃了CPU的使用权，阻塞状态是线程被阻塞在进入synchronized关键字修饰的方法或代码块时的状态。<br><code>WAITING</code>  等待状态，进入该状态的线程需要等待其他线程做出一些特定动作（通知或中断）。  它们不会被分配CPU时间，要等待被显示的唤醒，否则处于无限期等待状态。<br><code>TIME_WAITING</code>  超时等待状态，超时以后自动返回 ，该状态不同于WAITING，处于这种状态的线程不会被分配CPU执行时间，不过无须无限期等待被其他线程显示地唤醒，在达到一定时间后它们会自动唤醒。<br><code>RERMINATED</code>  终止状态，表示当前线程的run方法执行结束或者主线程的main方法完成时，我们就认为它终止了，而且不能复生。<br><img src="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/thread01.png" alt="图片加载中">  </p>
-<h3 id="如何在Java中应用多线程"><a href="#如何在Java中应用多线程" class="headerlink" title="如何在Java中应用多线程"></a>如何在Java中应用多线程</h3><p>使用多线程的方式：<br>（1）继承Thread类 （本质上Thread类里面也实现了Runnable接口）<br>-&gt; 定义Thread类的子类，并重写该类的run方法，也被称为线程执行体。<br>-&gt; 创建Thread类的子类实例，也就是创建了线程对象。<br>-&gt; 调用start方法，启动线程。  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>{
-        System.out.println(<span class="string">"当前线程："</span>+Thread.currentThread().getName());
-    }
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-        ThreadDemo demo1 = <span class="keyword">new</span> ThreadDemo();
-        demo1.start();
-    }
-} 
---------------------------------------------------------------------
-lamoda表达式：  
-
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-        <span class="keyword">new</span> Thread(() -&gt; {
-            System.out.println(<span class="string">"当前线程："</span> + Thread.currentThread().getName());
-        }, <span class="string">"thread1"</span>).start();
+    <h3 id="Thread-join的使用以及原理"><a href="#Thread-join的使用以及原理" class="headerlink" title="Thread.join的使用以及原理"></a>Thread.join的使用以及原理</h3><h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>Thread.join的作用就是保证线程执行结果的可见性。  </p>
+<h4 id="代码演示"><a href="#代码演示" class="headerlink" title="代码演示"></a>代码演示</h4> <a id="more"></a>    
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> </span>{
+        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> x = <span class="number">0</span>;
+        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> y = <span class="number">0</span>;
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>{
+        Thread t1 = <span class="keyword">new</span> Thread(()-&gt;{
+            x = <span class="number">1</span>;
+            y = <span class="number">2</span>;
+        });
+        Thread t2 = <span class="keyword">new</span> Thread(()-&gt;{
+            x = y + <span class="number">2</span>;
+        });
+        t1.start();
+        t1.join();  <span class="comment">//t1线程的执行结果对于t2可见，也就是说t1优先t2执行 ----阻塞</span>
+        t2.start();
+        Thread.sleep(<span class="number">1000</span>);
+        System.out.println(<span class="string">"result : "</span> + x);
     }
 }</code></pre>
-<p>（2）实现Runnable接口<br>-&gt;  定义Runnable接口的实现类，重写run方法。<br>-&gt;  创建Runnable实现类的实例，并用这个实例作为Thread的target来创建Thread对象，这个Thread对象才是真正的线程对象。<br>-&gt;  调用线程对象的start方法，启动线程。  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>{
+<p>如果没有调用join方法，那么此程序的执行结果将会是1或者4或者2；调用以后将只是4；</p>
+<h4 id="join源码"><a href="#join源码" class="headerlink" title="join源码"></a>join源码</h4><pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">join</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>{
+        join(<span class="number">0</span>);
+    }</code></pre>
+<p>继续跟进join(0)</p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">join</span><span class="params">(<span class="keyword">long</span> millis)</span></span>
+<span class="function">    <span class="keyword">throws</span> InterruptedException </span>{
+        <span class="keyword">long</span> base = System.currentTimeMillis();
+        <span class="keyword">long</span> now = <span class="number">0</span>;
 
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>{
-        System.out.println(<span class="string">"当前线程："</span>+Thread.currentThread().getName());
-    }
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-        ThreadDemo demo1 = <span class="keyword">new</span> ThreadDemo();
-        Thread thread1 = <span class="keyword">new</span> Thread(demo1);
-        thread1.start();
-    }
-}</code></pre>
-<p>两者输出： </p>
-<pre><code class="java">当前线程：Thread-<span class="number">0</span>
+        <span class="keyword">if</span> (millis &lt; <span class="number">0</span>) {
+            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"timeout value is negative"</span>);
+        }
 
-Process finished with exit code <span class="number">0</span></code></pre>
-<p>（3）实现Callable接口（想要得到返回值）<br>-&gt; 创建Callable接口的实现类，并实现call()方法，<br>-&gt; 创建线程池对象<br>-&gt; 将Callable实现类的实例对象传入submit()参数中，得到Future返回值对象。<br>-&gt; 调用get（）方法得到返回值。  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">String</span>&gt; </span>{
+        <span class="keyword">if</span> (millis == <span class="number">0</span>) {
+            <span class="keyword">while</span> (isAlive()) {
+                wait(<span class="number">0</span>);
+            }
+        } <span class="keyword">else</span> {
+            <span class="keyword">while</span> (isAlive()) {
+                <span class="keyword">long</span> delay = millis - now;
+                <span class="keyword">if</span> (delay &lt;= <span class="number">0</span>) {
+                    <span class="keyword">break</span>;
+                }
+                wait(delay);
+                now = System.currentTimeMillis() - base;
+            }
+        }
+    }</code></pre>
+<p>从上面的源码中我们可以看出：<br>（1）当millis == 0时，就进入while循环。即当前子线程存活时，主线程就不停地等待。注意：休眠的是主线程，而非子线程。<br>（2）isAlive()判断子线程是否存活， wait(0)代表阻塞当前执行的线程也就是主线程。<br>结合之前的代码演示，也就是说当主线程调用t1.join的时候，主线程会获得t1线程对象的锁，调用该对象的wait方法，直到该t1对象唤醒main线程，比如执行完毕。main线程才继续向下执行。<br>这就保证了线程执行结果的可见性。（本身基于wait和notify去实现的）<br><img src="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/thread02.png" alt="图片加载中">  </p>
+<h3 id="Thread-sleep介绍"><a href="#Thread-sleep介绍" class="headerlink" title="Thread.sleep介绍"></a>Thread.sleep介绍</h3><h4 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h4><p>使得线程暂停执行一段时间，直到等待的时间结束才会继续执行或者说在这段时间内被中断。  </p>
+<h4 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h4><p>（1）挂起线程并修改线程运行状态为阻塞<br>（2）用sleep()提供的参数来设置一个定时器<br>（3）当时间结束，定时器被触发，内核收到中断后修改线程的运行状态。例如线程会被标志为就绪而进入就绪队列等待调度。  </p>
+<h4 id="问题思考"><a href="#问题思考" class="headerlink" title="问题思考"></a>问题思考</h4><p>（1）假设现在是2020年01月01日 12：00：00.000 ，如果此时调用Thread.sleep(1000)，在2020年01月01日 12：00：01.000 时，这个线程会不会被唤醒？<br>（2）Thread.sleep(0)的意义？    </p>
+<p>首先操作系统中，CPU竞争有很多种策略。Unix系统使用的是时间片算法，而Windows则属于抢占式的。<br><strong>在时间片算法中，</strong>所有的进程排成一个队列。操作系统按照他们的顺序，给每个进程分配一段时间，即该进程允许运行的时间。如果在 时间片结束时进程还在运行，则CPU将被剥夺并分配给另一个进程。如果进程在时间片结束前阻塞或结束，则CPU当即进行切换。调度程 序所要做的就是维护一张就绪进程列表，，当进程用完它的时间片后，它被移到队列的末尾。</p>
+<p><strong>所谓抢占式操作系统，</strong>就是说如果一个进程得到了 CPU 时间，除非它自己放弃使用 CPU ，否则将完全霸占 CPU 。因此可以看出，在抢 占式操作系统中，操作系统假设所有的进程都是“人品很好”的，会主动退出 CPU 。<br>在抢占式操作系统中，假设有若干进程，操作系统会根据他们的优先级、饥饿时间（已经多长时间没有使用过 CPU 了），给他们算出一 个总的优先级来。操作系统就会把 CPU 交给总优先级最高的这个进程。当进程执行完毕或者自己主动挂起后，操作系统就会重新计算一 次所有进程的总优先级，然后再挑一个优先级最高的把 CPU 控制权交给他。 </p>
+<p>所以<strong>Thread.sleep(1000)</strong>的本意是表示在未来的1000ms内，我不想参与到CPU的竞争里面，那么1000ms过去之后也许另外一个线程正在使用CPU,那么操作系统是不会重新分配的，直到那个线程挂起或者结束。况且如果恰好那个时候轮到操作系统分配CPU，那么这个线程也不一定是优先级最高的，CPU可能被其他线程抢占过去。<br>而<strong>Thread.sleep(0)</strong>的含义是“在未来的0ms内，我不会再去争夺CPU控制权”，这就是说，“触发操作系统立刻重新进行一次CPU的竞争”，这个场景在很多大循环内都会用到，这样就给了其他线程CPU的控制权，避免假死在里面。  </p>
+<h3 id="wait和notify的使用"><a href="#wait和notify的使用" class="headerlink" title="wait和notify的使用"></a>wait和notify的使用</h3><p>如何去实现：一个线程修改了一个对象的值，而另一个线程感知到了变化，然后进行响应操作。  </p>
+<h4 id="JDK官方文档的解释"><a href="#JDK官方文档的解释" class="headerlink" title="JDK官方文档的解释"></a>JDK官方文档的解释</h4><p><code>wait（）：</code><br>public final void wait() throws InterruptedException<br>在其他线程调用此对象的 notify() 方法或 notifyAll() 方法前，导致当前线程等待。换句话说，此方法的行为就好像它仅执行 wait(0) 调用一样。<br>当前线程必须拥有此对象监视器。该线程发布对此监视器的所有权并等待，直到其他线程通过调用 notify 方法，或 notifyAll 方法通知在此对象的监视器上等待的线程醒来。然后该线程将等到重新获得对监视器的所有权后才能继续执行。<br>对于某一个参数的版本，实现中断和虚假唤醒是可能的，而且此方法应始终在循环中使用：<br>synchronized (obj) {<br>while ()<br>obj.wait();<br>… // Perform action appropriate to condition<br>}<br>此方法只应由作为此对象监视器的所有者的线程来调用。有关线程能够成为监视器所有者的方法的描述，请参阅 notify 方法。<br>抛出：<br>IllegalMonitorStateException - 如果当前线程不是此对象监视器的所有者。<br>InterruptedException - 如果在当前线程等待通知之前或者正在等待通知时，任何线程中断了当前线程。在抛出此异常时，当前线程的 中断状态 被清除。<br><code>notify（）：</code><br>public final void notify()<br>唤醒在此对象监视器上等待的单个线程。如果所有线程都在此对象上等待，则会选择唤醒其中一个线程。选择是任意性的，并在对实现做出决定时发生。线程通过调用其中一个 wait 方法，在对象的监视器上等待。<br>直到当前线程放弃此对象上的锁定，才能继续执行被唤醒的线程。被唤醒的线程将以常规方式与在该对象上主动同步的其他所有线程进行竞争；例如，唤醒的线程在作为锁定此对象的下一个线程方面没有可靠的特权或劣势。<br>此方法只应由作为此对象监视器的所有者的线程来调用。通过以下三种方法之一，线程可以成为此对象监视器的所有者：<br>通过执行此对象的同步实例方法。<br>通过执行在此对象上进行同步的 synchronized 语句的正文。<br>对于 Class 类型的对象，可以通过执行该类的同步静态方法。<br>一次只能有一个线程拥有对象的监视器。<br>抛出：<br>IllegalMonitorStateException - 如果当前线程不是此对象监视器的所有者。  </p>
+<h4 id="生产者-消费者演示"><a href="#生产者-消费者演示" class="headerlink" title="生产者-消费者演示"></a>生产者-消费者演示</h4><p><strong>生产者</strong>  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Producer</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>{
+    <span class="keyword">private</span> Queue&lt;String&gt; bags;
+    <span class="keyword">private</span> <span class="keyword">int</span> size;
+
+    <span class="function"><span class="keyword">public</span> <span class="title">Producer</span><span class="params">(Queue&lt;String&gt; bags, <span class="keyword">int</span> size)</span> </span>{
+        <span class="keyword">this</span>.bags = bags;
+        <span class="keyword">this</span>.size = size;
+    }
 
     <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>{
-        System.out.println(<span class="string">"当前线程："</span>+Thread.currentThread().getName());
-        Thread.sleep(<span class="number">1000</span>);
-        <span class="keyword">return</span> <span class="string">"Hello Callable"</span>;
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{
+        <span class="keyword">int</span> i = <span class="number">0</span>;
+        <span class="keyword">while</span>(<span class="keyword">true</span>){
+            i++;
+            <span class="keyword">synchronized</span> (bags){
+                <span class="keyword">while</span>(bags.size() == size){
+                    System.out.println(<span class="string">"bags已满"</span>);
+                    <span class="comment">//TODO？ 阻塞</span>
+                    <span class="keyword">try</span> {
+                        bags.wait();
+                    } <span class="keyword">catch</span> (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                <span class="keyword">try</span> {
+                    Thread.sleep(<span class="number">1000</span>);
+                } <span class="keyword">catch</span> (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(<span class="string">"生产者-生产：bag"</span>+i);
+                bags.add(<span class="string">"bag"</span>+i);
+                <span class="comment">//TODO? 唤醒处于阻塞状态下的消费者</span>
+                bags.notifyAll();
+            }
+        }
+    }
+}
+</code></pre>
+<p><strong>消费者</strong>  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Consumer</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>{
+    <span class="keyword">private</span> Queue&lt;String&gt; bags;
+    <span class="keyword">private</span> <span class="keyword">int</span> size;
+
+    <span class="function"><span class="keyword">public</span> <span class="title">Consumer</span><span class="params">(Queue&lt;String&gt; bags, <span class="keyword">int</span> size)</span> </span>{
+        <span class="keyword">this</span>.bags = bags;
+        <span class="keyword">this</span>.size = size;
     }
 
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>{
-      ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">1</span>);
-      Future&lt;String&gt; future = executorService.submit(<span class="keyword">new</span> ThreadDemo());
-        <span class="comment">//future.get()是一个阻塞方法，阻塞在返回值之前</span>
-   System.out.println(Thread.currentThread().getName()+<span class="string">"-"</span>+future.get());
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{
+        <span class="keyword">while</span>(<span class="keyword">true</span>){
+            <span class="keyword">synchronized</span> (bags){
+                <span class="keyword">while</span> (bags.isEmpty()){
+                    System.out.println(<span class="string">"bags为空"</span>);
+                    <span class="comment">//TODO? 阻塞</span>
+                    <span class="keyword">try</span> {
+                        bags.wait();
+                    } <span class="keyword">catch</span> (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                <span class="keyword">try</span> {
+                    Thread.sleep(<span class="number">1000</span>);
+                } <span class="keyword">catch</span> (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                String bag = bags.remove();
+                System.out.println(<span class="string">"消费者-消费：bag"</span>+bag);
+                <span class="comment">//唤醒处于阻塞状态下的生产者</span>
+                bags.notifyAll();
+            }
+
+        }
     }
 }</code></pre>
-<p>————三者的简单区别————    </p>
-<p>实现Runnable和实现Callable接口的方式基本相同，不过后者执行call()方法有返回值，前者线程执行体run()方法无返回值，因此可以把这两种方式归为一种方式与继承Thread类的方法之间的差别如下：</p>
-<p>1、线程只是实现Runnable或实现Callable接口，还可以继承其他类。</p>
-<p>2、实现接口的方式时，多个线程可以共享一个target对象，非常适合多线程处理同一份资源的情形。</p>
-<p>3、但是编程稍微复杂，如果需要访问当前线程，必须调用Thread.currentThread()方法。</p>
-<p>4、继承Thread类的线程类不能再继承其他父类（Java单继承决定）。</p>
-<p>注：一般推荐采用实现接口的方式来创建多线程</p>
+<p><strong>测试主方法</strong>  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WaitNotifyDemo</span> </span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+        Queue&lt;String&gt; queue = <span class="keyword">new</span> LinkedList&lt;&gt;();
+        <span class="keyword">int</span> size = <span class="number">10</span>;
+        <span class="comment">//共享同一管道</span>
+        Producer producer = <span class="keyword">new</span> Producer(queue,size);
+        Consumer consumer = <span class="keyword">new</span> Consumer(queue,size);
+        Thread t1 = <span class="keyword">new</span> Thread(producer);
+        Thread t2 = <span class="keyword">new</span> Thread(consumer);
+        t1.start();
+        t2.start();
+    }
+}</code></pre>
+<p><strong>部分执行结果</strong>  </p>
+<pre><code class="java">生产者-生产：bag1
+消费者-消费：bagbag1
+生产者-生产：bag2
+生产者-生产：bag3
+生产者-生产：bag4
+生产者-生产：bag5
+生产者-生产：bag6
+生产者-生产：bag7
+生产者-生产：bag8
+生产者-生产：bag9
+生产者-生产：bag10
+生产者-生产：bag11
+bags已满
+消费者-消费：bagbag2
+消费者-消费：bagbag3</code></pre>
+<p>那么为什么wait和notify要加synchronized呢？  </p>
+<p>1.从刚刚的案例来看，其实wait/notify本质上其实是一种条件的竞争，至少来说，wait/notify是互斥存在的，既然要实现互斥，那么synchronized就是一个很好的解决办法。<br>2.wait/notify是实现多个线程间的通信，而通讯必然存在一个载体，比如我们小时候玩的游戏，用两个纸杯，中间用一根绳连接起来，就可以实现远距离的对话，这跟绳子就是载体。在这里也一样，wait/notify是基于synchronized来实现通信的，也就是两者必须要在同一个频道也就是同一个锁的范围内。<br>关于更多底层源码分析可以参考这篇文章：<br><a href="https://www.jianshu.com/p/f4454164c017" target="_blank" rel="noopener">https://www.jianshu.com/p/f4454164c017</a><br><a href="https://www.jianshu.com/p/c5058b6fe8e5" target="_blank" rel="noopener">https://www.jianshu.com/p/c5058b6fe8e5</a>  </p>
+<h3 id="Thread-interrupted-Thread-intertupt"><a href="#Thread-interrupted-Thread-intertupt" class="headerlink" title="Thread.interrupted/Thread.intertupt"></a>Thread.interrupted/Thread.intertupt</h3><p>线程属于一次性消耗品，在执行完run()方法之后线程便会正常结束了，线程结束后便会销毁，不能再次start,只能重新建立新的线程对象，但有时run()方法是永远不会结束的。例如在程序中使用线程进行Socket监听请求，或是其他的需要循环处理的任务。在这种情况下，一般是将这些任务放在一个循环中，如while循环。当需要结束线程时，如何退出线程呢？     </p>
+<p>1.已被废弃的stop()方法：stop()是立即终止，从JVM从操纵系统层面上直接把这个线程非掐断。会导致一些数据被到处理一部分就会被终止，而用户并不知道哪些数据被处理，哪些没有被处理，产生了不完整的“残疾”数据，不符合完整性。   </p>
+<p>2.interrupt方法：当其他线程调用当前线程的interrupt方法时，表示向当前线程打个招呼，告诉它可以中断线程的执行了，至于什么时候中断，取决于当前线程自己本身。是一种友好的中断。要让run方法正确执行结束。  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InterruptDemo</span> </span>{
+        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> i;
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+        Thread t1 = <span class="keyword">new</span> Thread(()-&gt;{
+            <span class="keyword">while</span>(!Thread.currentThread().isInterrupted()){ <span class="comment">//默认是false 判断中断标识</span>
+                i++;
+            }
+        });
+        t1.start();
+        <span class="comment">//表示interrupt这个属性由false变为true</span>
+        t1.interrupt(); <span class="comment">//interrupt是在JVM层面上去维护的，是一种友好的中断</span>
+    }
+}</code></pre>
+<p>也就是说线程处于while循环或者处于阻塞状态下的情况 中断才有意义。<br>interrupt() 方法只是改变中断状态而已，它不会中断一个正在运行的线程。这一方法实际完成的是，给受阻塞的线程发出一个中断信号，这样受阻线程就得以退出阻塞的状态。 更确切的说，如果线程被Object.wait, Thread.join和Thread.sleep三种方法之一阻塞，此时调用该线程的interrupt()方法，那么该线程将抛出一个 InterruptedException中断异常（该线程必须事先预备好处理此异常），从而提早地终结被阻塞状态。如果线程没有被阻塞，这时调用 interrupt()将不起作用，直到执行到wait(),sleep(),join()时,才马上会抛出 InterruptedException。</p>
+<p>线程A在执行sleep,wait,join时,线程B调用线程A的interrupt方法,的确这一个时候A会有 InterruptedException 异常抛出来。但这其实是在sleep,wait,join这些方法内部会不断检查中断状态的值,而自己抛出的InterruptedException。 如果线程A正在执行一些指定的操作时如值,for,while,if,调用方法等,不会去检查中断状态,则线程A不会抛出 InterruptedException,而会一直执行着自己的操作。    </p>
+<p><code>我们再来看看interrupted方法：</code><br>源码：  </p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">interrupted</span><span class="params">()</span> </span>{
+        <span class="keyword">return</span> currentThread().isInterrupted(<span class="keyword">true</span>);
+    }</code></pre>
+<p>interrupted()是静态方法：内部实现是调用的当前线程的isInterrupted()，并且会重置当前线程的中断状态。也就是说此方法是对设置中断标志的线程复位，并返回当前线程的中断状态。<br>例子：  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InterruptedDemo</span> </span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> InterruptedException </span>{
+        Thread t1 = <span class="keyword">new</span> Thread(()-&gt;{
+           <span class="keyword">while</span>(<span class="keyword">true</span>){
+               <span class="keyword">if</span>(Thread.currentThread().isInterrupted()){
+                   System.out.println(<span class="string">"before:"</span>+Thread.currentThread().isInterrupted());
+                   Thread.interrupted();
+                   System.out.println(<span class="string">"after:"</span>+Thread.currentThread().isInterrupted());
+               }
+           }
+        });
+        t1.start();
+        TimeUnit.SECONDS.sleep(<span class="number">1</span>);
+        t1.interrupt();
+    }
+}
+
+输出：  
+
+before:<span class="keyword">true</span>
+after:<span class="keyword">false</span>
+
+Process finished with exit code -<span class="number">1</span></code></pre>
+<p>isInterrupted()是实例方法，是调用该方法的对象所表示的那个线程的isInterrupted()，不会重置当前线程的中断状态。</p>
 
     
 
@@ -355,7 +499,7 @@ Process finished with exit code <span class="number">0</span></code></pre>
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://chengqiji.github.io/2020/06/09/线程的基本认识/" title="线程的基本认识" target="_blank">https://chengqiji.github.io/2020/06/09/线程的基本认识/</a>
+          <a href="https://chengqiji.github.io/2020/06/10/线程的基本操作/" title="线程的基本操作" target="_blank">https://chengqiji.github.io/2020/06/10/线程的基本操作/</a>
         </li>
         
         <li>
@@ -444,7 +588,7 @@ Process finished with exit code <span class="number">0</span></code></pre>
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -459,18 +603,9 @@ Process finished with exit code <span class="number">0</span></code></pre>
 
 <nav id="article-nav">
   
-    <a href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          线程的基本操作
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">单例模式简单介绍</div>
+    <a href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">线程的基本认识</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -497,7 +632,7 @@ Process finished with exit code <span class="number">0</span></code></pre>
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#线程的基本介绍"><span class="toc-number">1.</span> <span class="toc-text">线程的基本介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#线程基本概念"><span class="toc-number">1.0.1.</span> <span class="toc-text">线程基本概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么会有线程"><span class="toc-number">1.0.2.</span> <span class="toc-text">为什么会有线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么要用多线程"><span class="toc-number">1.0.3.</span> <span class="toc-text">为什么要用多线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#多线程应用场景"><span class="toc-number">1.0.4.</span> <span class="toc-text">多线程应用场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#本质"><span class="toc-number">1.0.5.</span> <span class="toc-text">本质</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java线程的生命周期"><span class="toc-number">2.</span> <span class="toc-text">Java线程的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何在Java中应用多线程"><span class="toc-number">3.</span> <span class="toc-text">如何在Java中应用多线程</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread-join的使用以及原理"><span class="toc-number">1.</span> <span class="toc-text">Thread.join的使用以及原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#作用"><span class="toc-number">1.1.</span> <span class="toc-text">作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码演示"><span class="toc-number">1.2.</span> <span class="toc-text">代码演示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#join源码"><span class="toc-number">1.3.</span> <span class="toc-text">join源码</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread-sleep介绍"><span class="toc-number">2.</span> <span class="toc-text">Thread.sleep介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#作用-1"><span class="toc-number">2.1.</span> <span class="toc-text">作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#工作流程"><span class="toc-number">2.2.</span> <span class="toc-text">工作流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题思考"><span class="toc-number">2.3.</span> <span class="toc-text">问题思考</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#wait和notify的使用"><span class="toc-number">3.</span> <span class="toc-text">wait和notify的使用</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#JDK官方文档的解释"><span class="toc-number">3.1.</span> <span class="toc-text">JDK官方文档的解释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#生产者-消费者演示"><span class="toc-number">3.2.</span> <span class="toc-text">生产者-消费者演示</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Thread-interrupted-Thread-intertupt"><span class="toc-number">4.</span> <span class="toc-text">Thread.interrupted&#x2F;Thread.intertupt</span></a></li></ol>
                     </div>
                 </span>
             </div>
