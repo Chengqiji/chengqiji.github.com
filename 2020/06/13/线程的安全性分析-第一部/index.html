@@ -6,21 +6,29 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqiji.github.io">
-  <title>Stephen Cheng`s blog</title>
+  <title>线程的安全性分析-第一部 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <!-- <meta name="keywords" content="">
-    <meta name="description" content=""> -->
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Stephen Cheng&#96;s blog">
-<meta property="og:url" content="https://chengqiji.github.io/index.html">
+  <meta name="description" content="并发编程问题的源头：原子性，可见性，有序性如何理解线程安全当多个线程访问某个对象时，不论运行时环境采用何种调度方式或者这些线程如何交替执行，并且在主调代码中不采用任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。   并发编程起源1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I&#x2F;O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程的安全性分析-第一部">
+<meta property="og:url" content="https://chengqiji.github.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
+<meta property="og:description" content="并发编程问题的源头：原子性，可见性，有序性如何理解线程安全当多个线程访问某个对象时，不论运行时环境采用何种调度方式或者这些线程如何交替执行，并且在主调代码中不采用任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。   并发编程起源1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I&#x2F;O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I&#x2F;">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread03.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread04.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread05.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread06.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread07.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread08.png">
+<meta property="article:published_time" content="2020-06-13T00:49:50.000Z">
+<meta property="article:modified_time" content="2020-06-13T17:49:58.925Z">
 <meta property="article:author" content="Stephen Cheng">
+<meta property="article:tag" content="并发编程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chengqiji.github.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread03.png">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -188,25 +196,25 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-线程的安全性分析-第一部" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-线程的安全性分析-第一部" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" target="_blank">线程的安全性分析-第一部</a>
-  
+    <h1 class="article-title" itemprop="name">
+      线程的安全性分析-第一部
     </h1>
   
 
 
   
   
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
 <a href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" class="archive-article-date">
         <time datetime="2020-06-13T00:49:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-13</time>
 </a>
@@ -214,6 +222,27 @@
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">4.9k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">18分</span>
+    </span>
+  </span>
+</div>
+
 
   
   </header>
@@ -221,14 +250,265 @@
   <div class="article-entry" itemprop="articleBody">
     
     <h3 id="并发编程问题的源头：原子性，可见性，有序性"><a href="#并发编程问题的源头：原子性，可见性，有序性" class="headerlink" title="并发编程问题的源头：原子性，可见性，有序性"></a>并发编程问题的源头：原子性，可见性，有序性</h3><h4 id="如何理解线程安全"><a href="#如何理解线程安全" class="headerlink" title="如何理解线程安全"></a>如何理解线程安全</h4><p>当多个线程访问某个对象时，不论运行时环境采用何种调度方式或者这些线程如何交替执行，并且在主调代码中不采用任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。  </p>
-<h4 id="并发编程起源"><a href="#并发编程起源" class="headerlink" title="并发编程起源"></a>并发编程起源</h4><p>1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I/O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I/O设备。<br>2.为了优化三者速度差异，计算机体系结构，操作系统，编译程序都做出了贡献：<br>（1）CPU增加了缓存，以均衡和内存的速度差异<br>（2）操作系统增加了进程、线程、以及分时复用CPU，进而均衡CPU和I/O设备的速度差异<br></p>
-    
-    <a class="article-more-a" href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/#more">more >></a>
-    
-    
+<h4 id="并发编程起源"><a href="#并发编程起源" class="headerlink" title="并发编程起源"></a>并发编程起源</h4><p>1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I/O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I/O设备。<br>2.为了优化三者速度差异，计算机体系结构，操作系统，编译程序都做出了贡献：<br>（1）CPU增加了缓存，以均衡和内存的速度差异<br>（2）操作系统增加了进程、线程、以及分时复用CPU，进而均衡CPU和I/O设备的速度差异<br> <a id="more"></a><br>（3）编译程序优化指令的执行顺序，使得能够更加合理的利用缓存<br>但是这些优化改变也就导致了原子性，可见性，有序性问题。  </p>
+<h4 id="缓存导致的可见性问题"><a href="#缓存导致的可见性问题" class="headerlink" title="缓存导致的可见性问题"></a>缓存导致的可见性问题</h4><p><code>一个线程对共享变量改变时，另一个线程可以立即看到</code><br>在单核CPU中，所有线程都在一个CPU上云析，CPU缓存与内存的数据一致性很容易解决。比如说当线程A与线程B操作的是同一个CPU里的缓存，当A修改里面的某一个变量时，线程B再去修改的一定是线程A修改过后的值。<br><img src="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread03.png" alt="Alt text"><br>在多核CPU中，每个CPU都有各自的缓存，当多个线程在不同CPU上执行时，这些线程操作的就是不同CPU的缓存。也就比如说，当线程A去修改CPU-1中变量的值，它对与线程B来说具有不可见性。<br><img src="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread04.png" alt="Alt text">  </p>
+<h4 id="线程切换带来的原子性问题"><a href="#线程切换带来的原子性问题" class="headerlink" title="线程切换带来的原子性问题"></a>线程切换带来的原子性问题</h4><p><code>我们把一个或者一组操作在CPU执行的过程中不被中断的特性成为原子性（要么全部执行，要么全部不执行）。CPU可以保证的原子操作时CPU指令级别的，而高级语言层面保证操作的原子性。</code><br>在高级语言里，一条语句往往需要多条CPU指令完成，例如 count ++ ；至少需要三条CPU指令<br>（1）把count从内存中加载到CPU寄存器中<br>（2）在寄存器中执行+1的操作<br>（3）将结果写入内存，缓存机制可能导致结果写入的是CPU缓存而不是内存<br>操作系统中的线程切换可以在CPU任何一条指令执行完的时候。比如说，线程A在执行完第一条CPU指令的时候发生了线程切换，线程B会以自己的顺序基于线程A操作变量的原始值完成操作，这样就得不到预期的结果。<br><img src="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread05.png" alt="Alt text">  </p>
+<h4 id="编译优化带来的有序性问题"><a href="#编译优化带来的有序性问题" class="headerlink" title="编译优化带来的有序性问题"></a>编译优化带来的有序性问题</h4><p>有序性指的是程序按照代码先后顺序执行。而编译器为了优化性能，有时候会改变程序中代码的执行顺序。经典的例子就是双重检查锁定的单例模式（不加volatile修饰和构造器）：  </p>
+<pre><code class="java">pubic <span class="class"><span class="keyword">class</span> <span class="title">Singleton</span> </span>{
+   <span class="keyword">private</span> <span class="keyword">static</span> Singleton instance;
+   <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Singleton <span class="title">getInstance</span><span class="params">()</span></span>{
+        <span class="keyword">if</span> (instance == <span class="keyword">null</span>) {
+            <span class="keyword">synchronized</span>(Singleton<span class="class">.<span class="keyword">class</span>) </span>{
+                <span class="keyword">if</span> (instance == <span class="keyword">null</span>) {
+                    instance = <span class="keyword">new</span> Singleton();
+                }
+            }
+        }
+    }
+        <span class="keyword">return</span> instance;
+}</code></pre>
+<p>当在外部被实例化的时候，也就是Singleton singleton = new Singleton()时，分为三步：<br>（1）在堆上分配一块内存M<br>（2）在M上初始化Singleton对象实例<br>（3）把M的地址赋值给singleton变量<br>但是经过编译器优化后可能会出现一下顺序：<br>（1）在堆上分配一块内存M<br>（2）把M的地址赋值给singleton变量<br>（3）在M上初始化Singleton对象实例<br>假如线程A在执行完优化后的（2）操作时，发生线程切换，线程B也执行getInstance()方法，判断条件不为空，然后直接返回instance，而此时instance还没有被初始化，访问该变量将触发空指针异常。 所以使用volatile修饰instance变量可以解决指令重排序带来的问题。它实现的作用是对这个变量的读写直接从内存中写入/读出，不能使用CPU缓存。  </p>
+<h3 id="Java内存模型—Java如何解决可见性有序性问题"><a href="#Java内存模型—Java如何解决可见性有序性问题" class="headerlink" title="Java内存模型—Java如何解决可见性有序性问题"></a>Java内存模型—Java如何解决可见性有序性问题</h3><h4 id="什么是JMM"><a href="#什么是JMM" class="headerlink" title="什么是JMM"></a>什么是JMM</h4><p>Java内存模型是一种抽象的结构，它提供了合理的禁用缓存以及禁用重排序的方法来解决可见性和有序性问题。<br>JMM定义了Java虚拟机（JVM）在计算机内存中的工作方式，JVM是整个计算机虚拟模型，所以JMM隶属于JVM。从抽象的角度来看，JMM定义了线程和主内存间的抽象关系，线程间的共享变量存储在主内存中，每个线程都有一个私有的本地内存，本地内存中存储了该线程以读/写共享变量的副本。本地内存是JMM的一个抽象概念，并不真实存在，是通过高级语言实现。它涵盖了缓存，写缓冲区，寄存器以及其他的硬件和编译优化。  </p>
+<h4 id="JVM对Java内存模型的实现"><a href="#JVM对Java内存模型的实现" class="headerlink" title="JVM对Java内存模型的实现"></a>JVM对Java内存模型的实现</h4><p>在JVM内部，Java内存模型把内存分成了两部分：<strong>线程栈区和堆区</strong><br>JVM中运行的每个线程都拥有自己的线程栈，线程栈包含了当前线程执行的方法调用相关信息，我们也把它称作调用栈。随着代码的不断执行，调用栈会不断变化。<br>在线程栈中保存了所有基本数据类型的局部变量，对于他们的值，各个线程都是独立的，一个线程可以传递一个副本给另外一个线程，但他们之间无法共享。一个局部变量也可能是一个对象的引用，那么这个本地引用会存储在栈中，但是对象本身还是在堆中。<br>堆区包含了java创建的所有对象信息，不管对象是属于成员变量还是局部变量，都保存在堆区。对于一个对象的成员变量，不管是原始类型还是包装类型，都会存储在堆区。static类型的变量和类都会随着类本身存储在堆。  </p>
+<h4 id="可见性、有序性的解决方案"><a href="#可见性、有序性的解决方案" class="headerlink" title="可见性、有序性的解决方案"></a>可见性、有序性的解决方案</h4><p>（1）Volatile、synchronized、final关键字<br>（2）Happens-Before原则  </p>
+<h3 id="同步关键字synchronized"><a href="#同步关键字synchronized" class="headerlink" title="同步关键字synchronized"></a>同步关键字synchronized</h3><p>可以解决原子性、可见性、有序性问题。  </p>
+<h4 id="synchronized锁的范围"><a href="#synchronized锁的范围" class="headerlink" title="synchronized锁的范围"></a>synchronized锁的范围</h4><p>（1）对于普通同步方法，锁是当前实例对象    </p>
+<pre><code class="java"><span class="comment">//对象锁（this），同一个对象有效，否则无法实现两个线程互斥</span>
+<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">demo01</span><span class="params">()</span></span>{}</code></pre>
+<p>（2）对于静态同步方法，锁是当前类的class对象  </p>
+<pre><code class="java"><span class="comment">//类级别的锁（生命周期最大） xxx.class</span>
+<span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">demo02</span><span class="params">()</span></span>{}</code></pre>
+<p>（3）对于同步方法块，锁是synchronized括号里配置的对象   </p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">demo03</span><span class="params">()</span></span>{
+    <span class="comment">//TODO</span>
+    <span class="keyword">synchronized</span>(<span class="keyword">this</span>/xxx<span class="class">.<span class="keyword">class</span>)</span>{
+
+    }
+    <span class="comment">//TODO</span>
+}</code></pre>
+<h4 id="底层实现原理"><a href="#底层实现原理" class="headerlink" title="底层实现原理"></a>底层实现原理</h4><p>Java虚拟机中的同步stnchronized是基于管程（Monitor)对象实现的。无论任何Java对象都有一个管程对象和它相连，它可以随着对象的创建而创建，也可以在线程获取某个资源锁时创建。所谓管程，也叫监视器，指的就是将所有共享变量以及对共享变量能够进行的所有操作管理在一个模块里，让其能够支持并发访问。用java语言来说就是管理类的成员变量和成员方法，让这个类处于线程安全状态。  </p>
+<p>根据synchronized修饰位置的不同，它有两种同步类型：<br>  （1）显示同步：当synchronized修饰代码块时，有明确的指令monitorenter和monitorexit<br>  （2）隐式同步：当sychnronized修饰方法时，通过方法调用指令读取运行时常量池中方法的ACC_SYNCHRONIZED标志来隐式实现  </p>
+<h5 id="java对象头和monitor"><a href="#java对象头和monitor" class="headerlink" title="java对象头和monitor"></a>java对象头和monitor</h5><p>在JVM中，对象存储在堆中，主要分为三部分内容：对象头、对象实例数据、对齐填充（数组对象多一个区域来记录数组长度）；而其中的对象头是实现synchronized的锁对象的基础，与它息息相关。<br>（一）对象头<br>JVM中对象头分为普通对象和数组对象（以32位JVM为例）  </p>
+<pre><code class="java">普通对象： 
+
+|--------------------------------------------------------------|
+|                     <span class="function">Object <span class="title">Header</span> <span class="params">(<span class="number">64</span> bits)</span>                  |</span>
+<span class="function">|------------------------------------|-------------------------|</span>
+<span class="function">|        Mark <span class="title">Word</span> <span class="params">(<span class="number">32</span> bits)</span>         |    Klass <span class="title">Word</span> <span class="params">(<span class="number">32</span> bits)</span> |</span>
+<span class="function">|------------------------------------|-------------------------|  </span>
+<span class="function"></span>
+<span class="function">数组对象：  </span>
+<span class="function"></span>
+<span class="function">|----------------------------------------------------------------------|</span>
+<span class="function">|                                 Object <span class="title">Header</span> <span class="params">(<span class="number">96</span> bits)</span>              |          |                                                                      |</span>
+<span class="function">|------------------------|-----------------------|---------------------|</span>
+<span class="function">| Mark <span class="title">Word</span><span class="params">(<span class="number">32</span>bits)</span>      |    Klass <span class="title">Word</span><span class="params">(<span class="number">32</span>bits)</span> | array <span class="title">length</span><span class="params">(<span class="number">32</span>bits)</span>|</span>
+<span class="function">|------------------------|-----------------------|---------------------|</span></code></pre>
+<p>对象头由两部分组成：Mark Word 和 Class Metadata Address （数组对象则多一个区域记录数组长度）    </p>
+<p>(1.1) <strong>Mark Word</strong>：存储对象的hashcode、锁信息、或者分带年龄或者GC标志信息等。长度为JVM的一个WORD大小，也就是说32位JVM的Mark word为32位，64位JVM为64位。为了让一个字大小存储更多的信息，JVM将字的最低两个位设置为标记位，不同标记位下的Mark Word示意如下：  </p>
+<pre><code class="java">|--------------------------------------------------|--------------------|
+|                  <span class="function">Mark <span class="title">Word</span> <span class="params">(<span class="number">32</span> bits)</span>                  |       State        |</span>
+<span class="function">|--------------------------------------------------|--------------------|</span>
+<span class="function">| identity_hashcode:25 | age:4 | biased_lock:1 | lock:2 |       Normal       |</span>
+<span class="function">|--------------------------------------------------|--------------------|</span>
+<span class="function">|  thread:23 | epoch:2 | age:4 | biased_lock:1 | lock:2 |       Biased       |</span>
+<span class="function">|--------------------------------------------------|--------------------|</span>
+<span class="function">|               ptr_to_lock_record:30          | lock:2 | Lightweight Locked |</span>
+<span class="function">|--------------------------------------------------|--------------------|</span>
+<span class="function">|               ptr_to_heavyweight_monitor:30  | lock:2 | Heavyweight Locked |</span>
+<span class="function">|--------------------------------------------------|--------------------|</span>
+<span class="function">|                                              | lock:2 |    Marked <span class="keyword">for</span> GC   |</span>
+<span class="function">|--------------------------------------------------|--------------------|</span></code></pre>
+<p><strong>lock:</strong> 2位的锁状态标记位，由于希望用尽可能少的二进制位表示尽可能多的信息，所以设置了lock标记。该标记的值不同，整个mark word表示的含义不同。<br><img src="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread06.png" alt="Alt text">    </p>
+<p><strong>biased_lock：</strong>对象是否启用偏向锁标记，只占1个二进制位。为1时表示对象启用偏向锁，为0时表示对象没有偏向锁。    </p>
+<p><strong>age：</strong>4位的Java对象年龄。在GC中，如果对象在Survivor区复制一次，年龄增加1。当对象达到设定的阈值时，将会晋升到老年代。默认情况下，并行GC的年龄阈值为15，并发GC的年龄阈值为6。由于age只有4位，所以最大值为15，这就是-XX:MaxTenuringThreshold选项最大值为15的原因。    </p>
+<p><strong>identity_hashcode：</strong>25位的对象标识Hash码，采用延迟加载技术。调用方法System.identityHashCode()计算，并会将结果写到该对象头中。当对象被锁定时，该值会移动到管程Monitor中。    </p>
+<p><strong>thread：</strong>持有偏向锁的线程ID。<br><strong>epoch：</strong>偏向时间戳。<br><strong>ptr_to_lock_record：</strong>指向栈中锁记录的指针。<br><strong>ptr_to_heavyweight_monitor：</strong>指向管程Monitor的指针。  </p>
+<p>(1.2)<strong>Class Metadata Address：</strong>  用于存储对象的类型指针，该指针指向它的类元数据，JVM通过这个指针可以确定该对象是哪个类的实例。该指针的位长度等于JVM的一个字大小。如果应用的对象过多，使用64位的指针将浪费大量内存，统计而言，64位的JVM将会比32位的JVM多耗费50%的内存。为了节约内存可以使用选项+UseCompressedOops开启指针压缩，其中，oop即ordinary object pointer普通对象指针。开启该选项后，下列指针将压缩至32位：<br>1.每个Class的属性指针（即静态变量）<br>2.每个对象的属性指针（即对象变量）<br>3.普通对象数组的每个元素指针<br>当然，也不是所有的指针都会压缩，一些特殊类型的指针JVM不会优化，比如指向PermGen的Class对象指针(JDK8中指向元空间的Class对象指针)、本地变量、堆栈元素、入参、返回值和NULL指针等。   </p>
+<p>（1.3）*<em>array length： *</em> 如果对象是一个数组，那么对象头还需要有额外的空间用于存储数组的长度，这部分数据的长度也随着JVM架构的不同而不同：32位的JVM上，长度为32位；64位JVM则为64位。64位JVM如果开启+UseCompressedOops选项，该区域长度也将由64位压缩至32位。  </p>
+<p>（2）<strong>对象实例数据：</strong> 存放类的属性数据信息，包括父类的属性数据信息，如果是数组的实例部分，还包括数组的长度。这部分内存按4字节对齐。    </p>
+<p>（3）<strong>对齐填充：</strong> JVM要求对象占用的空间必须是8的倍数，方便内存分配（以字节为最小的单位分配），因此这部分就是用于填满不够的空间凑数用的。    </p>
+<p>（二）Monitor<br>monitor对象的属性如下：  </p>
+<pre><code class="java">ObjectMonitor() {
+    _header       = NULL;
+    _count        = <span class="number">0</span>; <span class="comment">//重入次数</span>
+    _waiters      = <span class="number">0</span>, <span class="comment">//等待线程数</span>
+    _recursions   = <span class="number">0</span>;
+    _object       = NULL;
+    _owner        = NULL; <span class="comment">//当前持有锁的线程</span>
+    _WaitSet      = NULL; <span class="comment">//处于wait状态的线程，会被加入到_WaitSet</span>
+    _WaitSetLock  = <span class="number">0</span> ;
+    _Responsible  = NULL ;
+    _succ         = NULL ;
+    _cxq          = NULL ;
+    FreeNext      = NULL ;
+    _EntryList    = NULL ; <span class="comment">//处于等待锁block状态的线程，会被加入到该列表</span>
+    _SpinFreq     = <span class="number">0</span> ;
+    _SpinClock    = <span class="number">0</span> ;
+    OwnerIsThread = <span class="number">0</span> ;
+  }</code></pre>
+<h5 id="JDK6以前synchronized具体实现逻辑"><a href="#JDK6以前synchronized具体实现逻辑" class="headerlink" title="JDK6以前synchronized具体实现逻辑"></a>JDK6以前synchronized具体实现逻辑</h5><ol>
+<li>当线程A和线程B都要访问某个共享变量并对其操作时，发现方法上加了synchronized锁，此时线程调度到A线程执行，A线程抢先拿到了锁。  </li>
+</ol>
+<p>A线程拿到锁步骤为：<br>-&gt; 将ObjectMonitor中的_owner设置为线程A<br>-&gt; 同时计数器 _count随着_owner所代表的线程的进出进行自增和自减<br>-&gt; 将对象头中的Mark Word设置为Monitor对象地址，锁标志位改为10<br>-&gt; B线程阻塞放到ContentionList队列（所有请求锁的线程都放在此竞争队列中）    </p>
+<ol start="2">
+<li><p>JVM每次从Waiting Queue的尾部取出一个线程放到OnDeck（任意时刻，最多只有一个线程正在竞争锁资源，该线程被称为OnDeck）作为候选者，Waiting Queue中拆分成ContntionList和EntryList两个队列，JVM将那些有资格成为候选资源的线程从ContentionList中转移到EntryList中作为准备进入OnDeck的预备线程。  </p>
+</li>
+<li><p>作为Owner的线程A执行过程中，可能调用wait释放锁，这个时候线程A进入WaitSet，等待被唤醒。处于ContentionList、EntryList和WaitSet中的线程都处于阻塞状态，该阻塞是由操作系统来完成的。<br><img src="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread07.png" alt="Alt text">    </p>
+</li>
+</ol>
+<p>其实Synchronized锁是一种非公平锁：<br>（1）Synchronized在线程竞争锁时，首先做的不是直接进入ContentionList队列，而是采用尝试自旋获取锁，如果获取不到才进入ContentionList中，这对于已经进入队列的线程时不公平的；<br>（2）另一个不公平的是自旋获取锁的线程还可能直接抢占OnDeck线程的锁资源。</p>
+<p>JDK6以前synchronized属于重量级锁，存在弊端，比如每次加锁都依赖操作系统实现，涉及到操作系统让线程从用户态到内核态的来回切换，损耗性能，而且sun公司程序员发现大部分程序大多数时间都不会发生多个线程同时访问竞态资源的情况，加锁解锁重复率高，都在耗性能，因此到了JDK6，引入了偏向锁（偏向锁的核心思想是，如果一个线程获得了锁，那么锁就进入偏向模式，此时Mark Word 的结构也变为偏向锁结构，当这个线程再次请求锁时，无需再做任何同步操作，即获取锁的过程，这样就省去了大量有关锁申请的操作，从而也就提供程序的性能。）和轻量级锁（不需要申请互斥量，仅仅将Mark Word中的部分字节CAS更新指向线程栈中的Lock Record，如果更新成功，则轻量级锁获取成功，记录锁状态为轻量级锁；否则，说明已经有线程获得了轻量级锁，目前发生了锁竞争（不适合继续使用轻量级锁），接下来膨胀为重量级锁）。  </p>
+<h5 id="无锁状态-gt-偏向锁"><a href="#无锁状态-gt-偏向锁" class="headerlink" title="无锁状态-&gt;偏向锁"></a>无锁状态-&gt;偏向锁</h5><ol>
+<li>首先线程A访问同步代码块，使用CAS操作将Thread ID 放到Mark Word中  </li>
+<li>如果CAS成功，则线程A就获得了锁  </li>
+<li>如果CAS失败，则表示有别的线程持有锁，这个时候启动偏向锁撤销  </li>
+<li>锁撤销流程：让线程A在全局安全点阻塞、遍历线程栈，查看是否有被锁对象的锁记录Lock Record、如果有则需要修复锁记录和MarkWord，使其变成无所状态、恢复线程A，设置其偏向锁状态为0，开始进行轻量级加锁流程。  <h5 id="偏向锁撤销-gt-轻量级锁"><a href="#偏向锁撤销-gt-轻量级锁" class="headerlink" title="偏向锁撤销-&gt;轻量级锁"></a>偏向锁撤销-&gt;轻量级锁</h5></li>
+<li>线程在自己的帧栈中创建锁记录LockRecord  </li>
+<li>线程A将MarkWord拷贝到线程栈的LockRecord中</li>
+<li>将锁记录中的owner指针指向加锁的对象（存放对象地址）</li>
+<li>将锁对象的对象头的MarkWord替换为指向锁记录的指针</li>
+<li>此时锁标志位变为00，表示轻量级锁<h5 id="轻量级锁-gt-重量级锁"><a href="#轻量级锁-gt-重量级锁" class="headerlink" title="轻量级锁-&gt;重量级锁"></a>轻量级锁-&gt;重量级锁</h5>如果有新的线程来竞争锁，首先新线程会自旋尝试获取锁，尝试到一定次数（一般是1次0）还是没拿到锁的时候就会升级为重量级锁。  </li>
+</ol>
+<h4 id="synchronized底层实现源码"><a href="#synchronized底层实现源码" class="headerlink" title="synchronized底层实现源码"></a>synchronized底层实现源码</h4><p><img src="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread08.png" alt="Alt text">    </p>
+<p>synchronized在代码块上是通过monitorenter和monitorexit指令实现  ;在静态方法和普通方法上加锁是在方法的flags中加入ACC_SYNCHRONIZED。    </p>
+<p>JVM运行方法时检查方法的flags，遇到同步标识开始启动前面的加锁流程，在方法内部遇到monitorenter指令开始加锁。    </p>
+<p>monitorenter指令函数源代码在InterpreterRuntime:monitorenter中  </p>
+<pre><code class="java">IRT_ENTRY_NO_ASYNC(<span class="keyword">void</span>, InterpreterRuntime::monitorenter(JavaThread* thread, BasicObjectLock* elem))
+#ifdef ASSERT
+  thread-&gt;last_frame().interpreter_frame_verify_monitor(elem);
+#endif
+  <span class="keyword">if</span> (PrintBiasedLockingStatistics) {
+    Atomic::inc(BiasedLocking::slow_path_entry_count_addr());
+  }
+  <span class="function">Handle <span class="title">h_obj</span><span class="params">(thread, elem-&gt;obj()</span>)</span>;
+  <span class="keyword">assert</span>(Universe::heap()-&gt;is_in_reserved_or_null(h_obj()),
+         <span class="string">"must be NULL or an object"</span>);
+ <span class="comment">//是否开启了偏向锁</span>
+  <span class="keyword">if</span> (UseBiasedLocking) {
+    <span class="comment">// 尝试偏向锁</span>
+    ObjectSynchronizer::fast_enter(h_obj, elem-&gt;lock(), <span class="keyword">true</span>, CHECK);
+  } <span class="keyword">else</span> {
+    <span class="comment">// 轻量锁逻辑</span>
+    ObjectSynchronizer::slow_enter(h_obj, elem-&gt;lock(), CHECK);
+  }
+  <span class="keyword">assert</span>(Universe::heap()-&gt;is_in_reserved_or_null(elem-&gt;obj()),
+         <span class="string">"must be NULL or an object"</span>);
+#ifdef ASSERT
+  thread-&gt;last_frame().interpreter_frame_verify_monitor(elem);
+#endif
+IRT_END</code></pre>
+<p>偏向锁源码：  </p>
+<pre><code class="java"><span class="comment">// -----------------------------------------------------------------------------</span>
+<span class="comment">//  Fast Monitor Enter/Exit</span>
+<span class="comment">// This the fast monitor enter. The interpreter and compiler use</span>
+<span class="comment">// some assembly copies of this code. Make sure update those code</span>
+<span class="comment">// if the following function is changed. The implementation is</span>
+<span class="comment">// extremely sensitive to race condition. Be careful.</span>
+
+<span class="keyword">void</span> ObjectSynchronizer::fast_enter(Handle obj, BasicLock* lock, bool attempt_rebias, TRAPS) {
+<span class="comment">//是否使用偏向锁</span>
+ <span class="keyword">if</span> (UseBiasedLocking) {
+    <span class="comment">// 如果不在全局安全点</span>
+    <span class="keyword">if</span> (!SafepointSynchronize::is_at_safepoint()) {
+      <span class="comment">// 获取偏向锁</span>
+      BiasedLocking::Condition cond = BiasedLocking::revoke_and_rebias(obj, attempt_rebias, THREAD);
+      <span class="keyword">if</span> (cond == BiasedLocking::BIAS_REVOKED_AND_REBIASED) {
+        <span class="keyword">return</span>;
+      }
+    } <span class="keyword">else</span> {
+      <span class="keyword">assert</span>(!attempt_rebias, <span class="string">"can not rebias toward VM thread"</span>);
+      <span class="comment">// 在全局安全点，撤销偏向锁</span>
+      BiasedLocking::revoke_at_safepoint(obj);
+    }
+    <span class="keyword">assert</span>(!obj-&gt;mark()-&gt;has_bias_pattern(), <span class="string">"biases should be revoked by now"</span>);
+ }
+<span class="comment">// 进轻量级锁流程</span>
+ slow_enter (obj, lock, THREAD) ;
+}</code></pre>
+<p>轻量级代码流程：  </p>
+<pre><code class="java"><span class="keyword">void</span> ObjectSynchronizer::slow_enter(Handle obj, BasicLock* lock, TRAPS) {
+<span class="comment">//获取对象的markOop数据mark</span>
+  markOop mark = obj-&gt;mark();
+  <span class="keyword">assert</span>(!mark-&gt;has_bias_pattern(), <span class="string">"should not see bias pattern here"</span>);
+
+<span class="comment">//判断mark是否为无锁状态 &amp; 不可偏向（锁标识为01，偏向锁标志位为0）</span>
+  <span class="keyword">if</span> (mark-&gt;is_neutral()) {
+    <span class="comment">// Anticipate successful CAS -- the ST of the displaced mark must</span>
+    <span class="comment">// be visible &lt;= the ST performed by the CAS.</span>
+    <span class="comment">// 保存Mark 到 线程栈 Lock Record 的displaced_header中</span>
+    lock-&gt;set_displaced_header(mark);
+    <span class="comment">// CAS 将  Mark Down 更新为 指向 lock 对象的指针，成功则获取到锁</span>
+    <span class="keyword">if</span> (mark == (markOop) Atomic::cmpxchg_ptr(lock, obj()-&gt;mark_addr(), mark)) {
+      TEVENT (slow_enter: release stacklock) ;
+      <span class="keyword">return</span> ;
+    }
+    <span class="comment">// Fall through to inflate() ...</span>
+  } <span class="keyword">else</span>
+  <span class="comment">// 根据对象mark 判断已经有锁  &amp; mark 中指针指的当前线程的Lock Record（当前线程已经获取到了，不必重试获取）</span>
+  <span class="keyword">if</span> (mark-&gt;has_locker() &amp;&amp; THREAD-&gt;is_lock_owned((address)mark-&gt;locker())) {
+    <span class="keyword">assert</span>(lock != mark-&gt;locker(), <span class="string">"must not re-lock the same lock"</span>);
+    <span class="keyword">assert</span>(lock != (BasicLock*)obj-&gt;mark(), <span class="string">"don't relock with same BasicLock"</span>);
+    lock-&gt;set_displaced_header(NULL);
+    <span class="keyword">return</span>;
+  }
+
+ lock-&gt;set_displaced_header(markOopDesc::unused_mark());
+   <span class="comment">// 锁膨胀</span>
+  ObjectSynchronizer::inflate(THREAD, obj())-&gt;enter(THREAD);</code></pre>
+<p>此时假设线程A和线程B同时执行到临界区if (mark-&gt;is_neutral()) ，线程A和线程B都把MarkWord赋值到各自的_displaced_header字段，该数据保存在线程的栈帧上，线程私有的。Atomic::cmpxchg_ptr属于原子操作，保障了只有一个线程可以把MarkWord中替换成指向自己线程栈的_displaced_header中的，假设线程A获取到了锁，开始执行同步代码块，线程B获取失败，开始退出临界区，通过 ObjectSynchronizer::inflate方法开始膨胀锁；</p>
 
     
 
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/Wechat.jpg">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Stephen Cheng
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://chengqiji.github.io/2020/06/13/线程的安全性分析-第一部/" title="线程的安全性分析-第一部" target="_blank">https://chengqiji.github.io/2020/06/13/线程的安全性分析-第一部/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
     
 
   </div>
@@ -260,16 +540,76 @@
 
 
     
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/">展开全文 >></a>
-    </p>
+
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
 
     
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">线程的基本操作</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -284,931 +624,33 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-线程的基本操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" target="_blank">线程的基本操作</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="archive-article-date">
-        <time datetime="2020-06-10T15:15:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-10</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="Thread-join的使用以及原理"><a href="#Thread-join的使用以及原理" class="headerlink" title="Thread.join的使用以及原理"></a>Thread.join的使用以及原理</h3><h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>Thread.join的作用就是保证线程执行结果的可见性。  </p>
-<h4 id="代码演示"><a href="#代码演示" class="headerlink" title="代码演示"></a>代码演示</h4>
-    
-    <a class="article-more-a" href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#并发编程问题的源头：原子性，可见性，有序性"><span class="toc-number">1.</span> <span class="toc-text">并发编程问题的源头：原子性，可见性，有序性</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#如何理解线程安全"><span class="toc-number">1.1.</span> <span class="toc-text">如何理解线程安全</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#并发编程起源"><span class="toc-number">1.2.</span> <span class="toc-text">并发编程起源</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缓存导致的可见性问题"><span class="toc-number">1.3.</span> <span class="toc-text">缓存导致的可见性问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#线程切换带来的原子性问题"><span class="toc-number">1.4.</span> <span class="toc-text">线程切换带来的原子性问题</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#编译优化带来的有序性问题"><span class="toc-number">1.5.</span> <span class="toc-text">编译优化带来的有序性问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java内存模型—Java如何解决可见性有序性问题"><span class="toc-number">2.</span> <span class="toc-text">Java内存模型—Java如何解决可见性有序性问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是JMM"><span class="toc-number">2.1.</span> <span class="toc-text">什么是JMM</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#JVM对Java内存模型的实现"><span class="toc-number">2.2.</span> <span class="toc-text">JVM对Java内存模型的实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#可见性、有序性的解决方案"><span class="toc-number">2.3.</span> <span class="toc-text">可见性、有序性的解决方案</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#同步关键字synchronized"><span class="toc-number">3.</span> <span class="toc-text">同步关键字synchronized</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#synchronized锁的范围"><span class="toc-number">3.1.</span> <span class="toc-text">synchronized锁的范围</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#底层实现原理"><span class="toc-number">3.2.</span> <span class="toc-text">底层实现原理</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#java对象头和monitor"><span class="toc-number">3.2.1.</span> <span class="toc-text">java对象头和monitor</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#JDK6以前synchronized具体实现逻辑"><span class="toc-number">3.2.2.</span> <span class="toc-text">JDK6以前synchronized具体实现逻辑</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#无锁状态-gt-偏向锁"><span class="toc-number">3.2.3.</span> <span class="toc-text">无锁状态-&gt;偏向锁</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#偏向锁撤销-gt-轻量级锁"><span class="toc-number">3.2.4.</span> <span class="toc-text">偏向锁撤销-&gt;轻量级锁</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#轻量级锁-gt-重量级锁"><span class="toc-number">3.2.5.</span> <span class="toc-text">轻量级锁-&gt;重量级锁</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#synchronized底层实现源码"><span class="toc-number">3.3.</span> <span class="toc-text">synchronized底层实现源码</span></a></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
 
-  
-    <article id="post-线程的基本认识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" target="_blank">线程的基本认识</a>
-  
-    </h1>
-  
 
 
-  
-  
-<a href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" class="archive-article-date">
-        <time datetime="2020-06-09T11:15:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-09</time>
-</a>
 
-  
-  
-    
 
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="线程的基本介绍"><a href="#线程的基本介绍" class="headerlink" title="线程的基本介绍"></a>线程的基本介绍</h3><h5 id="线程基本概念"><a href="#线程基本概念" class="headerlink" title="线程基本概念"></a>线程基本概念</h5><p>线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。  </p>
-<h5 id="为什么会有线程"><a href="#为什么会有线程" class="headerlink" title="为什么会有线程"></a>为什么会有线程</h5><p>（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。<br>（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。<br>（3）线程可以认为是一种轻量级的进程，因此线程的创建、销毁比进程快。  </p>
-<h5 id="为什么要用多线程"><a href="#为什么要用多线程" class="headerlink" title="为什么要用多线程"></a>为什么要用多线程</h5><p>（1）异步执行<br>（2）利用多CPU资源实现真正意义上的并行执行<br></p>
-    
-    <a class="article-more-a" href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/#more">more >></a>
-    
-    
 
-    
 
-    
 
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-单例模式简单介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" target="_blank">单例模式简单介绍</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
-        <time datetime="2020-05-20T07:45:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="单例模式的定义及应用场景"><a href="#单例模式的定义及应用场景" class="headerlink" title="单例模式的定义及应用场景"></a>单例模式的定义及应用场景</h3><p>单例模式（Singleton Pattern)是指确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点，也就是隐藏所有的构造方法，属于创建型模式。   </p>
-<p>那么为什么要单例呢？  </p>
-<p>为了防止出现重复的创建，这个类本独有一份，多份会带来麻烦，出现新的问题。<br>例如，Windows 中只能打开一个任务管理器，这样可以避免因打开多个任务管理器窗口而造成内存资源的浪费，或出现各个窗口显示内容的不一致等错误。</p>
-<p>在计算机系统中，还有 Windows 的回收站、操作系统中的文件系统、多线程中的线程池、显卡的驱动程序对象、打印机的后台处理服务、应用程序的日志对象、数据库的连接池、网站的计数器、Web 应用的配置对象、应用程序中的对话框、系统中的缓存等常常被设计成单例。  </p>
-<p>单例模式有 3 个特点：<br></p>
-    
-    <a class="article-more-a" href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-IO模型简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" target="_blank">IO模型简介</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" class="archive-article-date">
-        <time datetime="2020-05-19T14:44:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-19</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="阻塞IO模型"><a href="#阻塞IO模型" class="headerlink" title="阻塞IO模型"></a>阻塞IO模型</h3><p>最传统的一种 IO 模型，即在读写数据过程中会发生阻塞现象。<br>当用户线程发出 IO 请求之后，内核会去查看数据是否就绪，如果没有就绪就会等待数据就绪，而用户线程就会处于阻塞状态，用户线程交出 CPU。当数据就绪之后，内核会将数据拷贝到用户线程，并返回结果给用户线程，用户线程才解除 block 状态。<br>典型的阻塞 IO 模型的例子为：<br>data = socket.read();如果数据没有就绪，就会一直阻塞在 read 方法。   </p>
-<h3 id="非阻塞IO模型"><a href="#非阻塞IO模型" class="headerlink" title="非阻塞IO模型"></a>非阻塞IO模型</h3><p> 当用户线程发起一个 read 操作后，并不需要等待，而是马上就得到了一个结果。如果结果是一个<br>error 时，它就知道数据还没有准备好，于是它可以再次发送 read 操作。一旦内核中的数据准备<br>好了，并且又再次收到了用户线程的请求，那么它马上就将数据拷贝到了用户线程，然后返回。<br>所以事实上，在非阻塞 IO 模型中，用户线程需要不断地询问内核数据是否就绪，也就说非阻塞 IO<br>不会交出 CPU，而会一直占用 CPU。    </p>
-<p>典型的非阻塞 IO 模型一般如下：<br></p>
-    
-    <a class="article-more-a" href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">IO模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/IO模型//" class="article-tag-list-link color5">IO模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-三大工厂模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" target="_blank">三大工厂模式</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-        <time datetime="2020-05-19T07:11:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-19</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="Simple-Factory-Pattern-简单工厂模式"><a href="#Simple-Factory-Pattern-简单工厂模式" class="headerlink" title="Simple Factory Pattern 简单工厂模式"></a>Simple Factory Pattern 简单工厂模式</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>简单工厂模式（Simple Factory Pattern）是指由一个工厂对象决定创建出哪一种产品类的实例。  </p>
-<p>属于创建型模式，但它不属于GOF 23种设计模式。  </p>
-<h4 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h4><p>（1）工厂类创建的对象较少。<br>（2）客户端只需要传入工厂类的参数，对于如何创建对象的逻辑不需要关心。  </p>
-<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>只需要传入一个正确的参数就可以获取你想需要的对象，无需关心其创建细节。  </p>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4>
-    
-    <a class="article-more-a" href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JVM常用命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" target="_blank">JVM常用命令</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-        <time datetime="2020-05-18T03:29:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h3><p>JVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。  </p>
-<h4 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h4><p>jps [options] [hostid]    </p>
-<h4 id="option参数"><a href="#option参数" class="headerlink" title="option参数"></a>option参数</h4><p>-l : 输出主类全名或jar路径</p>
-<p>-q : 只输出LVMID</p>
-<p>-m : 输出JVM启动时传递给main()的参数<br></p>
-    
-    <a class="article-more-a" href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JVM垃圾回收" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" target="_blank">JVM垃圾回收</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="archive-article-date">
-        <time datetime="2020-05-17T16:05:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="如何判断一个对象是垃圾"><a href="#如何判断一个对象是垃圾" class="headerlink" title="如何判断一个对象是垃圾"></a>如何判断一个对象是垃圾</h3><p>判断对象是否存活一般有两种方式：</p>
-<p><strong>引用计数：</strong>每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。<br><strong>可达性分析（Reachability Analysis）：</strong>从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。不可达对象。</p>
-<p>在Java语言中，GC Roots包括：</p>
-<p>(1)虚拟机栈中引用的对象。</p>
-<p>(2)方法区中类静态属性实体引用的对象。<br></p>
-    
-    <a class="article-more-a" href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JVM内存模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" target="_blank">JVM内存模型</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
-        <time datetime="2020-05-17T14:28:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="由对象推导出内存模型"><a href="#由对象推导出内存模型" class="headerlink" title="由对象推导出内存模型"></a>由对象推导出内存模型</h3><p>先由两张图来阐述：</p>
-<p><img src="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/jvm11.png" alt="upload successful"><br></p>
-    
-    <a class="article-more-a" href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JVM运行时数据区" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" target="_blank">JVM运行时数据区</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" class="archive-article-date">
-        <time datetime="2020-05-17T13:18:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="官网解读"><a href="#官网解读" class="headerlink" title="官网解读"></a>官网解读</h3><p><img src="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm06.png" alt="upload successful"><br>翻译过来就是：Java虚拟机定义了在程序执行期间使用的各种运行时数据区域。其中一些数据区域是在Java虚拟机启动时创建的，只有在Java虚拟机退出时才会被销毁。其他数据区域是每个线程。每个线程数据区域在创建线程时创建，在线程退出时销毁。<br><strong>运行时数据区分为一下几类：</strong><br><img src="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm07.png" alt="upload successful"><br></p>
-    
-    <a class="article-more-a" href="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -1248,8 +690,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
