@@ -6,21 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqiji.github.io">
-  <title>Stephen Cheng`s blog</title>
+  <title>线程的安全性分析-第二部 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-    
-    <!-- <meta name="keywords" content="">
-    <meta name="description" content=""> -->
-  
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Stephen Cheng&#96;s blog">
-<meta property="og:url" content="https://chengqiji.github.io/index.html">
+  <meta name="description" content="volatile关键字分析用来解决可见性和有序性问题。   本质上来说：volatile是通过内存屏障来防止指令重排序以及禁止CPU高速缓存来解决可见性问题。而#Lock指令，它本质上是通过禁止高速缓存来解决可见性问题，但实际上表示的是一种内存屏障的功能。也就是说针对当前的硬件环境，JMM层面通过lock指令作为内存屏障来解决可见性问题。    当程序加了volatile关键字后，会出现一个Loc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线程的安全性分析-第二部">
+<meta property="og:url" content="https://chengqiji.github.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
+<meta property="og:description" content="volatile关键字分析用来解决可见性和有序性问题。   本质上来说：volatile是通过内存屏障来防止指令重排序以及禁止CPU高速缓存来解决可见性问题。而#Lock指令，它本质上是通过禁止高速缓存来解决可见性问题，但实际上表示的是一种内存屏障的功能。也就是说针对当前的硬件环境，JMM层面通过lock指令作为内存屏障来解决可见性问题。    当程序加了volatile关键字后，会出现一个Loc">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread09.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread10.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread11.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread12.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread13.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread14.png">
+<meta property="og:image" content="https://chengqiji.github.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread15.png">
+<meta property="article:published_time" content="2020-06-14T00:06:50.000Z">
+<meta property="article:modified_time" content="2020-06-14T15:06:30.092Z">
 <meta property="article:author" content="Stephen Cheng">
+<meta property="article:tag" content="并发编程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://chengqiji.github.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread09.png">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -188,25 +197,25 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-
-  
-    <article id="post-线程的安全性分析-第二部" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-线程的安全性分析-第二部" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/" target="_blank">线程的安全性分析-第二部</a>
-  
+    <h1 class="article-title" itemprop="name">
+      线程的安全性分析-第二部
     </h1>
   
 
 
   
   
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
+
 <a href="/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/" class="archive-article-date">
         <time datetime="2020-06-14T00:06:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-14</time>
 </a>
@@ -214,6 +223,27 @@
   
   
     
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">4.1k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">14分</span>
+    </span>
+  </span>
+</div>
+
 
   
   </header>
@@ -364,7 +394,54 @@ B.join();
     
 
     
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/Wechat.jpg">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
 
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Stephen Cheng
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://chengqiji.github.io/2020/06/14/线程的安全性分析-第二部/" title="线程的安全性分析-第二部" target="_blank">https://chengqiji.github.io/2020/06/14/线程的安全性分析-第二部/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
     
 
   </div>
@@ -396,16 +473,76 @@ B.join();
 
 
     
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/">展开全文 >></a>
-    </p>
+
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqiji.github.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
 
     
     <div class="clearfix"></div>
   </div>
   </div>
 </article>
+
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">线程的安全性分析-第一部</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -420,932 +557,33 @@ B.join();
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-线程的安全性分析-第一部" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" target="_blank">线程的安全性分析-第一部</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" class="archive-article-date">
-        <time datetime="2020-06-13T00:49:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-13</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="并发编程问题的源头：原子性，可见性，有序性"><a href="#并发编程问题的源头：原子性，可见性，有序性" class="headerlink" title="并发编程问题的源头：原子性，可见性，有序性"></a>并发编程问题的源头：原子性，可见性，有序性</h3><h4 id="如何理解线程安全"><a href="#如何理解线程安全" class="headerlink" title="如何理解线程安全"></a>如何理解线程安全</h4><p>当多个线程访问某个对象时，不论运行时环境采用何种调度方式或者这些线程如何交替执行，并且在主调代码中不采用任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。  </p>
-<h4 id="并发编程起源"><a href="#并发编程起源" class="headerlink" title="并发编程起源"></a>并发编程起源</h4><p>1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I/O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I/O设备。<br>2.为了优化三者速度差异，计算机体系结构，操作系统，编译程序都做出了贡献：<br>（1）CPU增加了缓存，以均衡和内存的速度差异<br>（2）操作系统增加了进程、线程、以及分时复用CPU，进而均衡CPU和I/O设备的速度差异<br></p>
-    
-    <a class="article-more-a" href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#volatile关键字分析"><span class="toc-number">1.</span> <span class="toc-text">volatile关键字分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#何时用volatile"><span class="toc-number">1.1.</span> <span class="toc-text">何时用volatile</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CPU的内存屏障"><span class="toc-number">1.2.</span> <span class="toc-text">CPU的内存屏障</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#什么是内存屏障"><span class="toc-number">1.3.</span> <span class="toc-text">什么是内存屏障</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多核CPU硬件架构"><span class="toc-number">1.4.</span> <span class="toc-text">多核CPU硬件架构</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#数据在主存-缓存和CPU寄存器间的流转"><span class="toc-number">1.4.1.</span> <span class="toc-text">数据在主存 缓存和CPU寄存器间的流转</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Java内存模型JMM"><span class="toc-number">1.5.</span> <span class="toc-text">Java内存模型JMM</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#JMM内存模型规范"><span class="toc-number">1.5.1.</span> <span class="toc-text">JMM内存模型规范</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#final域"><span class="toc-number">2.</span> <span class="toc-text">final域</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#final域和线程安全的关系"><span class="toc-number">2.1.</span> <span class="toc-text">final域和线程安全的关系</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Happens-Before规则"><span class="toc-number">3.</span> <span class="toc-text">Happens-Before规则</span></a></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
 
-  
-    <article id="post-线程的基本操作" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" target="_blank">线程的基本操作</a>
-  
-    </h1>
-  
 
 
-  
-  
-<a href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="archive-article-date">
-        <time datetime="2020-06-10T15:15:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-10</time>
-</a>
 
-  
-  
-    
 
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="Thread-join的使用以及原理"><a href="#Thread-join的使用以及原理" class="headerlink" title="Thread.join的使用以及原理"></a>Thread.join的使用以及原理</h3><h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>Thread.join的作用就是保证线程执行结果的可见性。  </p>
-<h4 id="代码演示"><a href="#代码演示" class="headerlink" title="代码演示"></a>代码演示</h4>
-    
-    <a class="article-more-a" href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/#more">more >></a>
-    
-    
 
-    
 
-    
 
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-线程的基本认识" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" target="_blank">线程的基本认识</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" class="archive-article-date">
-        <time datetime="2020-06-09T11:15:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-09</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="线程的基本介绍"><a href="#线程的基本介绍" class="headerlink" title="线程的基本介绍"></a>线程的基本介绍</h3><h5 id="线程基本概念"><a href="#线程基本概念" class="headerlink" title="线程基本概念"></a>线程基本概念</h5><p>线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。  </p>
-<h5 id="为什么会有线程"><a href="#为什么会有线程" class="headerlink" title="为什么会有线程"></a>为什么会有线程</h5><p>（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。<br>（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。<br>（3）线程可以认为是一种轻量级的进程，因此线程的创建、销毁比进程快。  </p>
-<h5 id="为什么要用多线程"><a href="#为什么要用多线程" class="headerlink" title="为什么要用多线程"></a>为什么要用多线程</h5><p>（1）异步执行<br>（2）利用多CPU资源实现真正意义上的并行执行<br></p>
-    
-    <a class="article-more-a" href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-单例模式简单介绍" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" target="_blank">单例模式简单介绍</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
-        <time datetime="2020-05-20T07:45:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-20</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="单例模式的定义及应用场景"><a href="#单例模式的定义及应用场景" class="headerlink" title="单例模式的定义及应用场景"></a>单例模式的定义及应用场景</h3><p>单例模式（Singleton Pattern)是指确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点，也就是隐藏所有的构造方法，属于创建型模式。   </p>
-<p>那么为什么要单例呢？  </p>
-<p>为了防止出现重复的创建，这个类本独有一份，多份会带来麻烦，出现新的问题。<br>例如，Windows 中只能打开一个任务管理器，这样可以避免因打开多个任务管理器窗口而造成内存资源的浪费，或出现各个窗口显示内容的不一致等错误。</p>
-<p>在计算机系统中，还有 Windows 的回收站、操作系统中的文件系统、多线程中的线程池、显卡的驱动程序对象、打印机的后台处理服务、应用程序的日志对象、数据库的连接池、网站的计数器、Web 应用的配置对象、应用程序中的对话框、系统中的缓存等常常被设计成单例。  </p>
-<p>单例模式有 3 个特点：<br></p>
-    
-    <a class="article-more-a" href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-IO模型简介" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" target="_blank">IO模型简介</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" class="archive-article-date">
-        <time datetime="2020-05-19T14:44:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-19</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="阻塞IO模型"><a href="#阻塞IO模型" class="headerlink" title="阻塞IO模型"></a>阻塞IO模型</h3><p>最传统的一种 IO 模型，即在读写数据过程中会发生阻塞现象。<br>当用户线程发出 IO 请求之后，内核会去查看数据是否就绪，如果没有就绪就会等待数据就绪，而用户线程就会处于阻塞状态，用户线程交出 CPU。当数据就绪之后，内核会将数据拷贝到用户线程，并返回结果给用户线程，用户线程才解除 block 状态。<br>典型的阻塞 IO 模型的例子为：<br>data = socket.read();如果数据没有就绪，就会一直阻塞在 read 方法。   </p>
-<h3 id="非阻塞IO模型"><a href="#非阻塞IO模型" class="headerlink" title="非阻塞IO模型"></a>非阻塞IO模型</h3><p> 当用户线程发起一个 read 操作后，并不需要等待，而是马上就得到了一个结果。如果结果是一个<br>error 时，它就知道数据还没有准备好，于是它可以再次发送 read 操作。一旦内核中的数据准备<br>好了，并且又再次收到了用户线程的请求，那么它马上就将数据拷贝到了用户线程，然后返回。<br>所以事实上，在非阻塞 IO 模型中，用户线程需要不断地询问内核数据是否就绪，也就说非阻塞 IO<br>不会交出 CPU，而会一直占用 CPU。    </p>
-<p>典型的非阻塞 IO 模型一般如下：<br></p>
-    
-    <a class="article-more-a" href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">IO模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/IO模型//" class="article-tag-list-link color5">IO模型</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-三大工厂模式" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" target="_blank">三大工厂模式</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-        <time datetime="2020-05-19T07:11:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-19</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="Simple-Factory-Pattern-简单工厂模式"><a href="#Simple-Factory-Pattern-简单工厂模式" class="headerlink" title="Simple Factory Pattern 简单工厂模式"></a>Simple Factory Pattern 简单工厂模式</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>简单工厂模式（Simple Factory Pattern）是指由一个工厂对象决定创建出哪一种产品类的实例。  </p>
-<p>属于创建型模式，但它不属于GOF 23种设计模式。  </p>
-<h4 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h4><p>（1）工厂类创建的对象较少。<br>（2）客户端只需要传入工厂类的参数，对于如何创建对象的逻辑不需要关心。  </p>
-<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>只需要传入一个正确的参数就可以获取你想需要的对象，无需关心其创建细节。  </p>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4>
-    
-    <a class="article-more-a" href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JVM常用命令" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" target="_blank">JVM常用命令</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-        <time datetime="2020-05-18T03:29:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h3><p>JVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。  </p>
-<h4 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h4><p>jps [options] [hostid]    </p>
-<h4 id="option参数"><a href="#option参数" class="headerlink" title="option参数"></a>option参数</h4><p>-l : 输出主类全名或jar路径</p>
-<p>-q : 只输出LVMID</p>
-<p>-m : 输出JVM启动时传递给main()的参数<br></p>
-    
-    <a class="article-more-a" href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JVM垃圾回收" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" target="_blank">JVM垃圾回收</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="archive-article-date">
-        <time datetime="2020-05-17T16:05:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="如何判断一个对象是垃圾"><a href="#如何判断一个对象是垃圾" class="headerlink" title="如何判断一个对象是垃圾"></a>如何判断一个对象是垃圾</h3><p>判断对象是否存活一般有两种方式：</p>
-<p><strong>引用计数：</strong>每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。<br><strong>可达性分析（Reachability Analysis）：</strong>从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。不可达对象。</p>
-<p>在Java语言中，GC Roots包括：</p>
-<p>(1)虚拟机栈中引用的对象。</p>
-<p>(2)方法区中类静态属性实体引用的对象。<br></p>
-    
-    <a class="article-more-a" href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-JVM内存模型" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-  
-  
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" target="_blank">JVM内存模型</a>
-  
-    </h1>
-  
-
-
-  
-  
-<a href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
-        <time datetime="2020-05-17T14:28:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-
-  
-  
-    
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-    
-    <h3 id="由对象推导出内存模型"><a href="#由对象推导出内存模型" class="headerlink" title="由对象推导出内存模型"></a>由对象推导出内存模型</h3><p>先由两张图来阐述：</p>
-<p><img src="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/jvm11.png" alt="upload successful"><br></p>
-    
-    <a class="article-more-a" href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/#more">more >></a>
-    
-    
-
-    
-
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-    
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-    
-    <p class="article-more-link">
-      <a class="article-more-a" href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/">展开全文 >></a>
-    </p>
-    
-
-    
-    <div class="clearfix"></div>
-  </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-  
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -1385,8 +623,8 @@ B.join();
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
