@@ -55,7 +55,7 @@
   <style type="text/css">
     
     #container.show {
-      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+      background: linear-gradient(200deg,#ccc,#000);
     }
   </style>
   
@@ -153,7 +153,7 @@
 			
 			
 			<div>
-				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=66"></iframe>
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=260 height=82 src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=62"></iframe>
 			</div>
 			
 		
@@ -232,8 +232,17 @@
     
       <header class="article-header">
 	  
+   
+   
+   <center><p>
   
+    <h1 class="article-title_code_ant" itemprop="name">
+      泛型的自我认知
+    </h1>
   
+
+</p></center>
+   
   
   
         
@@ -274,18 +283,7 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
-  
-    
-	<center><p>
-  
-    <h1 class="article-title_code_ant" itemprop="name">
-      泛型的自我认知
-    </h1>
-  
-
-</p></center>
 	
-    
     <h3 id="泛型的基本了解"><a href="#泛型的基本了解" class="headerlink" title="泛型的基本了解"></a><em>泛型的基本了解</em></h3><h4 id="泛型的本质"><a href="#泛型的本质" class="headerlink" title="泛型的本质"></a>泛型的本质</h4><p>泛型，即”参数化类型”或者”类型参数化”。<br>提到参数化，最熟悉的就是定义方法时有形参，然后调用此方法时传递实参。<br>那么参数化类型怎么理解呢？顾名思义，就是将类型由原来的具体的类型参数化，类似于方法中的变量参数，此时类型也定义成参数形式（可以称之为类型形参），然后在调用时传入具体的类型（类型实参）</p>
 <p>泛型的本质是为了参数化类型（在不创建新的类型的情况下，通过泛型指定的不同类型来控制形参具体限制的类型）。也就是说在泛型使用过程中，我们要操作的数据类型被指定为一个参数，这种参数类型可以用在类、接口和方法中，分别被称为泛型类、泛型接口、泛型方法。  </p>
 <p>泛型案例:<br> <a id="more"></a><br><img src="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/pasted-0.png" alt="upload successful"><br>通过案例,我们可以知道ArrayList可以存放任意类型,但是如果我们使用泛型进行强制类型的限定则情况就不一样了</p>

@@ -44,7 +44,7 @@
   <style type="text/css">
     
     #container.show {
-      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+      background: linear-gradient(200deg,#ccc,#000);
     }
   </style>
   
@@ -142,7 +142,7 @@
 			
 			
 			<div>
-				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=66"></iframe>
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=260 height=82 src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=62"></iframe>
 			</div>
 			
 		
@@ -221,8 +221,17 @@
     
       <header class="article-header">
 	  
+   
+   
+   <center><p>
   
+    <h1 class="article-title_code_ant" itemprop="name">
+      JVM垃圾回收
+    </h1>
   
+
+</p></center>
+   
   
   
         
@@ -263,18 +272,7 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
-  
-    
-	<center><p>
-  
-    <h1 class="article-title_code_ant" itemprop="name">
-      JVM垃圾回收
-    </h1>
-  
-
-</p></center>
 	
-    
     <h3 id="如何判断一个对象是垃圾"><a href="#如何判断一个对象是垃圾" class="headerlink" title="如何判断一个对象是垃圾"></a>如何判断一个对象是垃圾</h3><p>判断对象是否存活一般有两种方式：</p>
 <p><strong>引用计数：</strong>每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。<br><strong>可达性分析（Reachability Analysis）：</strong>从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。不可达对象。</p>
 <p>在Java语言中，GC Roots包括：</p>

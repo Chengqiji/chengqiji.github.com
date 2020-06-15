@@ -40,7 +40,7 @@
   <style type="text/css">
     
     #container.show {
-      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+      background: linear-gradient(200deg,#ccc,#000);
     }
   </style>
   
@@ -138,7 +138,7 @@
 			
 			
 			<div>
-				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=66"></iframe>
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=260 height=82 src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=62"></iframe>
 			</div>
 			
 		
@@ -217,8 +217,17 @@
     
       <header class="article-header">
 	  
+   
+   
+   <center><p>
   
+    <h1 class="article-title_code_ant" itemprop="name">
+      单例模式简单介绍
+    </h1>
   
+
+</p></center>
+   
   
   
         
@@ -259,18 +268,7 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
-  
-    
-	<center><p>
-  
-    <h1 class="article-title_code_ant" itemprop="name">
-      单例模式简单介绍
-    </h1>
-  
-
-</p></center>
 	
-    
     <h3 id="单例模式的定义及应用场景"><a href="#单例模式的定义及应用场景" class="headerlink" title="单例模式的定义及应用场景"></a>单例模式的定义及应用场景</h3><p>单例模式（Singleton Pattern)是指确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点，也就是隐藏所有的构造方法，属于创建型模式。   </p>
 <p>那么为什么要单例呢？  </p>
 <p>为了防止出现重复的创建，这个类本独有一份，多份会带来麻烦，出现新的问题。<br>例如，Windows 中只能打开一个任务管理器，这样可以避免因打开多个任务管理器窗口而造成内存资源的浪费，或出现各个窗口显示内容的不一致等错误。</p>

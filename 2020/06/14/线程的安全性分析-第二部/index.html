@@ -48,7 +48,7 @@
   <style type="text/css">
     
     #container.show {
-      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+      background: linear-gradient(200deg,#ccc,#000);
     }
   </style>
   
@@ -146,7 +146,7 @@
 			
 			
 			<div>
-				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=66"></iframe>
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=260 height=82 src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=62"></iframe>
 			</div>
 			
 		
@@ -225,8 +225,17 @@
     
       <header class="article-header">
 	  
+   
+   
+   <center><p>
   
+    <h1 class="article-title_code_ant" itemprop="name">
+      线程的安全性分析-第二部
+    </h1>
   
+
+</p></center>
+   
   
   
         
@@ -267,18 +276,7 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
-  
-    
-	<center><p>
-  
-    <h1 class="article-title_code_ant" itemprop="name">
-      线程的安全性分析-第二部
-    </h1>
-  
-
-</p></center>
 	
-    
     <h3 id="volatile关键字分析"><a href="#volatile关键字分析" class="headerlink" title="volatile关键字分析"></a>volatile关键字分析</h3><p>用来解决可见性和有序性问题。  </p>
 <p>本质上来说：volatile是通过内存屏障来防止指令重排序以及禁止CPU高速缓存来解决可见性问题。而#Lock指令，它本质上是通过禁止高速缓存来解决可见性问题，但实际上表示的是一种内存屏障的功能。也就是说针对当前的硬件环境，JMM层面通过lock指令作为内存屏障来解决可见性问题。   </p>
 <p>当程序加了volatile关键字后，会出现一个Lock的字节码指令（作用：将当前处理器缓存行的数据写回到系统内存；这个写回内存的操作会使得其他CPU缓存里存了该地址的数据无效）  </p>

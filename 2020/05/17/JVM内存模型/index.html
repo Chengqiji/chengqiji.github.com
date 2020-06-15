@@ -43,7 +43,7 @@
   <style type="text/css">
     
     #container.show {
-      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+      background: linear-gradient(200deg,#ccc,#000);
     }
   </style>
   
@@ -141,7 +141,7 @@
 			
 			
 			<div>
-				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=66"></iframe>
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=260 height=82 src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=62"></iframe>
 			</div>
 			
 		
@@ -220,8 +220,17 @@
     
       <header class="article-header">
 	  
+   
+   
+   <center><p>
   
+    <h1 class="article-title_code_ant" itemprop="name">
+      JVM内存模型
+    </h1>
   
+
+</p></center>
+   
   
   
         
@@ -262,18 +271,7 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
-  
-    
-	<center><p>
-  
-    <h1 class="article-title_code_ant" itemprop="name">
-      JVM内存模型
-    </h1>
-  
-
-</p></center>
 	
-    
     <h3 id="由对象推导出内存模型"><a href="#由对象推导出内存模型" class="headerlink" title="由对象推导出内存模型"></a>由对象推导出内存模型</h3><p>先由两张图来阐述：</p>
 <p><img src="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/jvm11.png" alt="upload successful"><br> <a id="more"></a><br><img src="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/jvm12.png" alt="upload successful"></p>
 <h3 id="Young区"><a href="#Young区" class="headerlink" title="Young区"></a>Young区</h3><p>Young区分为两大块：Survivor（s0+s1），Eden；比例为1：1：8<br>目的是有百分之10的空间去换取一个空间的连续性问题，也就是解决空间碎片的问题。</p>

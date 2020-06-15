@@ -42,7 +42,7 @@
   <style type="text/css">
     
     #container.show {
-      background: linear-gradient(200deg,#a0cfe4,#e8c37e);
+      background: linear-gradient(200deg,#ccc,#000);
     }
   </style>
   
@@ -140,7 +140,7 @@
 			
 			
 			<div>
-				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="86" src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=66"></iframe>
+				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=260 height=82 src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=62"></iframe>
 			</div>
 			
 		
@@ -219,8 +219,17 @@
     
       <header class="article-header">
 	  
+   
+   
+   <center><p>
   
+    <h1 class="article-title_code_ant" itemprop="name">
+      线程的基本认识
+    </h1>
   
+
+</p></center>
+   
   
   
         
@@ -261,18 +270,7 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
-  
-    
-	<center><p>
-  
-    <h1 class="article-title_code_ant" itemprop="name">
-      线程的基本认识
-    </h1>
-  
-
-</p></center>
 	
-    
     <h3 id="线程的基本介绍"><a href="#线程的基本介绍" class="headerlink" title="线程的基本介绍"></a>线程的基本介绍</h3><h5 id="线程基本概念"><a href="#线程基本概念" class="headerlink" title="线程基本概念"></a>线程基本概念</h5><p>线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。  </p>
 <h5 id="为什么会有线程"><a href="#为什么会有线程" class="headerlink" title="为什么会有线程"></a>为什么会有线程</h5><p>（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。<br>（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。<br>（3）线程可以认为是一种轻量级的进程，因此线程的创建、销毁比进程快。  </p>
 <h5 id="为什么要用多线程"><a href="#为什么要用多线程" class="headerlink" title="为什么要用多线程"></a>为什么要用多线程</h5><p>（1）异步执行<br>（2）利用多CPU资源实现真正意义上的并行执行<br> <a id="more"></a><br>（3）线程作为调度和执行的单位，每个线程拥有独立的运行栈和程序计数器(pc)，线程切换的开<br>销小<br>（4）一个进程中的多个线程共享相同的内存单元/内存地址空间它们从同一堆中分配对象，可以<br>访问相同的变量和对象。这就使得线程间通信更简便、高效。但多个线程操作共享的系统资<br>源可能就会带来安全的隐患。  </p>
