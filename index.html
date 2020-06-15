@@ -138,7 +138,7 @@
 			
 			
 			<div>
-				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=95447&auto=0&height=32"></iframe>
+				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=5066803201&auto=0&height=32"></iframe>
 			</div>
 			
 		
@@ -219,16 +219,9 @@
   <div class="article-inner">
     
       <header class="article-header">
+	  
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/" target="_blank">线程的安全性分析-第二部</a>
-  
-    </h1>
-  
-
-
   
   
 <a href="/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/" class="archive-article-date">
@@ -243,6 +236,19 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
+  
+    
+	<center><p>
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title_code_ant" href="/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/" target="_blank">线程的安全性分析-第二部</a>
+  
+    </h1>
+  
+
+</p></center>
+	
     
     <h3 id="volatile关键字分析"><a href="#volatile关键字分析" class="headerlink" title="volatile关键字分析"></a>volatile关键字分析</h3><p>用来解决可见性和有序性问题。  </p>
 <p>本质上来说：volatile是通过内存屏障来防止指令重排序以及禁止CPU高速缓存来解决可见性问题。而#Lock指令，它本质上是通过禁止高速缓存来解决可见性问题，但实际上表示的是一种内存屏障的功能。也就是说针对当前的硬件环境，JMM层面通过lock指令作为内存屏障来解决可见性问题。   </p>
@@ -321,16 +327,9 @@
   <div class="article-inner">
     
       <header class="article-header">
+	  
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" target="_blank">线程的安全性分析-第一部</a>
-  
-    </h1>
-  
-
-
   
   
 <a href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" class="archive-article-date">
@@ -345,6 +344,19 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
+  
+    
+	<center><p>
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title_code_ant" href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" target="_blank">线程的安全性分析-第一部</a>
+  
+    </h1>
+  
+
+</p></center>
+	
     
     <h3 id="并发编程问题的源头：原子性，可见性，有序性"><a href="#并发编程问题的源头：原子性，可见性，有序性" class="headerlink" title="并发编程问题的源头：原子性，可见性，有序性"></a>并发编程问题的源头：原子性，可见性，有序性</h3><h4 id="如何理解线程安全"><a href="#如何理解线程安全" class="headerlink" title="如何理解线程安全"></a>如何理解线程安全</h4><p>当多个线程访问某个对象时，不论运行时环境采用何种调度方式或者这些线程如何交替执行，并且在主调代码中不采用任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。  </p>
 <h4 id="并发编程起源"><a href="#并发编程起源" class="headerlink" title="并发编程起源"></a>并发编程起源</h4><p>1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I/O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I/O设备。<br>2.为了优化三者速度差异，计算机体系结构，操作系统，编译程序都做出了贡献：<br>（1）CPU增加了缓存，以均衡和内存的速度差异<br>（2）操作系统增加了进程、线程、以及分时复用CPU，进而均衡CPU和I/O设备的速度差异<br></p>
@@ -421,16 +433,9 @@
   <div class="article-inner">
     
       <header class="article-header">
+	  
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" target="_blank">线程的基本操作</a>
-  
-    </h1>
-  
-
-
   
   
 <a href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="archive-article-date">
@@ -445,6 +450,19 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
+  
+    
+	<center><p>
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title_code_ant" href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" target="_blank">线程的基本操作</a>
+  
+    </h1>
+  
+
+</p></center>
+	
     
     <h3 id="Thread-join的使用以及原理"><a href="#Thread-join的使用以及原理" class="headerlink" title="Thread.join的使用以及原理"></a>Thread.join的使用以及原理</h3><h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p>Thread.join的作用就是保证线程执行结果的可见性。  </p>
 <h4 id="代码演示"><a href="#代码演示" class="headerlink" title="代码演示"></a>代码演示</h4>
@@ -521,16 +539,9 @@
   <div class="article-inner">
     
       <header class="article-header">
+	  
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" target="_blank">线程的基本认识</a>
-  
-    </h1>
-  
-
-
   
   
 <a href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" class="archive-article-date">
@@ -545,6 +556,19 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
+  
+    
+	<center><p>
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title_code_ant" href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" target="_blank">线程的基本认识</a>
+  
+    </h1>
+  
+
+</p></center>
+	
     
     <h3 id="线程的基本介绍"><a href="#线程的基本介绍" class="headerlink" title="线程的基本介绍"></a>线程的基本介绍</h3><h5 id="线程基本概念"><a href="#线程基本概念" class="headerlink" title="线程基本概念"></a>线程基本概念</h5><p>线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。  </p>
 <h5 id="为什么会有线程"><a href="#为什么会有线程" class="headerlink" title="为什么会有线程"></a>为什么会有线程</h5><p>（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。<br>（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。<br>（3）线程可以认为是一种轻量级的进程，因此线程的创建、销毁比进程快。  </p>
@@ -622,16 +646,9 @@
   <div class="article-inner">
     
       <header class="article-header">
+	  
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" target="_blank">单例模式简单介绍</a>
-  
-    </h1>
-  
-
-
   
   
 <a href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
@@ -646,6 +663,19 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
+  
+    
+	<center><p>
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title_code_ant" href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" target="_blank">单例模式简单介绍</a>
+  
+    </h1>
+  
+
+</p></center>
+	
     
     <h3 id="单例模式的定义及应用场景"><a href="#单例模式的定义及应用场景" class="headerlink" title="单例模式的定义及应用场景"></a>单例模式的定义及应用场景</h3><p>单例模式（Singleton Pattern)是指确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点，也就是隐藏所有的构造方法，属于创建型模式。   </p>
 <p>那么为什么要单例呢？  </p>
@@ -725,16 +755,9 @@
   <div class="article-inner">
     
       <header class="article-header">
+	  
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" target="_blank">IO模型简介</a>
-  
-    </h1>
-  
-
-
   
   
 <a href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" class="archive-article-date">
@@ -749,6 +772,19 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
+  
+    
+	<center><p>
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title_code_ant" href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" target="_blank">IO模型简介</a>
+  
+    </h1>
+  
+
+</p></center>
+	
     
     <h3 id="阻塞IO模型"><a href="#阻塞IO模型" class="headerlink" title="阻塞IO模型"></a>阻塞IO模型</h3><p>最传统的一种 IO 模型，即在读写数据过程中会发生阻塞现象。<br>当用户线程发出 IO 请求之后，内核会去查看数据是否就绪，如果没有就绪就会等待数据就绪，而用户线程就会处于阻塞状态，用户线程交出 CPU。当数据就绪之后，内核会将数据拷贝到用户线程，并返回结果给用户线程，用户线程才解除 block 状态。<br>典型的阻塞 IO 模型的例子为：<br>data = socket.read();如果数据没有就绪，就会一直阻塞在 read 方法。   </p>
 <h3 id="非阻塞IO模型"><a href="#非阻塞IO模型" class="headerlink" title="非阻塞IO模型"></a>非阻塞IO模型</h3><p> 当用户线程发起一个 read 操作后，并不需要等待，而是马上就得到了一个结果。如果结果是一个<br>error 时，它就知道数据还没有准备好，于是它可以再次发送 read 操作。一旦内核中的数据准备<br>好了，并且又再次收到了用户线程的请求，那么它马上就将数据拷贝到了用户线程，然后返回。<br>所以事实上，在非阻塞 IO 模型中，用户线程需要不断地询问内核数据是否就绪，也就说非阻塞 IO<br>不会交出 CPU，而会一直占用 CPU。    </p>
@@ -826,16 +862,9 @@
   <div class="article-inner">
     
       <header class="article-header">
+	  
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" target="_blank">三大工厂模式</a>
-  
-    </h1>
-  
-
-
   
   
 <a href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
@@ -850,6 +879,19 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
+  
+    
+	<center><p>
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title_code_ant" href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" target="_blank">三大工厂模式</a>
+  
+    </h1>
+  
+
+</p></center>
+	
     
     <h3 id="Simple-Factory-Pattern-简单工厂模式"><a href="#Simple-Factory-Pattern-简单工厂模式" class="headerlink" title="Simple Factory Pattern 简单工厂模式"></a>Simple Factory Pattern 简单工厂模式</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>简单工厂模式（Simple Factory Pattern）是指由一个工厂对象决定创建出哪一种产品类的实例。  </p>
 <p>属于创建型模式，但它不属于GOF 23种设计模式。  </p>
@@ -929,16 +971,9 @@
   <div class="article-inner">
     
       <header class="article-header">
+	  
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" target="_blank">JVM常用命令</a>
-  
-    </h1>
-  
-
-
   
   
 <a href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="archive-article-date">
@@ -953,6 +988,19 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
+  
+    
+	<center><p>
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title_code_ant" href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" target="_blank">JVM常用命令</a>
+  
+    </h1>
+  
+
+</p></center>
+	
     
     <h3 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h3><p>JVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。  </p>
 <h4 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h4><p>jps [options] [hostid]    </p>
@@ -1032,16 +1080,9 @@
   <div class="article-inner">
     
       <header class="article-header">
+	  
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" target="_blank">JVM垃圾回收</a>
-  
-    </h1>
-  
-
-
   
   
 <a href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="archive-article-date">
@@ -1056,6 +1097,19 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
+  
+    
+	<center><p>
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title_code_ant" href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" target="_blank">JVM垃圾回收</a>
+  
+    </h1>
+  
+
+</p></center>
+	
     
     <h3 id="如何判断一个对象是垃圾"><a href="#如何判断一个对象是垃圾" class="headerlink" title="如何判断一个对象是垃圾"></a>如何判断一个对象是垃圾</h3><p>判断对象是否存活一般有两种方式：</p>
 <p><strong>引用计数：</strong>每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。<br><strong>可达性分析（Reachability Analysis）：</strong>从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。不可达对象。</p>
@@ -1135,16 +1189,9 @@
   <div class="article-inner">
     
       <header class="article-header">
+	  
   
   
-    <h1 itemprop="name">
-	
-	  <a class="article-title" href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" target="_blank">JVM内存模型</a>
-  
-    </h1>
-  
-
-
   
   
 <a href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
@@ -1159,6 +1206,19 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
+  
+    
+	<center><p>
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title_code_ant" href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" target="_blank">JVM内存模型</a>
+  
+    </h1>
+  
+
+</p></center>
+	
     
     <h3 id="由对象推导出内存模型"><a href="#由对象推导出内存模型" class="headerlink" title="由对象推导出内存模型"></a>由对象推导出内存模型</h3><p>先由两张图来阐述：</p>
 <p><img src="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/jvm11.png" alt="upload successful"><br></p>

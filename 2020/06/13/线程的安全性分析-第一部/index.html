@@ -145,7 +145,7 @@
 			
 			
 			<div>
-				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=95447&auto=0&height=32"></iframe>
+				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=5066803201&auto=0&height=32"></iframe>
 			</div>
 			
 		
@@ -223,14 +223,9 @@
   <div class="article-inner">
     
       <header class="article-header">
+	  
   
   
-    <h1 class="article-title" itemprop="name">
-      线程的安全性分析-第一部
-    </h1>
-  
-
-
   
   
         
@@ -271,6 +266,17 @@
   </header>
   
   <div class="article-entry" itemprop="articleBody">
+  
+    
+	<center><p>
+  
+    <h1 class="article-title_code_ant" itemprop="name">
+      线程的安全性分析-第一部
+    </h1>
+  
+
+</p></center>
+	
     
     <h3 id="并发编程问题的源头：原子性，可见性，有序性"><a href="#并发编程问题的源头：原子性，可见性，有序性" class="headerlink" title="并发编程问题的源头：原子性，可见性，有序性"></a>并发编程问题的源头：原子性，可见性，有序性</h3><h4 id="如何理解线程安全"><a href="#如何理解线程安全" class="headerlink" title="如何理解线程安全"></a>如何理解线程安全</h4><p>当多个线程访问某个对象时，不论运行时环境采用何种调度方式或者这些线程如何交替执行，并且在主调代码中不采用任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。  </p>
 <h4 id="并发编程起源"><a href="#并发编程起源" class="headerlink" title="并发编程起源"></a>并发编程起源</h4><p>1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I/O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I/O设备。<br>2.为了优化三者速度差异，计算机体系结构，操作系统，编译程序都做出了贡献：<br>（1）CPU增加了缓存，以均衡和内存的速度差异<br>（2）操作系统增加了进程、线程、以及分时复用CPU，进而均衡CPU和I/O设备的速度差异<br> <a id="more"></a><br>（3）编译程序优化指令的执行顺序，使得能够更加合理的利用缓存<br>但是这些优化改变也就导致了原子性，可见性，有序性问题。  </p>
