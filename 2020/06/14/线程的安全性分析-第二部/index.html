@@ -5,7 +5,7 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://chengqijie.gitee.io">
+  <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
   <title>线程的安全性分析-第二部 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,23 +13,23 @@
   <meta name="description" content="volatile关键字分析用来解决可见性和有序性问题。   本质上来说：volatile是通过内存屏障来防止指令重排序以及禁止CPU高速缓存来解决可见性问题。而#Lock指令，它本质上是通过禁止高速缓存来解决可见性问题，但实际上表示的是一种内存屏障的功能。也就是说针对当前的硬件环境，JMM层面通过lock指令作为内存屏障来解决可见性问题。    当程序加了volatile关键字后，会出现一个Loc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线程的安全性分析-第二部">
-<meta property="og:url" content="http://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/index.html">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:description" content="volatile关键字分析用来解决可见性和有序性问题。   本质上来说：volatile是通过内存屏障来防止指令重排序以及禁止CPU高速缓存来解决可见性问题。而#Lock指令，它本质上是通过禁止高速缓存来解决可见性问题，但实际上表示的是一种内存屏障的功能。也就是说针对当前的硬件环境，JMM层面通过lock指令作为内存屏障来解决可见性问题。    当程序加了volatile关键字后，会出现一个Loc">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread09.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread10.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread11.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread12.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread13.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread14.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread15.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread09.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread10.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread11.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread12.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread13.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread14.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread15.png">
 <meta property="article:published_time" content="2020-06-14T00:06:50.000Z">
 <meta property="article:modified_time" content="2020-06-14T15:08:52.808Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta property="article:tag" content="并发编程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread09.png">
+<meta name="twitter:image" content="https://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/thread09.png">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -423,7 +423,7 @@ B.join();
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://chengqijie.gitee.io/2020/06/14/线程的安全性分析-第二部/" title="线程的安全性分析-第二部" target="_blank">http://chengqijie.gitee.io/2020/06/14/线程的安全性分析-第二部/</a>
+          <a href="https://chengqijie.gitee.io/2020/06/14/线程的安全性分析-第二部/" title="线程的安全性分析-第二部" target="_blank">https://chengqijie.gitee.io/2020/06/14/线程的安全性分析-第二部/</a>
         </li>
         
         <li>
@@ -512,7 +512,7 @@ B.join();
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -585,7 +585,7 @@ B.join();
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018-2020 <a href="http://chengqijie.gitee.io/" target="_blank">Stephen Cheng</a>
+    		&copy; 2018-2020 <a href="https://chengqijie.gitee.io/" target="_blank">Stephen Cheng</a>
     	</div>
       	<div class="footer-right">
 			

@@ -5,7 +5,7 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://chengqijie.gitee.io">
+  <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
   <title>JVM运行时数据区 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,21 +13,21 @@
   <meta name="description" content="官网解读翻译过来就是：Java虚拟机定义了在程序执行期间使用的各种运行时数据区域。其中一些数据区域是在Java虚拟机启动时创建的，只有在Java虚拟机退出时才会被销毁。其他数据区域是每个线程。每个线程数据区域在创建线程时创建，在线程退出时销毁。运行时数据区分为一下几类：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM运行时数据区">
-<meta property="og:url" content="http://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/index.html">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:description" content="官网解读翻译过来就是：Java虚拟机定义了在程序执行期间使用的各种运行时数据区域。其中一些数据区域是在Java虚拟机启动时创建的，只有在Java虚拟机退出时才会被销毁。其他数据区域是每个线程。每个线程数据区域在创建线程时创建，在线程退出时销毁。运行时数据区分为一下几类：">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm06.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm07.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm08.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm09.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm10.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm06.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm07.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm08.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm09.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm10.png">
 <meta property="article:published_time" content="2020-05-17T13:18:50.000Z">
 <meta property="article:modified_time" content="2020-05-17T13:22:29.359Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm06.png">
+<meta name="twitter:image" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm06.png">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -296,7 +296,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://chengqijie.gitee.io/2020/05/17/JVM运行时数据区/" title="JVM运行时数据区" target="_blank">http://chengqijie.gitee.io/2020/05/17/JVM运行时数据区/</a>
+          <a href="https://chengqijie.gitee.io/2020/05/17/JVM运行时数据区/" title="JVM运行时数据区" target="_blank">https://chengqijie.gitee.io/2020/05/17/JVM运行时数据区/</a>
         </li>
         
         <li>
@@ -385,7 +385,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -467,7 +467,7 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018-2020 <a href="http://chengqijie.gitee.io/" target="_blank">Stephen Cheng</a>
+    		&copy; 2018-2020 <a href="https://chengqijie.gitee.io/" target="_blank">Stephen Cheng</a>
     	</div>
       	<div class="footer-right">
 			

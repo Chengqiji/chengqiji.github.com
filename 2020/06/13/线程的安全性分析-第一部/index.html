@@ -5,7 +5,7 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://chengqijie.gitee.io">
+  <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
   <title>线程的安全性分析-第一部 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -13,22 +13,22 @@
   <meta name="description" content="并发编程问题的源头：原子性，可见性，有序性如何理解线程安全当多个线程访问某个对象时，不论运行时环境采用何种调度方式或者这些线程如何交替执行，并且在主调代码中不采用任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。   并发编程起源1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I&#x2F;O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I&#x2F;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线程的安全性分析-第一部">
-<meta property="og:url" content="http://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/index.html">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:description" content="并发编程问题的源头：原子性，可见性，有序性如何理解线程安全当多个线程访问某个对象时，不论运行时环境采用何种调度方式或者这些线程如何交替执行，并且在主调代码中不采用任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。   并发编程起源1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I&#x2F;O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I&#x2F;">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread03.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread04.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread05.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread06.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread07.png">
-<meta property="og:image" content="http://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread08.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread03.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread04.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread05.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread06.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread07.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread08.png">
 <meta property="article:published_time" content="2020-06-13T00:49:50.000Z">
 <meta property="article:modified_time" content="2020-06-13T17:49:58.925Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta property="article:tag" content="并发编程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread03.png">
+<meta name="twitter:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread03.png">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -489,7 +489,7 @@ IRT_END</code></pre>
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="http://chengqijie.gitee.io/2020/06/13/线程的安全性分析-第一部/" title="线程的安全性分析-第一部" target="_blank">http://chengqijie.gitee.io/2020/06/13/线程的安全性分析-第一部/</a>
+          <a href="https://chengqijie.gitee.io/2020/06/13/线程的安全性分析-第一部/" title="线程的安全性分析-第一部" target="_blank">https://chengqijie.gitee.io/2020/06/13/线程的安全性分析-第一部/</a>
         </li>
         
         <li>
@@ -578,7 +578,7 @@ IRT_END</code></pre>
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=http://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -660,7 +660,7 @@ IRT_END</code></pre>
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-    		&copy; 2018-2020 <a href="http://chengqijie.gitee.io/" target="_blank">Stephen Cheng</a>
+    		&copy; 2018-2020 <a href="https://chengqijie.gitee.io/" target="_blank">Stephen Cheng</a>
     	</div>
       	<div class="footer-right">
 			
