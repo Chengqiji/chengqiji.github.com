@@ -3,6 +3,11 @@
 <head>
   <meta charset="utf-8">
   
+  
+  
+	<meta name="keywords" content="单例模式,博客">
+	
+  
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
@@ -18,9 +23,9 @@
 <meta property="og:description" content="单例模式的定义及应用场景单例模式（Singleton Pattern)是指确保一个类在任何情况下都绝对只有一个实例，并提供一个全局访问点，也就是隐藏所有的构造方法，属于创建型模式。    那么为什么要单例呢？   为了防止出现重复的创建，这个类本独有一份，多份会带来麻烦，出现新的问题。例如，Windows 中只能打开一个任务管理器，这样可以避免因打开多个任务管理器窗口而造成内存资源的浪费，或出现各">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2020-05-20T07:45:50.000Z">
-<meta property="article:modified_time" content="2020-05-20T07:43:54.004Z">
+<meta property="article:modified_time" content="2020-06-15T10:03:40.551Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="设计模式">
+<meta property="article:tag" content="单例模式">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
@@ -66,7 +71,7 @@
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="https://cn.bing.com/images/search?view=detailV2&ccid=mpYDm52T&id=C29FDEDB855C20E7E63B3B9BA8CBEA05B061507E&thid=OIP.mpYDm52TfnY-unjYaQ_opgHaHa&mediaurl=http%3a%2f%2fwww.beihaiting.com%2fuploads%2fallimg%2f160213%2f10723-160213133Z9451.jpg&exph=500&expw=500&q=%e5%91%a8%e6%98%9f%e9%a9%b0%e9%ab%98%e6%b8%85%e5%a4%b4%e5%83%8f%e5%9b%be%e7%89%87&simid=608047354627820917&ck=847D079C168790263695C1CDE964A3FA&selectedIndex=15&ajaxhist=0" class="js-avatar">
+			<img src="http://www.beihaiting.com/uploads/allimg/160213/10723-160213133Z9451.jpg" class="js-avatar">
 		</a>
 		<hgroup>
 			<h1 class="header-author"><a href="/">Stephen Cheng</a></h1>
@@ -137,7 +142,7 @@
 		<header id="header" class="inner">
 			<div class="profilepic">
 				<a href="/">
-					<img src="https://cn.bing.com/images/search?view=detailV2&ccid=mpYDm52T&id=C29FDEDB855C20E7E63B3B9BA8CBEA05B061507E&thid=OIP.mpYDm52TfnY-unjYaQ_opgHaHa&mediaurl=http%3a%2f%2fwww.beihaiting.com%2fuploads%2fallimg%2f160213%2f10723-160213133Z9451.jpg&exph=500&expw=500&q=%e5%91%a8%e6%98%9f%e9%a9%b0%e9%ab%98%e6%b8%85%e5%a4%b4%e5%83%8f%e5%9b%be%e7%89%87&simid=608047354627820917&ck=847D079C168790263695C1CDE964A3FA&selectedIndex=15&ajaxhist=0" class="js-avatar">
+					<img src="http://www.beihaiting.com/uploads/allimg/160213/10723-160213133Z9451.jpg" class="js-avatar">
 				</a>
 			</div>
 			<hgroup>
