@@ -46,7 +46,7 @@
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
   
-    <link rel="icon" href="/img/icoXing.png">
+    <link rel="icon" href="/img/avater.jpg">
   
   
     <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png">
@@ -82,11 +82,28 @@
       
 
 
-<div class="overlay" style="background: #4d4d4d;background: url('/img/sea.gif') no-repeat ;"></div>
+<div class="overlay" style="background: #4d4d4d;background: url('/img/sea.gif') no-repeat ;">
+<!-- 添加“心知天气”-->
+<div id="tp-weather-widget"></div>
+  <script>
+    (function(a,h,g,f,e,d,c,b){b=function(){d=h.createElement(g);c=h.getElementsByTagName(g)[0];d.src=e;d.charset="utf-8";d.async=1;c.parentNode.insertBefore(d,c)};a["SeniverseWeatherWidgetObject"]=f;a[f]||(a[f]=function(){(a[f].q=a[f].q||[]).push(arguments)});a[f].l=+new Date();if(a.attachEvent){a.attachEvent("onload",b)}else{a.addEventListener("load",b,false)}}(window,document,"script","SeniverseWeatherWidget","//cdn.sencdn.com/widget2/static/js/bundle.js?t="+parseInt((new Date().getTime() / 100000000).toString(),10)));
+    window.SeniverseWeatherWidget('show', {
+      flavor: "slim",
+      location: "WM7B0X53DZW2",
+      geolocation: true,
+      language: "zh-Hans",
+      unit: "c",
+      theme: "auto",
+      token: "010c1f7c-c754-47f1-b883-24972e5057b3",
+      hover: "enabled",
+      container: "tp-weather-widget"
+    })
+  </script>
+</div>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
-			<img src="http://www.beihaiting.com/uploads/allimg/160213/10723-160213133Z9451.jpg" class="js-avatar">
+			<img src="http://a1.qpic.cn/psc?/V12EP7FO3PHNn0/.GvYSzOiitXBn4c048fBdWDDYslVcTCGq0P8MwLOf4KD682n0r1*Kn1Itn3agO4dw9SiBODVr*mbNU6TX199og!!/b&ek=1&kp=1&pt=0&bo=wQHBAcEBwQEDIAU!&tl=1&vuin=337252068&tm=1592222400&sce=60-1-1&rf=viewer_311" class="js-avatar">
 		</a>
 		<hgroup>
 			<h1 class="header-author"><a href="/">Stephen Cheng</a></h1>
@@ -157,7 +174,7 @@
 		<header id="header" class="inner">
 			<div class="profilepic">
 				<a href="/">
-					<img src="http://www.beihaiting.com/uploads/allimg/160213/10723-160213133Z9451.jpg" class="js-avatar">
+					<img src="http://a1.qpic.cn/psc?/V12EP7FO3PHNn0/.GvYSzOiitXBn4c048fBdWDDYslVcTCGq0P8MwLOf4KD682n0r1*Kn1Itn3agO4dw9SiBODVr*mbNU6TX199og!!/b&ek=1&kp=1&pt=0&bo=wQHBAcEBwQEDIAU!&tl=1&vuin=337252068&tm=1592222400&sce=60-1-1&rf=viewer_311" class="js-avatar">
 				</a>
 			</div>
 			<hgroup>
