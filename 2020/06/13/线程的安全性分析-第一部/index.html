@@ -15,13 +15,12 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="并发编程问题的源头：原子性，可见性，有序性如何理解线程安全当多个线程访问某个对象时，不论运行时环境采用何种调度方式或者这些线程如何交替执行，并且在主调代码中不采用任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。   并发编程起源1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I&#x2F;O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I&#x2F;">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="线程的安全性分析-第一部">
 <meta property="og:url" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
-<meta property="og:description" content="并发编程问题的源头：原子性，可见性，有序性如何理解线程安全当多个线程访问某个对象时，不论运行时环境采用何种调度方式或者这些线程如何交替执行，并且在主调代码中不采用任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。   并发编程起源1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I&#x2F;O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I&#x2F;">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread03.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread04.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread05.png">
@@ -29,11 +28,11 @@
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread07.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread08.png">
 <meta property="article:published_time" content="2020-06-13T00:49:50.000Z">
-<meta property="article:modified_time" content="2020-06-15T10:03:17.286Z">
+<meta property="article:modified_time" content="2020-06-16T00:47:19.528Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chengqijie.gitee.io/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread03.png">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -145,7 +144,7 @@
 			
 			
 			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=260 height=82 src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=62"></iframe>
+				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1297742167&auto=1&height=32"></iframe>
 			</div>
 			
 		
@@ -276,8 +275,12 @@
   
   <div class="article-entry" itemprop="articleBody">
 	
-    <h3 id="并发编程问题的源头：原子性，可见性，有序性"><a href="#并发编程问题的源头：原子性，可见性，有序性" class="headerlink" title="并发编程问题的源头：原子性，可见性，有序性"></a>并发编程问题的源头：原子性，可见性，有序性</h3><h4 id="如何理解线程安全"><a href="#如何理解线程安全" class="headerlink" title="如何理解线程安全"></a>如何理解线程安全</h4><p>当多个线程访问某个对象时，不论运行时环境采用何种调度方式或者这些线程如何交替执行，并且在主调代码中不采用任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。  </p>
-<h4 id="并发编程起源"><a href="#并发编程起源" class="headerlink" title="并发编程起源"></a>并发编程起源</h4><p>1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I/O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I/O设备。<br>2.为了优化三者速度差异，计算机体系结构，操作系统，编译程序都做出了贡献：<br>（1）CPU增加了缓存，以均衡和内存的速度差异<br>（2）操作系统增加了进程、线程、以及分时复用CPU，进而均衡CPU和I/O设备的速度差异<br> <a id="more"></a><br>（3）编译程序优化指令的执行顺序，使得能够更加合理的利用缓存<br>但是这些优化改变也就导致了原子性，可见性，有序性问题。  </p>
+    <img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80" style="zoom:100%">  
+ <a id="more"></a>   
+
+
+<h3 id="并发编程问题的源头：原子性，可见性，有序性"><a href="#并发编程问题的源头：原子性，可见性，有序性" class="headerlink" title="并发编程问题的源头：原子性，可见性，有序性"></a>并发编程问题的源头：原子性，可见性，有序性</h3><h4 id="如何理解线程安全"><a href="#如何理解线程安全" class="headerlink" title="如何理解线程安全"></a>如何理解线程安全</h4><p>当多个线程访问某个对象时，不论运行时环境采用何种调度方式或者这些线程如何交替执行，并且在主调代码中不采用任何额外的同步或者协同，这个类都能表现出正确的行为，那么就称这个类是线程安全的。  </p>
+<h4 id="并发编程起源"><a href="#并发编程起源" class="headerlink" title="并发编程起源"></a>并发编程起源</h4><p>1.对于硬件设备发展来说，它有一个核心矛盾：CPU、内存、I/O三者之间存在着速度差异，根据木桶效应，程序整体性能最终受限制于速度最慢的I/O设备。<br>2.为了优化三者速度差异，计算机体系结构，操作系统，编译程序都做出了贡献：<br>（1）CPU增加了缓存，以均衡和内存的速度差异<br>（2）操作系统增加了进程、线程、以及分时复用CPU，进而均衡CPU和I/O设备的速度差异<br>（3）编译程序优化指令的执行顺序，使得能够更加合理的利用缓存<br>但是这些优化改变也就导致了原子性，可见性，有序性问题。  </p>
 <h4 id="缓存导致的可见性问题"><a href="#缓存导致的可见性问题" class="headerlink" title="缓存导致的可见性问题"></a>缓存导致的可见性问题</h4><p><code>一个线程对共享变量改变时，另一个线程可以立即看到</code><br>在单核CPU中，所有线程都在一个CPU上云析，CPU缓存与内存的数据一致性很容易解决。比如说当线程A与线程B操作的是同一个CPU里的缓存，当A修改里面的某一个变量时，线程B再去修改的一定是线程A修改过后的值。<br><img src="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread03.png" alt="Alt text"><br>在多核CPU中，每个CPU都有各自的缓存，当多个线程在不同CPU上执行时，这些线程操作的就是不同CPU的缓存。也就比如说，当线程A去修改CPU-1中变量的值，它对与线程B来说具有不可见性。<br><img src="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread04.png" alt="Alt text">  </p>
 <h4 id="线程切换带来的原子性问题"><a href="#线程切换带来的原子性问题" class="headerlink" title="线程切换带来的原子性问题"></a>线程切换带来的原子性问题</h4><p><code>我们把一个或者一组操作在CPU执行的过程中不被中断的特性成为原子性（要么全部执行，要么全部不执行）。CPU可以保证的原子操作时CPU指令级别的，而高级语言层面保证操作的原子性。</code><br>在高级语言里，一条语句往往需要多条CPU指令完成，例如 count ++ ；至少需要三条CPU指令<br>（1）把count从内存中加载到CPU寄存器中<br>（2）在寄存器中执行+1的操作<br>（3）将结果写入内存，缓存机制可能导致结果写入的是CPU缓存而不是内存<br>操作系统中的线程切换可以在CPU任何一条指令执行完的时候。比如说，线程A在执行完第一条CPU指令的时候发生了线程切换，线程B会以自己的顺序基于线程A操作变量的原始值完成操作，这样就得不到预期的结果。<br><img src="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/thread05.png" alt="Alt text">  </p>
 <h4 id="编译优化带来的有序性问题"><a href="#编译优化带来的有序性问题" class="headerlink" title="编译优化带来的有序性问题"></a>编译优化带来的有序性问题</h4><p>有序性指的是程序按照代码先后顺序执行。而编译器为了优化性能，有时候会改变程序中代码的执行顺序。经典的例子就是双重检查锁定的单例模式（不加volatile修饰和构造器）：  </p>

@@ -15,20 +15,19 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="线程的基本介绍线程基本概念线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。   为什么会有线程（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。（3）线程可以认为是一种轻">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="线程的基本认识">
 <meta property="og:url" content="https://chengqijie.gitee.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
-<meta property="og:description" content="线程的基本介绍线程基本概念线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。   为什么会有线程（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。（3）线程可以认为是一种轻">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.unsplash.com/photo-1591705599349-febbe70ed494?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/thread01.png">
 <meta property="article:published_time" content="2020-06-09T11:15:50.000Z">
-<meta property="article:modified_time" content="2020-06-15T10:04:55.583Z">
+<meta property="article:modified_time" content="2020-06-16T01:08:45.883Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chengqijie.gitee.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/thread01.png">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1591705599349-febbe70ed494?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -140,7 +139,7 @@
 			
 			
 			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=260 height=82 src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=62"></iframe>
+				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1297742167&auto=1&height=32"></iframe>
 			</div>
 			
 		
@@ -271,9 +270,14 @@
   
   <div class="article-entry" itemprop="articleBody">
 	
-    <h3 id="线程的基本介绍"><a href="#线程的基本介绍" class="headerlink" title="线程的基本介绍"></a>线程的基本介绍</h3><h5 id="线程基本概念"><a href="#线程基本概念" class="headerlink" title="线程基本概念"></a>线程基本概念</h5><p>线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。  </p>
+    <img src="https://images.unsplash.com/photo-1591705599349-febbe70ed494?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" style="width:100%">  
+<a id="more"></a>  
+
+
+
+<h3 id="线程的基本介绍"><a href="#线程的基本介绍" class="headerlink" title="线程的基本介绍"></a>线程的基本介绍</h3><h5 id="线程基本概念"><a href="#线程基本概念" class="headerlink" title="线程基本概念"></a>线程基本概念</h5><p>线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。  </p>
 <h5 id="为什么会有线程"><a href="#为什么会有线程" class="headerlink" title="为什么会有线程"></a>为什么会有线程</h5><p>（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。<br>（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。<br>（3）线程可以认为是一种轻量级的进程，因此线程的创建、销毁比进程快。  </p>
-<h5 id="为什么要用多线程"><a href="#为什么要用多线程" class="headerlink" title="为什么要用多线程"></a>为什么要用多线程</h5><p>（1）异步执行<br>（2）利用多CPU资源实现真正意义上的并行执行<br> <a id="more"></a><br>（3）线程作为调度和执行的单位，每个线程拥有独立的运行栈和程序计数器(pc)，线程切换的开<br>销小<br>（4）一个进程中的多个线程共享相同的内存单元/内存地址空间它们从同一堆中分配对象，可以<br>访问相同的变量和对象。这就使得线程间通信更简便、高效。但多个线程操作共享的系统资<br>源可能就会带来安全的隐患。  </p>
+<h5 id="为什么要用多线程"><a href="#为什么要用多线程" class="headerlink" title="为什么要用多线程"></a>为什么要用多线程</h5><p>（1）异步执行<br>（2）利用多CPU资源实现真正意义上的并行执行<br> <!--more--><br>（3）线程作为调度和执行的单位，每个线程拥有独立的运行栈和程序计数器(pc)，线程切换的开<br>销小<br>（4）一个进程中的多个线程共享相同的内存单元/内存地址空间它们从同一堆中分配对象，可以<br>访问相同的变量和对象。这就使得线程间通信更简便、高效。但多个线程操作共享的系统资<br>源可能就会带来安全的隐患。  </p>
 <h5 id="多线程应用场景"><a href="#多线程应用场景" class="headerlink" title="多线程应用场景"></a>多线程应用场景</h5><p>（1）使用多线程实现文件下载<br>（2）后台任务：如定时向大量用户发送邮件<br>（3）异步处理：记录日志<br>（4）多步骤的任务处理，可根据任务步骤的特征选用不用个数和特征的线程来协作处理，多任务的分割，由一个主线程分割给多个线程去完成。  </p>
 <h5 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h5><p>多线程的本质是：合理的利用多核心CPU资源来实现线程的并行处理，来实现同一个进程内不同任务的并行执行，同时基于线程本身的异步执行特性，提升任务处理的效率。  </p>
 <h3 id="Java线程的生命周期"><a href="#Java线程的生命周期" class="headerlink" title="Java线程的生命周期"></a>Java线程的生命周期</h3><p><strong>Java线程从创建到销毁，一共可能经历六种状态：</strong><br><code>NEW：</code>  初始状态，线程被构建，当一个Thread类或其子类的对象被声明并创建时，新生的线程对象处于新建状态。但是还没有调用start方法     </p>

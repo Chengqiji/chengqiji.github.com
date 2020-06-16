@@ -15,24 +15,23 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="官网解读翻译过来就是：Java虚拟机定义了在程序执行期间使用的各种运行时数据区域。其中一些数据区域是在Java虚拟机启动时创建的，只有在Java虚拟机退出时才会被销毁。其他数据区域是每个线程。每个线程数据区域在创建线程时创建，在线程退出时销毁。运行时数据区分为一下几类：">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="JVM运行时数据区">
 <meta property="og:url" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
-<meta property="og:description" content="官网解读翻译过来就是：Java虚拟机定义了在程序执行期间使用的各种运行时数据区域。其中一些数据区域是在Java虚拟机启动时创建的，只有在Java虚拟机退出时才会被销毁。其他数据区域是每个线程。每个线程数据区域在创建线程时创建，在线程退出时销毁。运行时数据区分为一下几类：">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.unsplash.com/photo-1591870178130-3a0735841ceb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm06.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm07.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm08.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm09.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm10.png">
 <meta property="article:published_time" content="2020-05-17T13:18:50.000Z">
-<meta property="article:modified_time" content="2020-06-15T10:03:00.861Z">
+<meta property="article:modified_time" content="2020-06-16T01:03:18.887Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chengqijie.gitee.io/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm06.png">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1591870178130-3a0735841ceb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -144,7 +143,7 @@
 			
 			
 			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=260 height=82 src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=62"></iframe>
+				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1297742167&auto=1&height=32"></iframe>
 			</div>
 			
 		
@@ -275,7 +274,11 @@
   
   <div class="article-entry" itemprop="articleBody">
 	
-    <h3 id="官网解读"><a href="#官网解读" class="headerlink" title="官网解读"></a>官网解读</h3><p><img src="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm06.png" alt="upload successful"><br>翻译过来就是：Java虚拟机定义了在程序执行期间使用的各种运行时数据区域。其中一些数据区域是在Java虚拟机启动时创建的，只有在Java虚拟机退出时才会被销毁。其他数据区域是每个线程。每个线程数据区域在创建线程时创建，在线程退出时销毁。<br><strong>运行时数据区分为一下几类：</strong><br><img src="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm07.png" alt="upload successful"><br> <a id="more"></a><br><img src="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm08.png" alt="upload successful"></p>
+    <img src="https://images.unsplash.com/photo-1591870178130-3a0735841ceb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" style="width:100%">  
+<a id="more"></a>  
+
+
+<h3 id="官网解读"><a href="#官网解读" class="headerlink" title="官网解读"></a>官网解读</h3><p><img src="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm06.png" alt="upload successful"><br>翻译过来就是：Java虚拟机定义了在程序执行期间使用的各种运行时数据区域。其中一些数据区域是在Java虚拟机启动时创建的，只有在Java虚拟机退出时才会被销毁。其他数据区域是每个线程。每个线程数据区域在创建线程时创建，在线程退出时销毁。<br><strong>运行时数据区分为一下几类：</strong><br><img src="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm07.png" alt="upload successful"><br> <!--more--><br><img src="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/jvm08.png" alt="upload successful"></p>
 <h3 id="方法区"><a href="#方法区" class="headerlink" title="方法区"></a>方法区</h3><p>通过官网对方法区的定义，我们可以总结为一下几点：   </p>
 <p>(1)方法区是各个线程共享的内存区域，在虚拟机启动时创建。<br>(2)用于存储已被虚拟机加载的类信息，常量，静态变量，即时编译器编译后的代码等数据。<br>(3)虽然java虚拟机规范把方法区描述为堆的一个逻辑部分，但是它又有一个别名叫做Non-Heap，也就是“非堆”，目的是与java堆区分开来。<br>(4)当方法区无法满足内存分配需求时，将抛出OutOfMemoryError异常。<br>(5)方法区在JDK8中就是Metaspace（元空间）,在JDK6 7中是Perm Space（永久代）。<br>(6)Run-Time Constant Pool（常量池）在方法区分配。    </p>
 <p>大家可以联想到，方法区的这些数据都是线程非安全的。因为它是被多个线程所共享的，它就会被多个线程区操作同一个数据，而导致数据的不一致性。</p>

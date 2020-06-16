@@ -15,22 +15,21 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="jpsJVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。   命令格式jps [options] [hostid]     option参数-l : 输出主类全名或jar路径 -q : 只输出LVMID -m : 输出JVM启动时传递给main()的参数">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="JVM常用命令">
 <meta property="og:url" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
-<meta property="og:description" content="jpsJVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。   命令格式jps [options] [hostid]     option参数-l : 输出主类全名或jar路径 -q : 只输出LVMID -m : 输出JVM启动时传递给main()的参数">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.unsplash.com/photo-1591814116567-0ec18eabcf1b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/jvm17.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/jvm18.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/jvm19.png">
 <meta property="article:published_time" content="2020-05-18T03:29:50.000Z">
-<meta property="article:modified_time" content="2020-06-15T10:02:16.464Z">
+<meta property="article:modified_time" content="2020-06-16T00:56:52.033Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/jvm17.png">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1591814116567-0ec18eabcf1b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -142,7 +141,7 @@
 			
 			
 			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=260 height=82 src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=62"></iframe>
+				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1297742167&auto=1&height=32"></iframe>
 			</div>
 			
 		
@@ -273,11 +272,15 @@
   
   <div class="article-entry" itemprop="articleBody">
 	
-    <h3 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h3><p>JVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。  </p>
+    <img src="https://images.unsplash.com/photo-1591814116567-0ec18eabcf1b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" style="width:100%">  
+<a id="more"></a>  
+
+
+<h3 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h3><p>JVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。  </p>
 <h4 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h4><p>jps [options] [hostid]    </p>
 <h4 id="option参数"><a href="#option参数" class="headerlink" title="option参数"></a>option参数</h4><p>-l : 输出主类全名或jar路径</p>
 <p>-q : 只输出LVMID</p>
-<p>-m : 输出JVM启动时传递给main()的参数<br> <a id="more"></a><br>-v : 输出JVM启动时显示指定的JVM参数  </p>
+<p>-m : 输出JVM启动时传递给main()的参数<br> <!--more--><br>-v : 输出JVM启动时显示指定的JVM参数  </p>
 <p>其中[option]、[hostid]参数也可以不写。<br><img src="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/jvm17.png" alt="Alt text"></p>
 <h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p>jstat(JVM statistics Monitoring)是用于监视虚拟机运行时状态信息的命令，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。  </p>
 <h4 id="命令格式-1"><a href="#命令格式-1" class="headerlink" title="命令格式"></a>命令格式</h4><p>jstat [option] LVMID [interval] [count]  </p>

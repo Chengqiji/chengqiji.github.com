@@ -15,24 +15,23 @@
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta name="description" content="JDK,JRE,JVM三者的定义JDK(Java Development Kit) 是整个JAVA的核心，包括了Java运行环境（Java Runtime Envirnment），一堆Java工具（javac&#x2F;java&#x2F;jdb等）和Java基础的类库（即Java API 包括rt.jar）。JDK是java开发工具包，基本上每个学java的人都会先在机器上装一个JDK，那他都包含哪几部分呢？在目录">
-<meta property="og:type" content="article">
+  <meta property="og:type" content="article">
 <meta property="og:title" content="初识JVM">
 <meta property="og:url" content="https://chengqijie.gitee.io/2020/05/17/%E5%88%9D%E5%A7%8BJVM/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
-<meta property="og:description" content="JDK,JRE,JVM三者的定义JDK(Java Development Kit) 是整个JAVA的核心，包括了Java运行环境（Java Runtime Envirnment），一堆Java工具（javac&#x2F;java&#x2F;jdb等）和Java基础的类库（即Java API 包括rt.jar）。JDK是java开发工具包，基本上每个学java的人都会先在机器上装一个JDK，那他都包含哪几部分呢？在目录">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.unsplash.com/photo-1591983459146-0851738ac9e4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/%E5%88%9D%E5%A7%8BJVM/jvm01.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/%E5%88%9D%E5%A7%8BJVM/jvm02.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/%E5%88%9D%E5%A7%8BJVM/jvm03.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/%E5%88%9D%E5%A7%8BJVM/jvm04.png">
 <meta property="og:image" content="https://chengqijie.gitee.io/2020/05/17/%E5%88%9D%E5%A7%8BJVM/jvm05.png">
 <meta property="article:published_time" content="2020-05-17T02:30:50.000Z">
-<meta property="article:modified_time" content="2020-06-15T10:03:28.575Z">
+<meta property="article:modified_time" content="2020-06-16T01:05:45.396Z">
 <meta property="article:author" content="Stephen Cheng">
 <meta property="article:tag" content="JVM">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://chengqijie.gitee.io/2020/05/17/%E5%88%9D%E5%A7%8BJVM/jvm01.png">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1591983459146-0851738ac9e4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -144,7 +143,7 @@
 			
 			
 			<div>
-				<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=260 height=82 src="//music.163.com/outchain/player?type=0&id=5066803201&auto=0&height=62"></iframe>
+				<iframe  frameborder="no" border="0" marginwidth="0" marginheight="0" width="240" height="52" src="//music.163.com/outchain/player?type=2&id=1297742167&auto=1&height=32"></iframe>
 			</div>
 			
 		
@@ -275,14 +274,18 @@
   
   <div class="article-entry" itemprop="articleBody">
 	
-    <h4 id="JDK-JRE-JVM三者的定义"><a href="#JDK-JRE-JVM三者的定义" class="headerlink" title="JDK,JRE,JVM三者的定义"></a>JDK,JRE,JVM三者的定义</h4><p><strong>JDK(Java Development Kit)</strong> 是整个JAVA的核心，包括了Java运行环境（Java Runtime Envirnment），一堆Java工具（javac/java/jdb等）和Java基础的类库（即Java API 包括rt.jar）。JDK是java开发工具包，基本上每个学java的人都会先在机器上装一个JDK，那他都包含哪几部分呢？在目录下面有 六个文件夹、一个src类库源码压缩包、和其他几个声明文件。其中，真正在运行java时起作用的 是以下四个文件夹：bin、include、lib、 jre。它们有这样一个关系，JDK包含JRE，而JRE包 含JVM。  </p>
+    <img src="https://images.unsplash.com/photo-1591983459146-0851738ac9e4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" style="width:100%">  
+<a id="more"></a>  
+
+
+<h4 id="JDK-JRE-JVM三者的定义"><a href="#JDK-JRE-JVM三者的定义" class="headerlink" title="JDK,JRE,JVM三者的定义"></a>JDK,JRE,JVM三者的定义</h4><p><strong>JDK(Java Development Kit)</strong> 是整个JAVA的核心，包括了Java运行环境（Java Runtime Envirnment），一堆Java工具（javac/java/jdb等）和Java基础的类库（即Java API 包括rt.jar）。JDK是java开发工具包，基本上每个学java的人都会先在机器上装一个JDK，那他都包含哪几部分呢？在目录下面有 六个文件夹、一个src类库源码压缩包、和其他几个声明文件。其中，真正在运行java时起作用的 是以下四个文件夹：bin、include、lib、 jre。它们有这样一个关系，JDK包含JRE，而JRE包 含JVM。  </p>
 <blockquote>
 <pre><code>bin:最主要的是编译器(javac.exe)
 include:java和JVM交互用的头文件
 lib：类库
 jre:java运行环境</code></pre><p>（注意：这里的bin、lib文件夹和jre里的bin、lib是不同的）</p>
 </blockquote>
-<p>总的来说JDK是用于java程序的开发,而jre则是只能运行class而没有编译的功能。<br> <a id="more"></a><br><strong>JRE（Java Runtime Environment，Java运行环境）</strong>，包含JVM标准实现及Java核心类库。JRE是Java运行环境，并不是一个开发环境，所以没有包含任何开发工具（如编译器和调试器）JRE是指java运行环境。光有JVM还不能成class的 执行，因为在解释class的时候JVM需要调用解释所需要的类库lib。(jre里有运行.class的java.exe）JRE （ Java Runtime Environment ），是运行 Java 程序必不可少的（除非用其他一些编译环境编译成.exe可执行文件……），JRE的 地位就象一台PC机一样，我们写好的Win64应用程序需要操作系统帮 我们运行，同样的，我们编写的Java程序也必须要JRE才能运行。  </p>
+<p>总的来说JDK是用于java程序的开发,而jre则是只能运行class而没有编译的功能。<br> <!--more--><br><strong>JRE（Java Runtime Environment，Java运行环境）</strong>，包含JVM标准实现及Java核心类库。JRE是Java运行环境，并不是一个开发环境，所以没有包含任何开发工具（如编译器和调试器）JRE是指java运行环境。光有JVM还不能成class的 执行，因为在解释class的时候JVM需要调用解释所需要的类库lib。(jre里有运行.class的java.exe）JRE （ Java Runtime Environment ），是运行 Java 程序必不可少的（除非用其他一些编译环境编译成.exe可执行文件……），JRE的 地位就象一台PC机一样，我们写好的Win64应用程序需要操作系统帮 我们运行，同样的，我们编写的Java程序也必须要JRE才能运行。  </p>
 <p><strong>JVM（Java Virtual Machine）</strong>，即java虚拟机, java运行时的环境，JVM是一种用于计算设备的规范，它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。针对java用户，也就是拥有可运行的.class文件包（jar或者war）的用户。里面主要包含了jvm和java运行时基本类库（rt.jar）。rt.jar可以简单粗暴地理解为：它就是java源码编译成的jar包。Java虚拟机在执行字节码时，把字节码解释成具体平台上的机器指令执行。这就是Java的能够“一次编译，到处运行”的原因。  </p>
 <h5 id="三者的联系"><a href="#三者的联系" class="headerlink" title="三者的联系"></a>三者的联系</h5><p><strong>JVM</strong>不能单独搞定class的执行，解释class的时候JVM需要调用解释所需要的<strong>类库lib</strong>。在<strong>JDK</strong>下面的的<strong>jre</strong>目录里面有两个文件夹<strong>bin和lib</strong>,在这里可以认为bin里的就是jvm，lib中则是jvm工作所需要的类库，而jvm和 lib和起来就称为jre。JVM+Lib=JRE。<br>总体来说就是，我们利用JDK（调用JAVA API）开发了属于我们自己的JAVA程序后，通过JDK中的编译程序（javac）将我们的文本java文件编译成JAVA字节码，在JRE上运行这些JAVA字节码，JVM解析这些字节码，映射到CPU指令集或OS的系统调用。<br><img src="/2020/05/17/%E5%88%9D%E5%A7%8BJVM/jvm01.png" alt="图片加载中"></p>
 <h5 id="三者的区别"><a href="#三者的区别" class="headerlink" title="三者的区别"></a>三者的区别</h5><p>a.JDK和JRE区别：在bin文件夹下会发现，JDK有javac.exe而JRE里面没有，javac指令是用来将java文件编译成class文件的，这是开发者需要的，而用户（只需要运行的人）是不需要的。JDK还有jar.exe, javadoc.exe等等用于开发的可执行指令文件。这也证实了一个是开发环境，一个是运行环境。<br>b.JRE和JVM区别：JVM并不代表就可以执行class了，JVM执行.class还需要JRE下的lib类库的支持，尤其是rt.jar。  </p>
