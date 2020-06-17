@@ -5,31 +5,30 @@
   
   
   
-	<meta name="keywords" content="JVM,博客">
+	<meta name="keywords" content="数据结构,博客">
 	
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
-  <title>JVM常用命令 | Stephen Cheng`s blog</title>
+  <title>数据结构-数组 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta property="og:type" content="article">
-<meta property="og:title" content="JVM常用命令">
-<meta property="og:url" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/index.html">
+<meta property="og:title" content="数据结构-数组">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/06/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%95%B0%E7%BB%84/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://images.unsplash.com/photo-1591814116567-0ec18eabcf1b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/jvm17.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/jvm18.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/jvm19.png">
-<meta property="article:published_time" content="2020-05-18T03:29:50.000Z">
-<meta property="article:modified_time" content="2020-06-16T00:56:52.033Z">
+<meta property="og:image" content="https://images.unsplash.com/photo-1592246030971-320f8fccaf1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%95%B0%E7%BB%84/array0.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%95%B0%E7%BB%84/array1.png">
+<meta property="article:published_time" content="2020-06-17T14:44:50.000Z">
+<meta property="article:modified_time" content="2020-06-17T12:20:05.881Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="JVM">
+<meta property="article:tag" content="数据结构">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1591814116567-0ec18eabcf1b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1592246030971-320f8fccaf1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -215,7 +214,7 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JVM常用命令" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-数据结构-数组" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -225,7 +224,7 @@
    <center><p>
   
     <h1 class="article-title_code_ant" itemprop="name">
-      JVM常用命令
+      数据结构-数组
     </h1>
   
 
@@ -238,8 +237,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-        <time datetime="2020-05-18T03:29:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
+<a href="/2020/06/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%95%B0%E7%BB%84/" class="archive-article-date">
+        <time datetime="2020-06-17T14:44:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-17</time>
 </a>
 
   
@@ -252,7 +251,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">746字</span>
+      <span class="post-count">1.8k字</span>
     </span>
   </span>
 
@@ -261,7 +260,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">2分</span>
+      <span class="post-count">7分</span>
     </span>
   </span>
 </div>
@@ -272,27 +271,146 @@
   
   <div class="article-entry" itemprop="articleBody">
 	
-    <img src="https://images.unsplash.com/photo-1591814116567-0ec18eabcf1b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" style="width:100%">  
+    <img src="https://images.unsplash.com/photo-1592246030971-320f8fccaf1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" style="width:100%">  
 <a id="more"></a>  
 
 
-<h3 id="jps"><a href="#jps" class="headerlink" title="jps"></a>jps</h3><p>JVM Process Status Tool,显示指定系统内所有的HotSpot虚拟机进程。  </p>
-<h4 id="命令格式"><a href="#命令格式" class="headerlink" title="命令格式"></a>命令格式</h4><p>jps [options] [hostid]    </p>
-<h4 id="option参数"><a href="#option参数" class="headerlink" title="option参数"></a>option参数</h4><p>-l : 输出主类全名或jar路径</p>
-<p>-q : 只输出LVMID</p>
-<p>-m : 输出JVM启动时传递给main()的参数<br> <!--more--><br>-v : 输出JVM启动时显示指定的JVM参数  </p>
-<p>其中[option]、[hostid]参数也可以不写。<br><img src="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/jvm17.png" alt="Alt text"></p>
-<h3 id="jstat"><a href="#jstat" class="headerlink" title="jstat"></a>jstat</h3><p>jstat(JVM statistics Monitoring)是用于监视虚拟机运行时状态信息的命令，它可以显示出虚拟机进程中的类装载、内存、垃圾收集、JIT编译等运行数据。  </p>
-<h4 id="命令格式-1"><a href="#命令格式-1" class="headerlink" title="命令格式"></a>命令格式</h4><p>jstat [option] LVMID [interval] [count]  </p>
-<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><p>[option] : 操作参数</p>
-<p>LVMID : 本地虚拟机进程ID</p>
-<p>[interval] : 连续输出的时间间隔</p>
-<p>[count] : 连续输出的次数    </p>
-<p>-class<br>监视类装载、卸载数量、总空间以及耗费的时间<br><img src="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/jvm18.png" alt="Alt text">  </p>
-<h3 id="jmap"><a href="#jmap" class="headerlink" title="jmap"></a>jmap</h3><p>jmap(JVM Memory Map)命令用于生成heap dump文件，如果不使用这个命令，还可以使用-XX:+HeapDumpOnOutOfMemoryError参数来让虚拟机出现OOM的时候·自动生成dump文件。 jmap不仅能生成dump文件，还可以查询finalize执行队列、Java堆和永久代的详细信息，如当前使用率、当前使用的是哪种收集器等。  </p>
-<h3 id="jhat"><a href="#jhat" class="headerlink" title="jhat"></a>jhat</h3><p>jhat(JVM Heap Analysis Tool)命令是与jmap搭配使用，用来分析jmap生成的dump，jhat内置了一个微型的HTTP/HTML服务器，生成dump的分析结果后，可以在浏览器中查看。在此要注意，一般不会直接在服务器上进行分析，因为jhat是一个耗时并且耗费硬件资源的过程，一般把服务器生成的dump文件复制到本地或其他机器上进行分析。  </p>
-<h3 id="jstack"><a href="#jstack" class="headerlink" title="jstack"></a>jstack</h3><p>jstack用于生成java虚拟机当前时刻的线程快照。线程快照是当前java虚拟机内每一条线程正在执行的方法堆栈的集合，生成线程快照的主要目的是定位线程出现长时间停顿的原因，如线程间死锁、死循环、请求外部资源导致的长时间等待等。 线程出现停顿的时候通过jstack来查看各个线程的调用堆栈，就可以知道没有响应的线程到底在后台做什么事情，或者等待什么资源。 如果java程序崩溃生成core文件，jstack工具可以用来获得core文件的java stack和native stack的信息，从而可以轻松地知道java程序是如何崩溃和在程序何处发生问题。另外，jstack工具还可以附属到正在运行的java程序中，看到当时运行的java程序的java stack和native stack的信息, 如果现在运行的java程序呈现hung的状态，jstack是非常有用的。  </p>
-<h3 id="jinfo"><a href="#jinfo" class="headerlink" title="jinfo"></a>jinfo</h3><p>jinfo(JVM Configuration info)这个命令作用是实时查看和调整虚拟机运行参数。 之前的jps -v口令只能查看到显示指定的参数，如果想要查看未被显示指定的参数的值就要使用jinfo口令<br><img src="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/jvm19.png" alt="Alt text"></p>
+<h3 id="数组简介"><a href="#数组简介" class="headerlink" title="数组简介"></a>数组简介</h3><ol>
+<li><p>同一种类型数据的集合  </p>
+</li>
+<li><p>用来存储固定大小的同类型元素  </p>
+</li>
+<li><p>数组一旦定义，那么里边存储的数据类型也就确定，长度一旦确定，就不能修改。  </p>
+</li>
+<li><p>数组本身是引用数据类型，而数组中的元素可为任何数据类型，包括基本数据类型和引用数据类型</p>
+</li>
+<li><p>数组的元素是通过索引访问的。数组索引从 0 开始，所以索引值从 0 到 arrayRefVar.length-1 </p>
+</li>
+<li><p>一维数组的声明方式：type var[] 或 type[] var；</p>
+</li>
+<li><p>声明数组时不能指定其长度(数组中元素的数)， 例如： int a[5]; //非法</p>
+</li>
+<li><p>创建方式：<code>dataType[] arrayRefVar = new dataType[arraySize]</code><br>&amp;#8195 &amp;#8195 &amp;#8195&amp;#8194&amp;#8194&amp;#8194<code>dataType[] arrayRefVar = {value0, value1, ..., valuek}</code>  </p>
+</li>
+<li><p>创建数组对象会在内存中开辟一整块连续的空间，而数组名中引用的是这块连续空间的首地址</p>
+</li>
+<li><p>关于foreach：被称为 For-Each 循环或者加强型循环，它能在不使用下标的情况下遍历数组</p>
+<pre><code class="java"><span class="keyword">for</span>(type element: array)
+{
+ System.out.println(element);
+}</code></pre>
+</li>
+<li><p>二维数组、多维数组用法基本跟一维数组一致</p>
+</li>
+<li><p>关于Arrays类：  </p>
+<pre><code class="java">查找数组元素：
+<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">binarySearch</span><span class="params">(Object[] a, Object key)</span></span>
+<span class="function">用二分查找算法在给定数组中搜索给定值的对象<span class="params">(Byte,Int,<span class="keyword">double</span>等)</span>。数组在调用前必须排序好的。如果查找值包含在数组中，则返回搜索键的索引；否则返回 <span class="params">(-(插入点)</span> - 1)。</span>
+<span class="function">比较数组：  </span>
+<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(<span class="keyword">long</span>[] a, <span class="keyword">long</span>[] a2)</span></span>
+<span class="function">如果两个指定的 <span class="keyword">long</span> 型数组彼此相等，则返回 <span class="keyword">true</span>。如果两个数组包含相同数量的元素，并且两个数组中的所有相应元素对都是相等的，则认为这两个数组是相等的。换句话说，如果两个数组以相同顺序包含相同的元素，则两个数组是相等的。同样的方法适用于所有的其他基本数据类型（Byte，<span class="keyword">short</span>，Int等）。</span>
+<span class="function">给数组赋值：</span>
+<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">fill</span><span class="params">(<span class="keyword">int</span>[] a, <span class="keyword">int</span> val)</span></span>
+<span class="function">将指定的 <span class="keyword">int</span> 值分配给指定 <span class="keyword">int</span> 型数组指定范围中的每个元素。同样的方法适用于所有的其他基本数据类型（Byte，<span class="keyword">short</span>，Int等）。</span>
+<span class="function">对数组排序：</span>
+<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">sort</span><span class="params">(Object[] a)</span></span>
+<span class="function">对指定对象数组根据其元素的自然顺序进行升序排列。同样的方法适用于所有的其他基本数据类型（Byte，<span class="keyword">short</span>，Int等）。</span></code></pre>
+</li>
+<li><p>Arrays.toString()方法:想要把数组中的内容打印出来，直接使用toString方法只会打印出数组的地址，因此需要使用Arrays的toString方法，可以从其内部实现中看出来，该方法支持入参可以是long，float，double，int，boolean，byte，object型的数组。  </p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">toString</span><span class="params">(<span class="keyword">int</span>[] a)</span> </span>{
+    <span class="keyword">if</span> (a == <span class="keyword">null</span>)
+        <span class="keyword">return</span> <span class="string">"null"</span>;
+    <span class="keyword">int</span> iMax = a.length - <span class="number">1</span>;
+    <span class="keyword">if</span> (iMax == -<span class="number">1</span>)
+        <span class="keyword">return</span> <span class="string">"[]"</span>;
+
+    StringBuilder b = <span class="keyword">new</span> StringBuilder();
+    b.append(<span class="string">'['</span>);
+    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; ; i++) {
+        b.append(a[i]);
+        <span class="keyword">if</span> (i == iMax)
+            <span class="keyword">return</span> b.append(<span class="string">']'</span>).toString();
+        b.append(<span class="string">", "</span>);
+    }
+}</code></pre>
+</li>
+<li><p><strong>数组的内存结构：以一维数组为例</strong><br><img src="/2020/06/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%95%B0%E7%BB%84/array0.png" alt="Alt text">  </p>
+</li>
+<li><p>二维数组[][]：数组中的数组    </p>
+</li>
+</ol>
+<p>（1）格式1（动态初始化）：int[][] arr = new int[3][2];<br>定义了名称为arr的二维数组，二维数组中有3个一维数组，每一个一维数组中有2个元素，一维数组的名称分别为arr[0], arr[1], arr[2]，给第一个一维数组1脚标位赋值为78写法是：arr[0][1] = 78;<br>（2）格式2（动态初始化）：int[][] arr = new int[3][];<br>二维数组中有3个一维数组。每个一维数组都是默认初始化值null (注意：区别于格式1），可以对这个三个一维数组分别进行初始化：arr[0] = new int[3]; arr[1] = new int[1]; arr[2] = new int[2];<br>注：int[][]arr = new int[][3]; //非法<br>（3）格式3（静态初始化）：int[][] arr = new int[][]{ {3,8,2},{2,7},{9,0,1,6} };<br>定义一个名称为arr的二维数组，二维数组中有三个一维数组<br>每一个一维数组中具体元素也都已初始化<br>第一个一维数组 arr[0] = {3,8,2};<br>第二个一维数组 arr[1] = {2,7};<br>第三个一维数组 arr[2] = {9,0,1,6};<br>第三个一维数组的长度表示方式：arr[2].length;<br><code>注意特殊写法情况：int[] x,y[]; x是一维数组，y是二维数组。</code><br>Java中多维数组不必都是规则矩阵形式<br><img src="/2020/06/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%95%B0%E7%BB%84/array1.png" alt="Alt text"></p>
+<p>关于更多数组内存分配我看的是这篇文章：<a href="https://blog.csdn.net/nioutian/article/details/81609714" target="_blank" rel="noopener">https://blog.csdn.net/nioutian/article/details/81609714</a></p>
+<h3 id="数组相关算法"><a href="#数组相关算法" class="headerlink" title="数组相关算法"></a>数组相关算法</h3><p>常见的有：<br>1.数组元素的赋值(杨辉三角、回形数等)<br>2.求数值型数组中元素的最大值、最小值、平均数、总和等<br>3.数组的复制、反转、查找(线性查找、二分法查找)<br>4.数组元素的排序算法    </p>
+<p>其中，衡量排序算法的优劣是：<br>1.时间复杂度：分析关键字的比较次数和记录的移动次数<br>2.空间复杂度：分析排序算法中需要多少辅助内存<br>3.稳定性：若两个记录A和B的关键字值相等，但排序后A、B的先后次序保持不变，则称这种排序算法是稳定的</p>
+<h4 id="剑指offer、leetcode原题"><a href="#剑指offer、leetcode原题" class="headerlink" title="剑指offer、leetcode原题"></a>剑指offer、leetcode原题</h4><p> 【简单】<br> 给定一个数组A[0,1,…,n-1],请构建一个数组B[0,1,…,n-1],其中B中的元素B[i]=A[0]<em>A[1]</em>…<em>A[i-1]*A[i+1]</em>…*A[n-1]。不能使用除法。（注意：规定B[0] = A[1] * A[2] * … * A[n-1]，B[n-1] = A[0] * A[1] * … * A[n-2];）  </p>
+<pre><code class="java"><span class="keyword">import</span> java.util.ArrayList;
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
+    <span class="keyword">public</span> <span class="keyword">int</span>[] multiply(<span class="keyword">int</span>[] A) {
+         <span class="keyword">if</span>(A == <span class="keyword">null</span> || A.length == <span class="number">0</span>){
+             <span class="keyword">return</span> <span class="keyword">null</span>;
+         }
+        <span class="keyword">int</span>[] B = <span class="keyword">new</span> <span class="keyword">int</span>[A.length];
+        <span class="keyword">int</span> cur = <span class="number">0</span>;
+        <span class="keyword">while</span>(cur &lt; A.length){
+            B[cur] = <span class="number">1</span>;
+            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;cur;++i){
+                B[cur] *= A[i];
+            }
+            <span class="keyword">for</span>(<span class="keyword">int</span> j = cur+<span class="number">1</span>;j&lt;A.length;++j){
+                B[cur] *= A[j];
+            }
+            cur++;
+        }
+        <span class="keyword">return</span> B;
+
+    }
+}</code></pre>
+<p>【简单】<br> 给定一个整数数组 nums 和一个目标值 target，请你在该数组中找出和为目标值的那 两个 整数，并返回他们的数组下标。</p>
+<p>你可以假设每种输入只会对应一个答案。但是，数组中同一个元素不能使用两遍。</p>
+<pre><code class="java"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
+    <span class="keyword">public</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) {
+        <span class="keyword">if</span>(nums.length == <span class="number">0</span> || nums.length == <span class="number">1</span>){<span class="keyword">return</span> <span class="keyword">null</span>;}
+        <span class="keyword">int</span> other = <span class="number">0</span>;
+        Map&lt;Integer,Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();
+        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i&lt;nums.length;++i){
+            other = target-nums[i];
+            <span class="keyword">if</span>(map.containsKey(other)){
+                <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]{map.get(other),i};
+            }
+            map.put(nums[i],i);
+        }
+        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"No two sum solution"</span>);
+    }
+}</code></pre>
+<p>【中等】<br>输入一个递增排序的数组和一个数字S，在数组中查找两个数，使得他们的和正好是S，如果有多对数字的和等于S，输出两个数的乘积最小的。  </p>
+<pre><code class="java"><span class="keyword">import</span> java.util.ArrayList;
+<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{
+    <span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">FindNumbersWithSum</span><span class="params">(<span class="keyword">int</span> [] array,<span class="keyword">int</span> sum)</span> </span>{
+         ArrayList&lt;Integer&gt; result=<span class="keyword">new</span> ArrayList&lt;Integer&gt;();
+        <span class="comment">//边界条件</span>
+        <span class="keyword">if</span>(array==<span class="keyword">null</span>||array.length&lt;=<span class="number">1</span>){
+            <span class="keyword">return</span> result;
+        }
+        <span class="keyword">int</span> smallIndex=<span class="number">0</span>;
+        <span class="keyword">int</span> bigIndex=array.length-<span class="number">1</span>;
+        <span class="keyword">while</span>(smallIndex&lt;bigIndex){
+            <span class="comment">//如果相等就放进去</span>
+             <span class="keyword">if</span>((array[smallIndex]+array[bigIndex])==sum){
+                result.add(array[smallIndex]);
+                result.add(array[bigIndex]);
+                 <span class="comment">//最外层的乘积最小，别被题目误导</span>
+                 <span class="keyword">break</span>;
+        }<span class="keyword">else</span> <span class="keyword">if</span>((array[smallIndex]+array[bigIndex])&lt;sum){
+                 smallIndex++;
+             }<span class="keyword">else</span>{
+                 bigIndex--;
+             }
+        }
+        <span class="keyword">return</span> result;
+    }
+}</code></pre>
+<p>更多算法题前往牛客网：<a href="https://www.nowcoder.com/" target="_blank" rel="noopener">https://www.nowcoder.com/</a> 力扣： <a href="https://leetcode-cn.com/" target="_blank" rel="noopener">https://leetcode-cn.com/</a></p>
 
     
 
@@ -334,7 +452,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://chengqijie.gitee.io/2020/05/18/JVM常用命令/" title="JVM常用命令" target="_blank">https://chengqijie.gitee.io/2020/05/18/JVM常用命令/</a>
+          <a href="https://chengqijie.gitee.io/2020/06/17/数据结构-数组/" title="数据结构-数组" target="_blank">https://chengqijie.gitee.io/2020/06/17/数据结构-数组/</a>
         </li>
         
         <li>
@@ -356,7 +474,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">数据结构</a>
         		</li>
       		
 		</ul>
@@ -368,7 +486,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
+        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
         		</li>
       		
 		</ul>
@@ -423,7 +541,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/06/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E6%95%B0%E7%BB%84/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -438,18 +556,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          三大工厂模式
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM垃圾回收</div>
+    <a href="/2020/06/16/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%89%E9%83%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">线程的安全性分析-第三部</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -476,7 +585,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#jps"><span class="toc-number">1.</span> <span class="toc-text">jps</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#命令格式"><span class="toc-number">1.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#option参数"><span class="toc-number">1.2.</span> <span class="toc-text">option参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jstat"><span class="toc-number">2.</span> <span class="toc-text">jstat</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#命令格式-1"><span class="toc-number">2.1.</span> <span class="toc-text">命令格式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#参数"><span class="toc-number">2.2.</span> <span class="toc-text">参数</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jmap"><span class="toc-number">3.</span> <span class="toc-text">jmap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jhat"><span class="toc-number">4.</span> <span class="toc-text">jhat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jstack"><span class="toc-number">5.</span> <span class="toc-text">jstack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#jinfo"><span class="toc-number">6.</span> <span class="toc-text">jinfo</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#数组简介"><span class="toc-number">1.</span> <span class="toc-text">数组简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#数组相关算法"><span class="toc-number">2.</span> <span class="toc-text">数组相关算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#剑指offer、leetcode原题"><span class="toc-number">2.1.</span> <span class="toc-text">剑指offer、leetcode原题</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -500,9 +609,9 @@
     <script src="/lib/giteement.browser.js"></script>
   
   <script>
-  <!-- id: "JVM常用命令" -->
+  <!-- id: "数据结构-数组" -->
   var giteement = new Giteement({
-    id: '20200518112950',
+    id: '20200617224450',
     owner: 'chengqijie',
     repo: 'chengqijie',
     backcall_uri: 'https://chengqijie.gitee.io',
