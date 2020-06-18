@@ -5,24 +5,28 @@
   
   
   
-	<meta name="keywords" content="博客">
-  
+	<meta name="keywords" content="数据库MySQL,博客">
+	
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
-  <title>Tag: IO模型 | Stephen Cheng`s blog</title>
+  <title>MySQL入门系列一 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Stephen Cheng&#96;s blog">
-<meta property="og:url" content="https://chengqijie.gitee.io/tags/IO%E6%A8%A1%E5%9E%8B/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="MySQL入门系列一">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/06/18/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%B8%80/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.unsplash.com/photo-1592145358789-23b36ac5e0c2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
+<meta property="article:published_time" content="2020-06-18T09:47:50.000Z">
+<meta property="article:modified_time" content="2020-06-18T09:18:00.897Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="博客">
+<meta property="article:tag" content="数据库MySQL">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1592145358789-23b36ac5e0c2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -208,76 +212,386 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-MySQL入门系列一" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" class="archive-article-date">
-        <time datetime="2020-05-19T14:44:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-19</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
+	  
+   
+   
+   <center><p>
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" target="_blank">IO模型简介</a>
-  
+    <h1 class="article-title_code_ant" itemprop="name">
+      MySQL入门系列一
     </h1>
   
 
+</p></center>
+   
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
 
-        <div class="article-info info-on-right">
+<a href="/2020/06/18/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%B8%80/" class="archive-article-date">
+        <time datetime="2020-06-18T09:47:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-18</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2.4k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">9分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+	
+    <img src="https://images.unsplash.com/photo-1592145358789-23b36ac5e0c2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" style="width:100%">  
+<a id="more"></a>  
+
+
+<h3 id="数据库概述"><a href="#数据库概述" class="headerlink" title="数据库概述"></a>数据库概述</h3><p>数据库是持久化数据的一种介质，可以理解成用来存储和管理数据的仓库！<br>持久化(persistence)：把数据保存到可掉电式存储设备中以供之后使用。持久化的大多数时候是将内存中的数据存储在数据库中，当然也可以存储在磁盘文件、XML数据文件中。    </p>
+<h4 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h4><p>可将数据持久化到硬盘<br>可存储大量数据<br>方便检索<br>保证数据的一致性、完整性<br>安全，可共享<br>通过组合分析，可以产生新数据    </p>
+<h4 id="相关概念："><a href="#相关概念：" class="headerlink" title="相关概念："></a>相关概念：</h4><p>DB<br>数据库（ database ）：存储数据的“仓库”。它保存了一系列有组织的数据。<br>DBMS<br>数据库管理系统（ Database Management System ）。数据库是通过 DBMS 创<br>建和操作的容器<br>SQL<br>结构化查询语言（ Structure Query Language ）：专门用来与数据库通信的语<br>言。    </p>
+<h4 id="存储数据特点："><a href="#存储数据特点：" class="headerlink" title="存储数据特点："></a>存储数据特点：</h4><p>将数据放到表中，表再放到库中<br>一个数据库中可以有多个表，每个表都有一个的名字，用来标识自己。表名具有唯一性。<br>表具有一些特性，这些特性定义了数据在表中如何存储，类似java中 “类”的设计。<br>表由列组成，我们也称为字段。所有表都是由一个或多个列组成的，每一列类似java 中的”属性”<br>表中的数据是按行存储的，每一行类似于java中的“对象”  </p>
+<h3 id="MySQL数据库介绍"><a href="#MySQL数据库介绍" class="headerlink" title="MySQL数据库介绍"></a>MySQL数据库介绍</h3><p>产品介绍:<br>MySQL是一种开放源代码的关系型数据库管理系统，开发者为瑞典MySQL AB公司。在2008年1月16号被Sun公司收购。而2009年,SUN又被Oracle收购.目前 MySQL被广泛地应用在Internet上的中小型网站中。由于其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，许多中小型网站为了降低网站总体拥有成本而选择了MySQL作为网站数据库（Facebook, Twitter, YouTube）。阿里提出“去IOE”，更多网站也开始选择MySQL  </p>
+<h4 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h4><p>成本低：开放源代码，一般可以免费试用<br>性能高：执行很快<br>简单：很容易安装和使用   </p>
+<h4 id="MyAQL安装目录："><a href="#MyAQL安装目录：" class="headerlink" title="MyAQL安装目录："></a>MyAQL安装目录：</h4><p>bin目录中都是可执行文件；<br>my.ini文件是MySQL的配置文件；<br>MySQL的数据存储目录为data<br>data目录通常在C:\Documents and Settings\All Users\Application Data\MySQL\MySQL Server 5.7\Data位置。<br>在data下的每个目录都代表一个数据库。  </p>
+<h4 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令:"></a>基本命令:</h4><p>以管理员身份运行<br>1.net  start  MySQL服务名（启动服务）<br>2.net  stop  MySQL服务名（关闭服务）<br>3.登录：mysql -u root -p root -h localhost；u：后面的root是用户名，这里使用的是超级管理员root；-p：后面的root是密码，这是在安装MySQL时就已经指定的密码；-h：后面给出的localhost是服务器主机名，它是可以省略的，例如：mysql -u root -p root；<br>4.退出：quit或exit；  </p>
+<h3 id="SQL语句"><a href="#SQL语句" class="headerlink" title="SQL语句"></a>SQL语句</h3><p>SQL（Structured Query Language）是“结构化查询语言”，它是对关系型数据库的操作语言。它可以应用到所有关系型数据库中，例如：MySQL、Oracle、SQL Server等。<br>虽然SQL可以用在所有关系型数据库中，但很多数据库还都有标准之后的一些语法，我们可以称之为“方言”。例如MySQL中的LIMIT语句就是MySQL独有的方言，其它数据库都不支持！当然，Oracle或SQL Server都有自己的方言。  </p>
+<h4 id="语法要求："><a href="#语法要求：" class="headerlink" title="语法要求："></a>语法要求：</h4><p>SQL语句可以单行或多行书写，以分号结尾；<br>可以用空格和缩进来来增强语句的可读性；<br>关键字不区别大小写，建议使用大写；  </p>
+<h4 id="分类："><a href="#分类：" class="headerlink" title="分类："></a>分类：</h4><p>DDL（Data Definition Language）：数据定义语言，用来定义数据库对象：库、表、列等；<br>DML（Data Manipulation Language）：数据操作语言，用来定义数据库记录（数据）；<br>DCL（Data Control Language）：数据控制语言，用来定义访问权限和安全级别；<br>DQL（Data Query Language）：数据查询语言，用来查询记录（数据）。  </p>
+<h4 id="基础查询："><a href="#基础查询：" class="headerlink" title="基础查询："></a>基础查询：</h4><p>SELECT 查询列表  FROM 表名<br>（1）查询的结果集是一个虚拟表<br>（2）查询列表可以由多个部分组成。例如select 字段1，字段2，表达式… from 表名<br>（3）执行顺序：FROM子句   SELECT子句<br>（4）查询列表可以是字段，表达式、常量、函数等     </p>
+<h5 id="查询函数"><a href="#查询函数" class="headerlink" title="查询函数"></a>查询函数</h5><p>调用函数，获取返回值<br>SELECT DATABASE(); SELECT VERSION(); SELECT USER()  </p>
+<h5 id="起别名"><a href="#起别名" class="headerlink" title="起别名"></a>起别名</h5><p>SELECT first_name  AS  “用户名”   FROM employees;  </p>
+<h5 id="拼接函数-CONCAT"><a href="#拼接函数-CONCAT" class="headerlink" title="拼接函数 CONCAT"></a>拼接函数 CONCAT</h5><p>SELECT  CONCAT( first_name,last_name ) AS “姓 名” FROM employees  </p>
+<h5 id="distinct关键字"><a href="#distinct关键字" class="headerlink" title="distinct关键字"></a>distinct关键字</h5><p>在表中，一个列可能会包含多个重复值，有时您也许希望仅仅列出不同（distinct）的值。<br>DISTINCT 关键词用于返回唯一不同的值。<br>SELECT DISTINCT column_name,column_name<br>FROM table_name;  </p>
+<h4 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h4><p>WHERE 子句用于提取那些满足指定条件的记录。<br>select 查询列表<br>from  表名<br>where 筛选条件;    </p>
+<p>执行顺序：<br>①from子句<br>②where子句<br>③select子句  </p>
+<p>select last_name,first_name from employees where salary&gt;20000;  </p>
+<p>特点：  </p>
+<p>1、按关系表达式筛选  </p>
+<p>关系运算符：&gt;   &lt;    &gt;=   &lt;=     =       &lt;&gt;<br>              补充：也可以使用!=,但不建议<br>2、按逻辑表达式筛选  </p>
+<p>逻辑运算符：and    or   not<br>          补充：也可以使用&amp;&amp;  ||   !  ，但不建议<br>3、模糊查询  </p>
+<p>like  、in、between and、is null</p>
+<p>一、按关系表达式筛选<br>案例1：查询部门编号不是100的员工信息<br>SELECT *<br>FROM employees<br>WHERE department_id &lt;&gt; 100;</p>
+<p>案例2：查询工资&lt;15000的姓名、工资<br>SELECT last_name,salary<br>FROM employees<br>WHERE salary&lt;15000;</p>
+<p>二、按逻辑表达式筛选  </p>
+<p>案例1：查询部门编号不是 50-100之间员工姓名、部门编号、邮箱<br>方式1：<br>SELECT last_name,department_id,email<br>FROM employees<br>WHERE department_id &lt;50 OR department_id&gt;100;</p>
+<p>方式2：  </p>
+<p>SELECT last_name,department_id,email<br>FROM employees<br>WHERE NOT(department_id&gt;=50 AND department_id&lt;=100);</p>
+<p>案例2：查询奖金率&gt;0.03 或者 员工编号在60-110之间的员工信息<br>SELECT *<br>FROM employees<br>WHERE commission_pct&gt;0.03 OR (employee_id &gt;=60 AND employee_id&lt;=110);</p>
+<h4 id="模糊查询"><a href="#模糊查询" class="headerlink" title="模糊查询"></a>模糊查询</h4><p>1、like</p>
+<p>功能：一般和通配符搭配使用，对字符型数据进行部分匹配查询<br>常见的通配符：<br>_ 任意单个字符<br>% 任意多个字符,支持0-多个<br>like/not like </p>
+<p>案例1：查询姓名中包含字符a的员工信息<br>SELECT *<br>FROM employees<br>WHERE last_name LIKE ‘%a%’;</p>
+<p>案例2：查询姓名中包含最后一个字符为e的员工信息<br>SELECT *<br>FROM employees<br>WHERE last_name LIKE ‘%e’;</p>
+<p>案例3：查询姓名中包含第一个字符为e的员工信息<br>SELECT *<br>FROM employees<br>WHERE last_name LIKE ‘e%’;</p>
+<p>案例4：查询姓名中包含第三个字符为x的员工信息<br>SELECT *<br>FROM employees<br>WHERE last_name LIKE ‘__x%’;</p>
+<p>案例5：查询姓名中包含第二个字符为<em>的员工信息<br>SELECT *<br>FROM employees<br>WHERE last_name LIKE ‘_\</em>%’;</p>
+<p>2、in</p>
+<p>功能：查询某字段的值是否属于指定的列表之内</p>
+<p>a  in(常量值1,常量值2,常量值3,…)<br>a not in(常量值1,常量值2,常量值3,…)</p>
+<p>in/not in</p>
+<p>案例1：查询部门编号是30/50/90的员工名、部门编号</p>
+<p>方式1：<br>SELECT last_name,department_id<br>FROM employees<br>WHERE department_id IN(30,50,90);</p>
+<p>方式2：</p>
+<p>SELECT last_name,department_id<br>FROM employees<br>WHERE department_id = 30<br>OR department_id = 50<br>OR department_id = 90;</p>
+<p>案例2：查询工种编号不是SH_CLERK或IT_PROG的员工信息<br>方式1：<br>SELECT *<br>FROM employees<br>WHERE job_id NOT IN(‘SH_CLERK’,’IT_PROG’);</p>
+<p>方式2：<br>SELECT *<br>FROM employees<br>WHERE NOT(job_id =’SH_CLERK’<br>OR job_id = ‘IT_PROG’);</p>
+<p>3、between and</p>
+<p>功能：判断某个字段的值是否介于xx之间</p>
+<p>between and/not between and</p>
+<p>案例1：查询部门编号是30-90之间的部门编号、员工姓名</p>
+<p>方式1：<br>SELECT department_id,last_name<br>FROM employees<br>WHERE department_id BETWEEN 30 AND 90;</p>
+<p>方式2：</p>
+<p>SELECT department_id,last_name<br>FROM employees<br>WHERE department_id&gt;=30 AND department_id&lt;=90;</p>
+<p>案例2：查询年薪不是100000-200000之间的员工姓名、工资、年薪</p>
+<p>SELECT last_name,salary,salary<em>12</em>(1+IFNULL(commission_pct,0)) 年薪<br>FROM employees<br>WHERE salary<em>12</em>(1+IFNULL(commission_pct,0))&lt;100000 OR salary<em>12</em>(1+IFNULL(commission_pct,0))&gt;200000;</p>
+<p>SELECT last_name,salary,salary<em>12</em>(1+IFNULL(commission_pct,0)) 年薪<br>FROM employees<br>WHERE salary<em>12</em>(1+IFNULL(commission_pct,0)) NOT BETWEEN 100000 AND 200000;</p>
+<p>4、is null/is not null</p>
+<p>案例1：查询没有奖金的员工信息<br>SELECT *<br>FROM employees<br>WHERE commission_pct IS NULL;</p>
+<p>案例2：查询有奖金的员工信息<br>SELECT *<br>FROM employees<br>WHERE commission_pct IS NOT NULL;</p>
+<p>SELECT *<br>FROM employees<br>WHERE salary IS 10000;</p>
+<p>—————-对比————————————</p>
+<p>=        只能判断普通的内容</p>
+<p>IS              只能判断NULL值</p>
+<p>&lt;=&gt;             安全等于，既能判断普通内容，又能判断NULL值</p>
+<p>SELECT *<br>FROM employees<br>WHERE salary &lt;=&gt; 10000;</p>
+<p>SELECT *<br>FROM employees<br>WHERE commission_pct &lt;=&gt; NULL;  </p>
+<h4 id="排序查询"><a href="#排序查询" class="headerlink" title="排序查询"></a>排序查询</h4><p>语法：</p>
+<p>select 查询列表<br>from 表名<br>【where 筛选条件】<br>order by 排序列表</p>
+<p>执行顺序：</p>
+<p>①from子句<br>②where子句<br>③select子句<br>④order by 子句</p>
+<p>举例：<br>select last_name,salary<br>from employees<br>where salary&gt;20000<br>order by salary ;</p>
+<p>特点：</p>
+<p>1、排序列表可以是单个字段、多个字段、表达式、函数、列数、以及以上的组合<br>2、升序 ，通过 asc   （默认行为）<br>   降序 ，通过 desc</p>
+<p>一、按单个字段排序<br>案例1：将员工编号&gt;120的员工信息进行工资的升序<br>SELECT *<br>FROM employees </p>
+<p>ORDER BY salary ;</p>
+<p>案例1：将员工编号&gt;120的员工信息进行工资的降序<br>SELECT *<br>FROM employees<br>WHERE employee_id&gt;120<br>ORDER BY salary DESC;</p>
+<p>二、按表达式排序<br>案例1：对有奖金的员工，按年薪降序</p>
+<p>SELECT <em>,salary*12</em>(1+IFNULL(commission_pct,0))  年薪<br>FROM employees<br>WHERE commission_pct IS NOT NULL<br>ORDER BY salary<em>12</em>(1+IFNULL(commission_pct,0)) DESC;</p>
+<p>三、按别名排序<br>案例1：对有奖金的员工，按年薪降序</p>
+<p>SELECT <em>,salary*12</em>(1+IFNULL(commission_pct,0))  年薪<br>FROM employees</p>
+<p>ORDER BY 年薪 DESC;</p>
+<p>四、按函数的结果排序</p>
+<p>案例1：按姓名的字数长度进行升序</p>
+<p>SELECT last_name<br>FROM employees<br>ORDER BY LENGTH(last_name);</p>
+<p>五、按多个字段排序</p>
+<p>案例1：查询员工的姓名、工资、部门编号，先按工资升序，再按部门编号降序</p>
+<p>SELECT last_name,salary,department_id<br>FROM employees<br>ORDER BY salary ASC,department_id DESC;</p>
+<p>六、补充选学：按列数排序</p>
+<p>SELECT * FROM employees<br>ORDER BY 2 DESC;</p>
+<p>SELECT * FROM employees<br>ORDER BY first_name;</p>
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/Wechat.jpg">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Stephen Cheng
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://chengqijie.gitee.io/2020/06/18/MySQL入门系列一/" title="MySQL入门系列一" target="_blank">https://chengqijie.gitee.io/2020/06/18/MySQL入门系列一/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">IO模型</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库MySQL</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/IO模型//" class="article-tag-list-link color5">IO模型</a>
+        			<a href="/categories/数据库MySQL//" class="article-tag-list-link color4">数据库MySQL</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+    
 
     
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/06/18/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%B8%80/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+
+<nav id="article-nav">
+  
+    <a href="/2020/06/18/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%BA%8C/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          MySQL入门系列二
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/06/18/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84-%E9%98%9F%E5%88%97/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据结构-队列</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库概述"><span class="toc-number">1.</span> <span class="toc-text">数据库概述</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#优点："><span class="toc-number">1.1.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#相关概念："><span class="toc-number">1.2.</span> <span class="toc-text">相关概念：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#存储数据特点："><span class="toc-number">1.3.</span> <span class="toc-text">存储数据特点：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL数据库介绍"><span class="toc-number">2.</span> <span class="toc-text">MySQL数据库介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#优点：-1"><span class="toc-number">2.1.</span> <span class="toc-text">优点：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MyAQL安装目录："><span class="toc-number">2.2.</span> <span class="toc-text">MyAQL安装目录：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基本命令"><span class="toc-number">2.3.</span> <span class="toc-text">基本命令:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL语句"><span class="toc-number">3.</span> <span class="toc-text">SQL语句</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#语法要求："><span class="toc-number">3.1.</span> <span class="toc-text">语法要求：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分类："><span class="toc-number">3.2.</span> <span class="toc-text">分类：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#基础查询："><span class="toc-number">3.3.</span> <span class="toc-text">基础查询：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#查询函数"><span class="toc-number">3.3.1.</span> <span class="toc-text">查询函数</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#起别名"><span class="toc-number">3.3.2.</span> <span class="toc-text">起别名</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#拼接函数-CONCAT"><span class="toc-number">3.3.3.</span> <span class="toc-text">拼接函数 CONCAT</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#distinct关键字"><span class="toc-number">3.3.4.</span> <span class="toc-text">distinct关键字</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#条件查询"><span class="toc-number">3.4.</span> <span class="toc-text">条件查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#模糊查询"><span class="toc-number">3.5.</span> <span class="toc-text">模糊查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#排序查询"><span class="toc-number">3.6.</span> <span class="toc-text">排序查询</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
+        </div>
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+
+
+  <div id="giteement-ctn"></div>
+  
+    <link rel="stylesheet" href="/lib/default.css">
+    <script src="/lib/giteement.browser.js"></script>
+  
+  <script>
+  <!-- id: "MySQL入门系列一" -->
+  var giteement = new Giteement({
+    id: '20200618174750',
+    owner: 'chengqijie',
+    repo: 'chengqijie',
+    backcall_uri: 'https://chengqijie.gitee.io',
+    oauth_uri: 'https://cors-anywhere.herokuapp.com/https://gitee.com/oauth/token',
+    oauth: {
+      client_id: 'e551fed6367a77dcf3a8672bede3eff5e038f747e7d5e674dc58b215488d5545',
+      client_secret: 'fc2cd40a7b35bff445412d26248a22323155df97d0eb8f3802625f533d723a54'
+    },
+  })
+  giteement.render('giteement-ctn')
+  </script>
+
+
+
+
+
+
 
 
           </div>
@@ -318,9 +632,9 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
