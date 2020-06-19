@@ -5,24 +5,31 @@
   
   
   
-	<meta name="keywords" content="博客">
-  
+	<meta name="keywords" content="多线程,博客">
+	
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
-  <title>Category: 设计模式 | Stephen Cheng`s blog</title>
+  <title>J.U.C核心-第一部 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Stephen Cheng&#96;s blog">
-<meta property="og:url" content="https://chengqijie.gitee.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="J.U.C核心-第一部">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/06/19/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%80%E9%83%A8/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img02.tooopen.com/images/20151228/tooopen_sy_152973598862.jpg">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/19/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%80%E9%83%A8/juc01.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/19/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%80%E9%83%A8/juc02.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/19/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%80%E9%83%A8/juc03.png">
+<meta property="article:published_time" content="2020-06-19T15:57:50.000Z">
+<meta property="article:modified_time" content="2020-06-19T15:58:05.804Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="博客">
+<meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img02.tooopen.com/images/20151228/tooopen_sy_152973598862.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -208,130 +215,643 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-J.U.C核心-第一部" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" class="archive-article-date">
-        <time datetime="2020-05-20T07:45:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-20</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
+	  
+   
+   
+   <center><p>
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" target="_blank">单例模式简单介绍</a>
-  
+    <h1 class="article-title_code_ant" itemprop="name">
+      J.U.C核心-第一部
     </h1>
   
 
+</p></center>
+   
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
 
-        <div class="article-info info-on-right">
+<a href="/2020/06/19/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%80%E9%83%A8/" class="archive-article-date">
+        <time datetime="2020-06-19T15:57:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-19</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">3.3k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">13分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+	
+    <img src="http://img02.tooopen.com/images/20151228/tooopen_sy_152973598862.jpg" style="width:100%">  
+<a id="more"></a>    
+
+<h3 id="重入锁Reentrantlock初步认识"><a href="#重入锁Reentrantlock初步认识" class="headerlink" title="重入锁Reentrantlock初步认识"></a>重入锁Reentrantlock初步认识</h3><p>首先我们重温下什么是锁：<br>锁是用来解决多线程并发访问共享资源的时候所带来的数据安全性问题的手段，对于一个共享资源加锁后，如果有一个线程获得了锁，那么其他线程无法访问这个共享资源。    </p>
+<h4 id="Lock接口"><a href="#Lock接口" class="headerlink" title="Lock接口"></a>Lock接口</h4><p>Lock接口实现了对显示锁（锁的持有和释放手动编写）的支持，之前介绍的Synchronized属于隐式锁（当调用Synchronized修饰的代码时，并不需要显示的加锁和解锁的过程，所以称之为隐式锁。）<br>源码：  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Lock</span> </span>{
+    <span class="comment">//加锁</span>
+    <span class="function"><span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span></span>;
+
+    <span class="comment">//解锁</span>
+    <span class="function"><span class="keyword">void</span> <span class="title">unlock</span><span class="params">()</span></span>;
+
+    <span class="comment">//可中断获取锁，与lock()不同之处在于可响应中断操作，即在获</span>
+    <span class="comment">//取锁的过程中可中断，synchronized在获取锁时是不可中断的</span>
+    <span class="function"><span class="keyword">void</span> <span class="title">lockInterruptibly</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException</span>;
+
+    <span class="comment">//尝试非阻塞获取锁，调用该方法后立即返回结果，如果能够获取则返回true，否则返回false</span>
+    <span class="function"><span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">()</span></span>;
+
+    <span class="comment">//根据传入的时间段获取锁，在指定时间内没有获取锁则返回false，如果在指定时间内当前线程未被中断且获取到锁则返回true</span>
+    <span class="function"><span class="keyword">boolean</span> <span class="title">tryLock</span><span class="params">(<span class="keyword">long</span> time, TimeUnit unit)</span> <span class="keyword">throws</span> InterruptedException</span>;
+
+    <span class="comment">//获取等待通知组件，该组件与当前锁绑定，当前线程只有获得了锁</span>
+    <span class="comment">//才能调用该组件的wait()方法，而调用后，当前线程将释放锁。</span>
+    <span class="function">Condition <span class="title">newCondition</span><span class="params">()</span></span>;
+</code></pre>
+<p>源码中的lock()方法与unlock()就是我们需要调用的持有锁和释放锁，当它们包围临界区的时候，其他线程由于无法持有锁将无法进入临界区直到当前持锁线程释放锁。unlock()操作必须在finally代码块中，这样可以确保即使临界区执行抛出异常，线程最终也能正常释放锁。  </p>
+<pre><code class="java">Lock lock = <span class="keyword">new</span> ReentrantLock();
+lock.lock();
+<span class="keyword">try</span>{
+    <span class="comment">//临界区......</span>
+}<span class="keyword">finally</span>{
+    lock.unlock();
+}</code></pre>
+<p>今天要介绍的Reentrantlock就是Lock的一个实现类</p>
+<h4 id="重入锁"><a href="#重入锁" class="headerlink" title="重入锁"></a>重入锁</h4><p>简单点说就是：一个持有锁的线程，在释放锁之前，如果再次访问加了该同步锁的其他方法，这个线程不需要再次争夺锁，只需要记录重入次数。可以解决死锁的问题。<br>更简单点说就是：一个类的A、B两个方法，A、B都有获得统一把锁，当A方法被调用时，获得锁，在A方法的锁还没有被释放时，调用B方法时，就不用再去争抢锁，直接获得。  </p>
+<h4 id="ReentrantLock类"><a href="#ReentrantLock类" class="headerlink" title="ReentrantLock类"></a>ReentrantLock类</h4><p>ReentrantLock实现了Lock接口，比之前介绍的synchronized更加灵活，也是可重入锁。但是它是显示锁，你必须手动加锁，加多少次就要手动释放多少次。<br>除了实现Lock的lock()和unlock方法外，还有：  </p>
+<pre><code class="java"><span class="comment">//查询当前线程保持此锁的次数。</span>
+<span class="function"><span class="keyword">int</span> <span class="title">getHoldCount</span><span class="params">()</span> </span>
+<span class="function"></span>
+<span class="function"><span class="comment">//返回目前拥有此锁的线程，如果此锁不被任何线程拥有，则返回 null。      </span></span>
+<span class="function"><span class="keyword">protected</span>  Thread   <span class="title">getOwner</span><span class="params">()</span></span>; 
+
+<span class="comment">//返回一个 collection，它包含可能正等待获取此锁的线程，其内部维持一个队列，这点稍后会分析。      </span>
+<span class="function"><span class="keyword">protected</span>  Collection&lt;Thread&gt;   <span class="title">getQueuedThreads</span><span class="params">()</span></span>; 
+
+<span class="comment">//返回正等待获取此锁的线程估计数。   </span>
+<span class="function"><span class="keyword">int</span> <span class="title">getQueueLength</span><span class="params">()</span></span>;
+
+<span class="comment">// 返回一个 collection，它包含可能正在等待与此锁相关给定条件的那些线程。</span>
+<span class="function"><span class="keyword">protected</span>  Collection&lt;Thread&gt;   <span class="title">getWaitingThreads</span><span class="params">(Condition condition)</span></span>; 
+
+<span class="comment">//返回等待与此锁相关的给定条件的线程估计数。       </span>
+<span class="function"><span class="keyword">int</span> <span class="title">getWaitQueueLength</span><span class="params">(Condition condition)</span></span>;
+
+<span class="comment">// 查询给定线程是否正在等待获取此锁。     </span>
+<span class="function"><span class="keyword">boolean</span> <span class="title">hasQueuedThread</span><span class="params">(Thread thread)</span></span>; 
+
+<span class="comment">//查询是否有些线程正在等待获取此锁。     </span>
+<span class="function"><span class="keyword">boolean</span> <span class="title">hasQueuedThreads</span><span class="params">()</span></span>;
+
+<span class="comment">//查询是否有些线程正在等待与此锁有关的给定条件。     </span>
+<span class="function"><span class="keyword">boolean</span> <span class="title">hasWaiters</span><span class="params">(Condition condition)</span></span>; 
+
+<span class="comment">//如果此锁的公平设置为 true，则返回 true。     </span>
+<span class="function"><span class="keyword">boolean</span> <span class="title">isFair</span><span class="params">()</span> </span>
+<span class="function"></span>
+<span class="function"><span class="comment">//查询当前线程是否保持此锁。      </span></span>
+<span class="function"><span class="keyword">boolean</span> <span class="title">isHeldByCurrentThread</span><span class="params">()</span> </span>
+<span class="function"></span>
+<span class="function"><span class="comment">//查询此锁是否由任意线程保持。        </span></span>
+<span class="function"><span class="keyword">boolean</span> <span class="title">isLocked</span><span class="params">()</span>       </span></code></pre>
+<h3 id="AQS是什么"><a href="#AQS是什么" class="headerlink" title="AQS是什么"></a>AQS是什么</h3><p>ReentrantLock类关系图：<br><img src="/2020/06/19/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%80%E9%83%A8/juc01.png" alt="Alt text">  </p>
+<p>AbstractQueuedSynchronizer（AQS-抽象类）又称为队列同步器。是用来构建锁或其他同步组件的基础框架。主要用来实现线程阻塞的排队工作。其内部以虚拟队列的方式管理线程的锁获取与锁释放  </p>
+<p>ReentrantLock构造方法中默认是一个非公平锁。<br>当我们调用lock()方法时,源码：<br><img src="/2020/06/19/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%80%E9%83%A8/juc02.png" alt="Alt text">  </p>
+<pre><code class="java"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">NonfairSync</span> <span class="keyword">extends</span> <span class="title">Sync</span> </span>{
+       <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">7316153563782823691L</span>;
+
+       <span class="comment">/**</span>
+<span class="comment">        * Performs lock.  Try immediate barge, backing up to normal</span>
+<span class="comment">        * acquire on failure.</span>
+<span class="comment">        */</span>
+       <span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">lock</span><span class="params">()</span> </span>{
+           <span class="keyword">if</span> (compareAndSetState(<span class="number">0</span>, <span class="number">1</span>))
+               setExclusiveOwnerThread(Thread.currentThread());
+           <span class="keyword">else</span>
+               acquire(<span class="number">1</span>);
+       }
+
+       <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryAcquire</span><span class="params">(<span class="keyword">int</span> acquires)</span> </span>{
+           <span class="keyword">return</span> nonfairTryAcquire(acquires);
+       }
+   }</code></pre>
+<p>lock()里面调用了一个CAS的操作去修改一个state的值    </p>
+<pre><code class="java"><span class="comment">/**</span>
+<span class="comment">   * The synchronization state.</span>
+<span class="comment">   */</span>
+   <span class="comment">//互斥变量，控制同步状态；当state=0时表示没有锁的状态，当state&gt;0时表示有锁的状态</span>
+  <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> state;</code></pre>
+<p>所以在lock()里面，我要去抢占锁实际上就是去抢占一个标志，抢占这个互斥变量。首先通过原子的操作（  if (compareAndSetState(0, 1)) ）去修改state。返回的是一个boolean值，如果是0就去修改为1（表示已占用了这个共享资源）并且返回true。否则false。  </p>
+<pre><code class="java"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">compareAndSetState</span><span class="params">(<span class="keyword">int</span> expect, <span class="keyword">int</span> update)</span> </span>{
+       <span class="comment">// See below for intrinsics setup to support this</span>
+       <span class="keyword">return</span> unsafe.compareAndSwapInt(<span class="keyword">this</span>, stateOffset, expect, update);
+   }</code></pre>
+<p>如果当前线程拿到了锁，  就会进入setExclusiveOwnerThread(Thread.currentThread());去设置一个独占线程（表示当前线程是一个独占状态），将当前线程保存到exclusiveOwnerThread字段里面。</p>
+<pre><code class="java"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">setExclusiveOwnerThread</span><span class="params">(Thread thread)</span> </span>{
+        exclusiveOwnerThread = thread;
+    }</code></pre>
+<p>这就是一个线程A获取到锁的一个过程。这时候线程B和线程C在判断语句中为false，就会去执行AQS中的 acquire(1);方法  ,尝试去抢占锁。arg表示一个抢占锁的数量。</p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">acquire</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>{
+        <span class="keyword">if</span> (!tryAcquire(arg) &amp;&amp;
+            acquireQueued(addWaiter(Node.EXCLUSIVE), arg))
+            selfInterrupt();
+    }  
+    <span class="comment">//然后进入if子句，执行里面的tryAcquire(arg)方法。</span>
+      <span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryAcquire</span><span class="params">(<span class="keyword">int</span> acquires)</span> </span>{
+            <span class="keyword">return</span> nonfairTryAcquire(acquires);
+        }</code></pre>
+<p>我们再进入方法nonfairTryAcquire(acquires)  </p>
+<pre><code class="java"><span class="function"><span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">nonfairTryAcquire</span><span class="params">(<span class="keyword">int</span> acquires)</span> </span>{
+            <span class="comment">//得到当前线程，可能是B可能是C</span>
+           <span class="keyword">final</span> Thread current = Thread.currentThread();
+           <span class="comment">//判断state的值</span>
+           <span class="keyword">int</span> c = getState();
+           <span class="keyword">if</span> (c == <span class="number">0</span>) {
+               <span class="comment">//无锁状态，执行方式跟前面的线程A一样</span>
+               <span class="keyword">if</span> (compareAndSetState(<span class="number">0</span>, acquires)) {
+                   setExclusiveOwnerThread(current);
+                   <span class="keyword">return</span> <span class="keyword">true</span>;
+               }
+           }
+           <span class="comment">//所以B或者C执行这里，判断是否是重入状态</span>
+           <span class="keyword">else</span> <span class="keyword">if</span> (current == getExclusiveOwnerThread()) {
+               <span class="keyword">int</span> nextc = c + acquires;
+               <span class="keyword">if</span> (nextc &lt; <span class="number">0</span>) <span class="comment">// overflow</span>
+                   <span class="keyword">throw</span> <span class="keyword">new</span> Error(<span class="string">"Maximum lock count exceeded"</span>);
+               setState(nextc);
+               <span class="keyword">return</span> <span class="keyword">true</span>;
+           }
+           <span class="keyword">return</span> <span class="keyword">false</span>;
+       }</code></pre>
+<p>返回false到之前 !tryAcquire(arg)  ，!tryAcquire(arg) 就为true，执行&amp;&amp;后的acquireQueued(addWaiter(Node.EXCLUSIVE), arg)方法<br>其实我们可以猜出来，线程B和线程C抢占锁失败，要进行排队和阻塞两个操作。排队的话就一定有地方去存储。addWaiter(Node.EXCLUSIVE)：构建一个队列，把没有获得锁的线程加入的一个双向链表里面，再去acquireQueued(addWaiter(Node.EXCLUSIVE), arg)，通过不断去轮询队列里面的线程，去唤醒和阻塞。   </p>
+<pre><code>关于node：Node的数据结构中包含了需要同步的线程本身以及线程的状态（waitStatus：共有4种取值CANCELLED、SIGNAL、CONDITION、PROPAGATE。值为0，代表初始化状态。），如是否被阻塞，是否等待唤醒，是否已经被取消等。每个Node结点内部关联其前继结点prev和后继结点next，这样可以方便线程释放锁后快速唤醒下一个在等待的线程，所以节点里还包含当前线程信息。Node是AQS的内部类，其数据结构如下：  
+static final class Node {
+//共享模式，一个锁允许多条线程同时操作，如信号量Semaphore采用的就是基于AQS的共享模式实现的
+static final Node SHARED = new Node();
+//独占模式，同一个时间段只能有一个线程对共享资源进行操作，多余的请求线程需要排队等待，如ReentranLock
+static final Node EXCLUSIVE = null;
+
+//标识线程已处于结束状态
+static final int CANCELLED =  1;
+//等待被唤醒状态
+static final int SIGNAL    = -1;
+//条件状态，与Condition相关，该标识的结点处于等待队列中，结点的线程等待在Condition上，当其他线程调用了Condition的signal()方法后，CONDITION状态的结点将从等待队列转移到同步队列中，等待获取同步锁
+static final int CONDITION = -2;
+//在共享模式中使用表示获得的同步状态会被传播
+static final int PROPAGATE = -3;
+
+//等待状态,存在CANCELLED、SIGNAL、CONDITION、PROPAGATE 4种
+volatile int waitStatus;
+
+//同步队列中前驱结点
+volatile Node prev;
+
+//同步队列中后继结点
+volatile Node next;
+
+//请求锁的线程
+volatile Thread thread;
+
+//等待队列中的后继结点，这个与Condition有关
+Node nextWaiter;
+
+//判断是否为共享模式
+final boolean isShared() {
+    return nextWaiter == SHARED;
+}
+
+//获取前驱结点
+final Node predecessor() throws NullPointerException {
+    Node p = prev;
+    if (p == null)
+        throw new NullPointerException();
+    else
+        return p;
+}
+
+//.....}  </code></pre><hr>
+<pre><code class="java"><span class="comment">//线程B C都进入这个方法了，Node是一种独占状态,独占模式则是同一个时间段只能有一个线程对共享资源进行操作,多余的请求线程需要排队等待</span>
+ <span class="function"><span class="keyword">private</span> Node <span class="title">addWaiter</span><span class="params">(Node mode)</span> </span>{
+         <span class="comment">//构建node,Node结点是对每一个访问同步代码的线程的封装</span>
+        Node node = <span class="keyword">new</span> Node(Thread.currentThread(), mode);
+        <span class="comment">// Try the fast path of enq; backup to full enq on failure</span>
+        <span class="comment">//下面都是在构建双向队列的过程，封装未拿到锁的线程</span>
+        Node pred = tail;
+        <span class="keyword">if</span> (pred != <span class="keyword">null</span>) {
+            node.prev = pred;
+            <span class="keyword">if</span> (compareAndSetTail(pred, node)) {
+                pred.next = node;
+                <span class="keyword">return</span> node;
+            }
+        }
+        <span class="comment">//当pred为空时，执行此方法</span>
+        enq(node);
+        <span class="keyword">return</span> node;
+    }</code></pre>
+<p>head和tail分别是AQS中的变量，其中head指向同步队列的头部，注意head为空结点，不存储信息。而tail则是同步队列的队尾，同步队列采用的是双向链表的结构这样可方便队列进行结点增删操作<br>enq(node);方法：  </p>
+<pre><code class="java"><span class="function"><span class="keyword">private</span> Node <span class="title">enq</span><span class="params">(<span class="keyword">final</span> Node node)</span> </span>{
+        <span class="keyword">for</span> (;;) {
+            Node t = tail;
+            <span class="keyword">if</span> (t == <span class="keyword">null</span>) { <span class="comment">// Must initialize</span>
+                <span class="keyword">if</span> (compareAndSetHead(<span class="keyword">new</span> Node()))
+                    tail = head;
+            } <span class="keyword">else</span> {
+                node.prev = t;
+                <span class="keyword">if</span> (compareAndSetTail(t, node)) {
+                    t.next = node;
+                    <span class="keyword">return</span> t;
+                }
+            }
+        }
+    }
+</code></pre>
+<p>到这里，就完成了线程B C等按照先后顺序完成了排队操作。<br>也就是 addWaiter(Node.EXCLUSIVE)构建node返回，作为参数传到了 acquireQueued(addWaiter(Node.EXCLUSIVE), arg))里面  </p>
+<pre><code class="java"><span class="function"><span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">acquireQueued</span><span class="params">(<span class="keyword">final</span> Node node, <span class="keyword">int</span> arg)</span> </span>{
+        <span class="keyword">boolean</span> failed = <span class="keyword">true</span>;
+        <span class="keyword">try</span> {
+            <span class="keyword">boolean</span> interrupted = <span class="keyword">false</span>;
+            <span class="comment">//自旋</span>
+            <span class="keyword">for</span> (;;) {
+                <span class="keyword">final</span> Node p = node.predecessor();
+                <span class="keyword">if</span> (p == head &amp;&amp; tryAcquire(arg)) {
+                    setHead(node);
+                    p.next = <span class="keyword">null</span>; <span class="comment">// help GC</span>
+                    failed = <span class="keyword">false</span>;
+                    <span class="keyword">return</span> interrupted;
+                }
+                <span class="comment">//去唤醒和阻塞</span>
+                <span class="keyword">if</span> (shouldParkAfterFailedAcquire(p, node) &amp;&amp;
+                    parkAndCheckInterrupt())
+                    interrupted = <span class="keyword">true</span>;
+            }
+        } <span class="keyword">finally</span> {
+            <span class="keyword">if</span> (failed)
+                cancelAcquire(node);
+        }
+    }</code></pre>
+<p>if (shouldParkAfterFailedAcquire(p, node) &amp;&amp;<br>                    parkAndCheckInterrupt())中的两个方法：  </p>
+<pre><code class="java"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">shouldParkAfterFailedAcquire</span><span class="params">(Node pred, Node node)</span> </span>{
+       <span class="keyword">int</span> ws = pred.waitStatus;
+       <span class="keyword">if</span> (ws == Node.SIGNAL)
+           <span class="comment">/*</span>
+<span class="comment">            * This node has already set status asking a release</span>
+<span class="comment">            * to signal it, so it can safely park.</span>
+<span class="comment">            */</span>
+           <span class="keyword">return</span> <span class="keyword">true</span>;
+       <span class="keyword">if</span> (ws &gt; <span class="number">0</span>) {
+           <span class="comment">/*</span>
+<span class="comment">            * Predecessor was cancelled. Skip over predecessors and</span>
+<span class="comment">            * indicate retry.</span>
+<span class="comment">            */</span>
+           <span class="keyword">do</span> {
+               node.prev = pred = pred.prev;
+           } <span class="keyword">while</span> (pred.waitStatus &gt; <span class="number">0</span>);
+           pred.next = node;
+       } <span class="keyword">else</span> {
+           <span class="comment">/*</span>
+<span class="comment">            * waitStatus must be 0 or PROPAGATE.  Indicate that we</span>
+<span class="comment">            * need a signal, but don't park yet.  Caller will need to</span>
+<span class="comment">            * retry to make sure it cannot acquire before parking.</span>
+<span class="comment">            */</span>
+           compareAndSetWaitStatus(pred, ws, Node.SIGNAL);
+       }
+       <span class="keyword">return</span> <span class="keyword">false</span>;
+   }  
+   <span class="comment">//=========================================</span>
+   <span class="function"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">parkAndCheckInterrupt</span><span class="params">()</span> </span>{
+       LockSupport.park(<span class="keyword">this</span>);<span class="comment">//通过park去阻塞线程B C等</span>
+       <span class="keyword">return</span> Thread.interrupted();
+   }</code></pre>
+<p>这个时候lock（）就完成了线程A持有锁，然后去阻塞其他线程的操作。等到unlock()方法去唤醒处于阻塞状态的线程。  unlock():</p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unlock</span><span class="params">()</span> </span>{
+        sync.release(<span class="number">1</span>);
+    }    </code></pre>
+<p>release(1):  当下面的tryRelease(arg)返回true时，通过unpark去唤醒</p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">release</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>{
+       <span class="keyword">if</span> (tryRelease(arg)) {
+       <span class="comment">//拿到head节点，此时waitStatus = -1 signal</span>
+           Node h = head;
+           <span class="keyword">if</span> (h != <span class="keyword">null</span> &amp;&amp; h.waitStatus != <span class="number">0</span>)
+                <span class="comment">//传入head节点</span>
+               unparkSuccessor(h);
+           <span class="keyword">return</span> <span class="keyword">true</span>;
+       }
+       <span class="keyword">return</span> <span class="keyword">false</span>;
+   }</code></pre>
+<p>tryRelease(arg):    将state和exclusiveOwnerThread还原未默认值，即0和null。然后返回true</p>
+<pre><code class="java"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">tryRelease</span><span class="params">(<span class="keyword">int</span> releases)</span> </span>{
+            <span class="comment">//此时 0 = 1 - 1 ;</span>
+            <span class="keyword">int</span> c = getState() - releases;  
+            <span class="keyword">if</span> (Thread.currentThread() != getExclusiveOwnerThread())
+                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalMonitorStateException();
+            <span class="keyword">boolean</span> free = <span class="keyword">false</span>;
+            <span class="keyword">if</span> (c == <span class="number">0</span>) {
+                free = <span class="keyword">true</span>;
+                setExclusiveOwnerThread(<span class="keyword">null</span>);
+            }
+            setState(c);
+            <span class="keyword">return</span> free;
+        }</code></pre>
+<p>unparkSuccessor(h); ：  </p>
+<pre><code class="java"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">unparkSuccessor</span><span class="params">(Node node)</span> </span>{
+        <span class="comment">/*</span>
+<span class="comment">         * If status is negative (i.e., possibly needing signal) try</span>
+<span class="comment">         * to clear in anticipation of signalling.  It is OK if this</span>
+<span class="comment">         * fails or if status is changed by waiting thread.</span>
+<span class="comment">         */</span>
+        <span class="keyword">int</span> ws = node.waitStatus;
+        <span class="keyword">if</span> (ws &lt; <span class="number">0</span>)
+            compareAndSetWaitStatus(node, ws, <span class="number">0</span>);
+
+        <span class="comment">/*</span>
+<span class="comment">         * Thread to unpark is held in successor, which is normally</span>
+<span class="comment">         * just the next node.  But if cancelled or apparently null,</span>
+<span class="comment">         * traverse backwards from tail to find the actual</span>
+<span class="comment">         * non-cancelled successor.</span>
+<span class="comment">         */</span>
+         <span class="comment">//head的下一个节点，线程B</span>
+        Node s = node.next;
+        <span class="comment">//清理异常的节点</span>
+        <span class="keyword">if</span> (s == <span class="keyword">null</span> || s.waitStatus &gt; <span class="number">0</span>) {
+            s = <span class="keyword">null</span>;
+            <span class="keyword">for</span> (Node t = tail; t != <span class="keyword">null</span> &amp;&amp; t != node; t = t.prev)
+                <span class="keyword">if</span> (t.waitStatus &lt;= <span class="number">0</span>)
+                    s = t;
+        }
+        <span class="comment">//唤醒线程B，通过unpark()</span>
+        <span class="keyword">if</span> (s != <span class="keyword">null</span>)
+            LockSupport.unpark(s.thread);
+    }</code></pre>
+<p>线程B之前阻塞在：  </p>
+<pre><code class="java"><span class="function"><span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">parkAndCheckInterrupt</span><span class="params">()</span> </span>{
+       LockSupport.park(<span class="keyword">this</span>);<span class="comment">//通过park去阻塞线程B C等</span>
+       <span class="comment">//返回一个中断状态，并复位</span>
+       <span class="keyword">return</span> Thread.interrupted();
+   }</code></pre>
+<p>返回之后继续进行final boolean acquireQueued(final Node node, int arg) 里面的循环</p>
+<pre><code class="java"><span class="keyword">for</span> (;;) {
+               <span class="keyword">final</span> Node p = node.predecessor();
+               <span class="keyword">if</span> (p == head &amp;&amp; tryAcquire(arg)) {
+                   setHead(node);
+                   p.next = <span class="keyword">null</span>; <span class="comment">// help GC</span>
+                   failed = <span class="keyword">false</span>;
+                   <span class="keyword">return</span> interrupted;
+               }</code></pre>
+<p>然后去final boolean nonfairTryAcquire(int acquires) 。线程B就获得了锁。 setHead(node);方法把线程B设置成head节点，  </p>
+<pre><code class="java"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">setHead</span><span class="params">(Node node)</span> </span>{
+        head = node;
+        node.thread = <span class="keyword">null</span>;
+        node.prev = <span class="keyword">null</span>;<span class="comment">//之前的head节点没有被引用了，被孤立了，等待垃圾回收</span>
+    }</code></pre>
+<p>然后往上一直返回 –&gt; acquire(int arg)  –&gt; final void lock() –&gt; public void lock()  –&gt; 用户调用lock()的地方。<br>然后线程B执行完后，按照相同的步骤继续唤醒线程C，线程C又被设置成head, 线程B被回收掉。<br><img src="/2020/06/19/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%80%E9%83%A8/juc03.png" alt="Alt text"><br>以上基本就是AQS去实现线程的排队与阻塞唤醒的实现原理，也是AQS的实现原理。<br>AQS就是一个同步器，我们可以看到刚才抢占锁以及创建队列都是在AbstractQueuedSynchronizer这样一个同步工具去实现的。它不仅在ReentrantLock里面用到，还有许多地方也有用到。</p>
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/Wechat.jpg">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Stephen Cheng
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://chengqijie.gitee.io/2020/06/19/J.U.C核心-第一部/" title="J.U.C核心-第一部" target="_blank">https://chengqijie.gitee.io/2020/06/19/J.U.C核心-第一部/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/06/19/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%80%E9%83%A8/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-        <time datetime="2020-05-19T07:11:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-19</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/06/19/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E9%80%92%E5%BD%92/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">数据结构与算法-递归</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" target="_blank">三大工厂模式</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#重入锁Reentrantlock初步认识"><span class="toc-number">1.</span> <span class="toc-text">重入锁Reentrantlock初步认识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Lock接口"><span class="toc-number">1.1.</span> <span class="toc-text">Lock接口</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#重入锁"><span class="toc-number">1.2.</span> <span class="toc-text">重入锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ReentrantLock类"><span class="toc-number">1.3.</span> <span class="toc-text">ReentrantLock类</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AQS是什么"><span class="toc-number">2.</span> <span class="toc-text">AQS是什么</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+        
+    </div>
+</aside>
 
-    
+
+
+
+
+
+
+
+
+
+  <div id="giteement-ctn"></div>
+  
+    <link rel="stylesheet" href="/lib/default.css">
+    <script src="/lib/giteement.browser.js"></script>
+  
+  <script>
+  <!-- id: "J.U.C核心-第一部" -->
+  var giteement = new Giteement({
+    id: '20200619235750',
+    owner: 'chengqijie',
+    repo: 'chengqijie',
+    backcall_uri: 'https://chengqijie.gitee.io',
+    oauth_uri: 'https://cors-anywhere.herokuapp.com/https://gitee.com/oauth/token',
+    oauth: {
+      client_id: 'e551fed6367a77dcf3a8672bede3eff5e038f747e7d5e674dc58b215488d5545',
+      client_secret: 'fc2cd40a7b35bff445412d26248a22323155df97d0eb8f3802625f533d723a54'
+    },
+  })
+  giteement.render('giteement-ctn')
+  </script>
+
+
+
+
+
+
 
 
           </div>
@@ -372,10 +892,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
