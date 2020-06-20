@@ -5,29 +5,28 @@
   
   
   
-	<meta name="keywords" content="多线程,博客">
+	<meta name="keywords" content="数据库MySQL,博客">
 	
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
-  <title>线程的基本认识 | Stephen Cheng`s blog</title>
+  <title>MySQL入门系列五-完结 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta property="og:type" content="article">
-<meta property="og:title" content="线程的基本认识">
-<meta property="og:url" content="https://chengqijie.gitee.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/index.html">
+<meta property="og:title" content="MySQL入门系列五-完结">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/06/20/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%BA%94-%E5%AE%8C%E7%BB%93/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://images.unsplash.com/photo-1591705599349-febbe70ed494?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/thread01.png">
-<meta property="article:published_time" content="2020-06-09T11:15:50.000Z">
-<meta property="article:modified_time" content="2020-06-16T01:08:45.883Z">
+<meta property="og:image" content="http://image.tianjimedia.com/uploadImages/2013/237/015W189B5F99_B75.JPG">
+<meta property="article:published_time" content="2020-06-20T14:24:50.000Z">
+<meta property="article:modified_time" content="2020-06-20T14:24:20.149Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="多线程">
+<meta property="article:tag" content="数据库MySQL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1591705599349-febbe70ed494?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
+<meta name="twitter:image" content="http://image.tianjimedia.com/uploadImages/2013/237/015W189B5F99_B75.JPG">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -213,7 +212,7 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-线程的基本认识" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-MySQL入门系列五-完结" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -223,7 +222,7 @@
    <center><p>
   
     <h1 class="article-title_code_ant" itemprop="name">
-      线程的基本认识
+      MySQL入门系列五-完结
     </h1>
   
 
@@ -236,8 +235,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" class="archive-article-date">
-        <time datetime="2020-06-09T11:15:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-09</time>
+<a href="/2020/06/20/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%BA%94-%E5%AE%8C%E7%BB%93/" class="archive-article-date">
+        <time datetime="2020-06-20T14:24:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-20</time>
 </a>
 
   
@@ -250,7 +249,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.8k字</span>
+      <span class="post-count">2.6k字</span>
     </span>
   </span>
 
@@ -259,7 +258,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">6分</span>
+      <span class="post-count">9分</span>
     </span>
   </span>
 </div>
@@ -270,81 +269,63 @@
   
   <div class="article-entry" itemprop="articleBody">
 	
-    <img src="https://images.unsplash.com/photo-1591705599349-febbe70ed494?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" style="width:100%">  
-<a id="more"></a>  
+    <img src="http://image.tianjimedia.com/uploadImages/2013/237/015W189B5F99_B75.JPG" style="width:100%">  
+<a id="more"></a>    
 
 
-
-<h3 id="线程的基本介绍"><a href="#线程的基本介绍" class="headerlink" title="线程的基本介绍"></a>线程的基本介绍</h3><h5 id="线程基本概念"><a href="#线程基本概念" class="headerlink" title="线程基本概念"></a>线程基本概念</h5><p>线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。  </p>
-<h5 id="为什么会有线程"><a href="#为什么会有线程" class="headerlink" title="为什么会有线程"></a>为什么会有线程</h5><p>（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。<br>（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。<br>（3）线程可以认为是一种轻量级的进程，因此线程的创建、销毁比进程快。  </p>
-<h5 id="为什么要用多线程"><a href="#为什么要用多线程" class="headerlink" title="为什么要用多线程"></a>为什么要用多线程</h5><p>（1）异步执行<br>（2）利用多CPU资源实现真正意义上的并行执行<br> <!--more--><br>（3）线程作为调度和执行的单位，每个线程拥有独立的运行栈和程序计数器(pc)，线程切换的开<br>销小<br>（4）一个进程中的多个线程共享相同的内存单元/内存地址空间它们从同一堆中分配对象，可以<br>访问相同的变量和对象。这就使得线程间通信更简便、高效。但多个线程操作共享的系统资<br>源可能就会带来安全的隐患。  </p>
-<h5 id="多线程应用场景"><a href="#多线程应用场景" class="headerlink" title="多线程应用场景"></a>多线程应用场景</h5><p>（1）使用多线程实现文件下载<br>（2）后台任务：如定时向大量用户发送邮件<br>（3）异步处理：记录日志<br>（4）多步骤的任务处理，可根据任务步骤的特征选用不用个数和特征的线程来协作处理，多任务的分割，由一个主线程分割给多个线程去完成。  </p>
-<h5 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h5><p>多线程的本质是：合理的利用多核心CPU资源来实现线程的并行处理，来实现同一个进程内不同任务的并行执行，同时基于线程本身的异步执行特性，提升任务处理的效率。  </p>
-<h3 id="Java线程的生命周期"><a href="#Java线程的生命周期" class="headerlink" title="Java线程的生命周期"></a>Java线程的生命周期</h3><p><strong>Java线程从创建到销毁，一共可能经历六种状态：</strong><br><code>NEW：</code>  初始状态，线程被构建，当一个Thread类或其子类的对象被声明并创建时，新生的线程对象处于新建状态。但是还没有调用start方法     </p>
-<p><code>RUNNABLED：</code> 运行状态，Java线程把操作系统中的就绪和运行两种状态统一称为“运行中”  。线程对象创建后，其他线程(比如main线程）调用了该对象的start()方法。该状态的线程位于可运行线程池中，等待被线程调度选中，获取CPU的使用权，此时处于就绪状态（ready）。就绪状态的线程在获得CPU时间片后变为运行中状态（running）。也就是start方法调用之后，线程并没有立即运行，线程的运行是需要OS去调度的（抢占式或者时间片）。<br>1.调用线程的start()方法，此线程进入就绪状态。<br>2.当前线程sleep()方法结束，其他线程join()结束，等待用户输入完毕，某个线程拿到对象锁，这些线程也将进入就绪状态。<br>3.当前线程时间片用完了，调用当前线程的yield()方法，当前线程进入就绪状态。<br>4.锁池里的线程拿到对象锁后，进入就绪状态。<br>5.运行中状态是线程调度程序从可运行池中选择一个线程作为当前线程时所处的状态。这也是线程进入运行状态的唯一一种方式。  </p>
-<p><code>BLOCKED：</code>   阻塞状态，表示线程进入等待状态，也就是线程因为某种原因放弃了CPU的使用权，阻塞状态是线程被阻塞在进入synchronized关键字修饰的方法或代码块时的状态。<br><code>WAITING</code>  等待状态，进入该状态的线程需要等待其他线程做出一些特定动作（通知或中断）。  它们不会被分配CPU时间，要等待被显示的唤醒，否则处于无限期等待状态。<br><code>TIME_WAITING</code>  超时等待状态，超时以后自动返回 ，该状态不同于WAITING，处于这种状态的线程不会被分配CPU执行时间，不过无须无限期等待被其他线程显示地唤醒，在达到一定时间后它们会自动唤醒。<br><code>RERMINATED</code>  终止状态，表示当前线程的run方法执行结束或者主线程的main方法完成时，我们就认为它终止了，而且不能复生。<br><img src="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/thread01.png" alt="图片加载中">  </p>
-<h3 id="如何在Java中应用多线程"><a href="#如何在Java中应用多线程" class="headerlink" title="如何在Java中应用多线程"></a>如何在Java中应用多线程</h3><p>使用多线程的方式：<br>（1）继承Thread类 （本质上Thread类里面也实现了Runnable接口）<br>-&gt; 定义Thread类的子类，并重写该类的run方法，也被称为线程执行体。<br>-&gt; 创建Thread类的子类实例，也就是创建了线程对象。<br>-&gt; 调用start方法，启动线程。  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>{
-        System.out.println(<span class="string">"当前线程："</span>+Thread.currentThread().getName());
-    }
+<h2 id="JDBC"><a href="#JDBC" class="headerlink" title="JDBC"></a>JDBC</h2><p>JDBC(Java Database Connectivity)是一个独立于特定数据库管理系统（DBMS）、通用的SQL数据库存取和操作的公共接口（一组API），定义了用来访问数据库的标准Java类库，使用这个类库可以以一种标准的方法、方便地访问数据库资源。   </p>
+<p>简单来说JDBC是SUN公司提供一套用于数据库操作的接口API，Java程序员只需要面向这套接口编程即可。  </p>
+<p>不同的数据库厂商，需要针对这套接口，提供不同实现。不同的实现的集合，即为不同数据库的驱动。<br>JDBC程序编写步骤：<br>（1）注册驱动<br>（2）获取连接<br>（3）执行增删改查<br>（4）释放资源  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JDBCdemo</span> </span>{
     <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-        ThreadDemo demo1 = <span class="keyword">new</span> ThreadDemo();
-        demo1.start();
-    }
-} 
---------------------------------------------------------------------
-lamoda表达式：  
 
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> </span>{
+        <span class="keyword">try</span> {
+            <span class="comment">//1.加载驱动</span>
+            Class.forName(<span class="string">"com.mysql.cj.jdbc.Driver"</span>);
+            <span class="comment">//2.获取连接</span>
+            Connection connection = DriverManager.getConnection(<span class="string">"jdbc:mysql://localhost:3306/day037?&amp;serverTimezone=CST"</span>,<span class="string">"root"</span>,<span class="string">"root"</span>);
+            System.out.println(<span class="string">"数据库连接成功！"</span>);
+            <span class="comment">//编写、执行mysql</span>
+            String sql = <span class="string">"select * from employee"</span>;
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            System.out.println(resultSet);
+            statement.close();
+            connection.close();
 
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-        <span class="keyword">new</span> Thread(() -&gt; {
-            System.out.println(<span class="string">"当前线程："</span> + Thread.currentThread().getName());
-        }, <span class="string">"thread1"</span>).start();
+        } <span class="keyword">catch</span> (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 }</code></pre>
-<p>（2）实现Runnable接口<br>-&gt;  定义Runnable接口的实现类，重写run方法。<br>-&gt;  创建Runnable实现类的实例，并用这个实例作为Thread的target来创建Thread对象，这个Thread对象才是真正的线程对象。<br>-&gt;  调用线程对象的start方法，启动线程。  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>{
+<p>补充 -类的加载时机：<br>1.new 对象<br>2.加载子类<br>3.调用类中的静态成员<br>4.反射    </p>
+<p>数据库连接被用于向数据库服务器发送命令和 SQL 语句，并接受数据库服务器返回的结果。<br>其实一个数据库连接就是一个Socket连接<br>在 java.sql 包中有 3 个接口分别定义了对数据库的调用的不同方式：<br><strong>Statement：</strong>用于执行静态 SQL 语句并返回它所生成结果的对象。<br><strong>PrepatedStatement：</strong>SQL 语句被预编译并存储在此对象中，然后可以使用此对象多次高效地执行该语句。<br><strong>CallableStatement：</strong>用于执行 SQL 存储过程    </p>
+<p><strong>关于ResultSet</strong><br>通过调用 Statement 对象的 excuteQuery() 方法创建该对象<br>ResultSet 对象以逻辑表格的形式封装了执行数据库操作的结果集，ResultSet 接口由数据库厂商实现<br>ResultSet 对象维护了一个指向当前数据行的游标，初始的时候，游标在第一行之前，可以通过 ResultSet 对象的 next() 方法移动到下一行<br>ResultSet 接口的常用方法：<br>boolean next()<br>getXxx(String columnLabel)：columnLabel使用 SQL AS 子句指定的列标签。如果未指定 SQL AS 子句，则标签是列名称<br>getXxx(int index) :索引从1开始<br>…  </p>
+<p><strong>注意：</strong>Connection、Statement、ResultSet都是应用程序和数据库服务器的连接资源，使用后一定要关闭，可以在finally中关闭  </p>
+<h2 id="PreparedStatement"><a href="#PreparedStatement" class="headerlink" title="PreparedStatement"></a>PreparedStatement</h2><h3 id="Statement的不足"><a href="#Statement的不足" class="headerlink" title="Statement的不足"></a>Statement的不足</h3><p>（1）SQL拼接：如果要编译的SQL语句存在变量时，就需要用分隔符隔开<br>（2）SQL注入：SQL 注入是利用某些系统没有对用户输入的数据进行充分的检查，而在用户输入数据中注入非法的 SQL 语句段或命令，从而利用系统的 SQL 引擎完成恶意行为的做法<br>（3）处理不了Blob类型的数据：BLOB (binary large object)，二进制大对象，BLOB常常是数据库中用来存储二进制文件的字段类型。插入BLOB类型的数据必须使用PreparedStatement，因为BLOB类型的数据无法使用字符串拼接写的。  </p>
+<h3 id="PreparedStatement概述"><a href="#PreparedStatement概述" class="headerlink" title="PreparedStatement概述"></a>PreparedStatement概述</h3><p>可以通过调用 Connection 对象的 preparedStatement(String sql) 方法获取 PreparedStatement 对象<br>PreparedStatement 接口是 Statement 的子接口，比Statement更强大。它表示一条预编译过的 SQL 语句。<br>（1）PreparedStatement 对象所代表的 SQL 语句中的参数用问号(?)来表示，调用 PreparedStatement 对象的 setXxx() 方法来设置这些参数. setXxx() 方法有两个参数，第一个参数是要设置的 SQL 语句中的参数的索引(从 1 开始)，第二个是设置的 SQL 语句中的参数的值<br>（2）ResultSet executeQuery()执行查询，并返回该查询生成的 ResultSet 对象。<br>（3）int executeUpdate()：执行更新，包括增、删、改  </p>
+<pre><code class="java"><span class="comment">//2、 INSERT INTO `user` VALUES(NULL,用户名,密码,照片)</span>
+String sql = <span class="string">"INSERT INTO `user` (username,`password`,head_picture)VALUES(?,?,?)"</span>;
 
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>{
-        System.out.println(<span class="string">"当前线程："</span>+Thread.currentThread().getName());
-    }
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-        ThreadDemo demo1 = <span class="keyword">new</span> ThreadDemo();
-        Thread thread1 = <span class="keyword">new</span> Thread(demo1);
-        thread1.start();
-    }
-}</code></pre>
-<p>两者输出： </p>
-<pre><code class="java">当前线程：Thread-<span class="number">0</span>
+<span class="comment">// 3、准备一个PreparedStatement：预编译sql</span>
+PreparedStatement pst = conn.prepareStatement(sql);<span class="comment">// 对带？的sql进行预编译</span>
 
-Process finished with exit code <span class="number">0</span></code></pre>
-<p>（3）实现Callable接口（想要得到返回值）<br>-&gt; 创建Callable接口的实现类，并实现call()方法，<br>-&gt; 创建线程池对象<br>-&gt; 将Callable实现类的实例对象传入submit()参数中，得到Future返回值对象。<br>-&gt; 调用get（）方法得到返回值。  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">String</span>&gt; </span>{
+<span class="comment">// 4、对？进行设置</span>
+pst.setString(<span class="number">1</span>, username);
+pst.setString(<span class="number">2</span>, pwd);
+pst.setBlob(<span class="number">3</span>, <span class="keyword">new</span> FileInputStream(photoPath));
 
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>{
-        System.out.println(<span class="string">"当前线程："</span>+Thread.currentThread().getName());
-        Thread.sleep(<span class="number">1000</span>);
-        <span class="keyword">return</span> <span class="string">"Hello Callable"</span>;
-    }
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>{
-      ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">1</span>);
-      Future&lt;String&gt; future = executorService.submit(<span class="keyword">new</span> ThreadDemo());
-        <span class="comment">//future.get()是一个阻塞方法，阻塞在返回值之前</span>
-   System.out.println(Thread.currentThread().getName()+<span class="string">"-"</span>+future.get());
-    }
-}</code></pre>
-<p>————三者的简单区别————    </p>
-<p>实现Runnable和实现Callable接口的方式基本相同，不过后者执行call()方法有返回值，前者线程执行体run()方法无返回值，因此可以把这两种方式归为一种方式与继承Thread类的方法之间的差别如下：</p>
-<p>1、线程只是实现Runnable或实现Callable接口，还可以继承其他类。</p>
-<p>2、实现接口的方式时，多个线程可以共享一个target对象，非常适合多线程处理同一份资源的情形。</p>
-<p>3、但是编程稍微复杂，如果需要访问当前线程，必须调用Thread.currentThread()方法。</p>
-<p>4、继承Thread类的线程类不能再继承其他父类（Java单继承决定）。</p>
-<p>注：一般推荐采用实现接口的方式来创建多线程</p>
+<span class="comment">// 5、执行sql</span>
+<span class="keyword">int</span> len = pst.executeUpdate();
+System.out.println(len &gt; <span class="number">0</span> ? <span class="string">"添加成功"</span> : <span class="string">"添加失败"</span>);</code></pre>
+<h3 id="PreparedStatement-vs-Statement"><a href="#PreparedStatement-vs-Statement" class="headerlink" title="PreparedStatement vs Statement"></a>PreparedStatement vs Statement</h3><p>(1)代码的可读性和可维护性. Statement的sql拼接是个难题。<br>(2)PreparedStatement 可以防止 SQL 注入<br>(3)PreparedStatement 可以处理Blob类型的数据<br>(4)PreparedStatement 能最大可能提高性能：（Oracle和PostgreSQL8是这样，但是对于MySQL不一定比Statement高）<br>DBServer会对预编译语句提供性能优化。因为预编译语句有可能被重复调用，所以语句在被DBServer的编译器编译后的执行代码被缓存下来，那么下次调用时只要是相同的预编译语句就不需要编译，只要将参数直接传入编译过的语句执行代码中就会得到执行。  </p>
+<h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>JDBC程序中当一个连接对象被创建时，默认情况下是自动提交事务：每次执行一个 SQL 语句时，如果执行成功，就会向数据库自动提交，而不能回滚。<br>JDBC程序中为了让多个 SQL 语句作为一个事务执行：<br>（1）调用 Connection 对象的 setAutoCommit(false); 以取消自动提交事务<br>（2）在所有的 SQL 语句都成功执行后，调用 commit(); 方法提交事务<br>（3）在其中某个操作失败或出现异常时，调用 rollback(); 方法回滚事务<br>（4）若此时 Connection 没有被关闭, 则需要恢复其自动提交状态 setAutoCommit(true);<br><strong>注意：</strong><br>如果多个操作，每个操作使用的是自己单独的连接，则无法保证事务。即同一个事务的多个操作必须在同一个连接下  </p>
+<h2 id="批处理"><a href="#批处理" class="headerlink" title="批处理"></a>批处理</h2><p>当需要成批插入或者更新记录时。可以采用Java的批量更新机制，这一机制允许多条语句一次性提交给数据库批量处理。通常情况下比单独提交处理更有效率。  </p>
+<p>JDBC的批量处理语句包括下面方法：<br>（1）addBatch()：添加需要批量处理的SQL语句或参数<br>（2）executeBatch()：执行批量处理语句；<br>（3）clearBatch():清空批处理包的语句    </p>
+<p>通常我们会遇到两种批量执行SQL语句的情况：<br>多条SQL语句的批量处理；一条SQL语句的批量传参；<br><strong>注意：</strong><br>JDBC连接MySQL时，如果要使用批处理功能，请再url中加参数?rewriteBatchedStatements=true<br>PreparedStatement作批处理插入时使用values（使用value没有效果）  </p>
+<h2 id="数据库连接池"><a href="#数据库连接池" class="headerlink" title="数据库连接池"></a>数据库连接池</h2><p>基本思想就是为数据库连接建立一个“缓冲池”。预先在缓冲池中放入一定数量的连接，当需要建立数据库连接时，只需从“缓冲池”中取出一个，使用完毕之后再放回去。数据库连接池负责分配、管理和释放数据库连接，它允许应用程序重复使用一个现有的数据库连接，而不是重新建立一个。连接池的最大数据库连接数量限定了这个连接池能占有的最大连接数，当应用程序向连接池请求的连接数超过最大连接数量时，这些请求将被加入到等待队列中。<br><strong>不使用数据库连接池存在的问题:</strong><br>（1）普通的JDBC数据库连接使用 DriverManager 来获取，每次向数据库建立连接的时候都要将 Connection 加载到内存中，再验证IP地址，用户名和密码(得花费0.05s～1s的时间)。需要数据库连接的时候，就向数据库要求一个，执行完成后再断开连接。这样的方式将会消耗大量的资源和时间。数据库的连接资源并没有得到很好的重复利用.若同时有几百人甚至几千人在线，频繁的进行数据库连接操作将占用很多的系统资源，严重的甚至会造成服务器的崩溃。<br>（2）对于每一次数据库连接，使用完后都得断开。否则，如果程序出现异常而未能关闭，将会导致数据库系统中的内存泄漏，最终将导致重启数据库。<br>（3）这种开发不能控制被创建的连接对象数，系统资源会被毫无顾及的分配出去，如连接过多，也可能导致内存泄漏，服务器崩溃。<br><strong>数据库连接池技术的优点：</strong><br>（1）资源重用：<br>由于数据库连接得以重用，避免了频繁创建，释放连接引起的大量性能开销。在减少系统消耗的基础上，另一方面也增加了系统运行环境的平稳性。<br>（2）更快的系统反应速度<br>数据库连接池在初始化过程中，往往已经创建了若干数据库连接置于连接池中备用。此时连接的初始化工作均已完成。对于业务请求处理而言，直接利用现有可用连接，避免了数据库连接初始化和释放过程的时间开销，从而减少了系统的响应时间<br>（3）新的资源分配手段<br>对于多应用共享同一数据库的系统而言，可在应用层通过数据库连接池的配置，实现某一应用最大可用数据库连接数的限制，避免某一应用独占所有的数据库资源<br>（4）统一的连接管理，避免数据库连接泄露<br>在较为完善的数据库连接池实现中，可根据预先的占用超时设定，强制回收被占用连接，从而避免了常规数据库连接操作中可能出现的资源泄露  </p>
+<h3 id="Druid（德鲁伊）数据源"><a href="#Druid（德鲁伊）数据源" class="headerlink" title="Druid（德鲁伊）数据源"></a>Druid（德鲁伊）数据源</h3><p>Druid是阿里巴巴开源平台上一个数据库连接池实现，它结合了C3P0、DBCP、Proxool等DB池的优点，同时加入了日志监控，可以很好的监控DB池连接和SQL的执行情况，可以说是针对监控而生的DB连接池，据说是目前最好的连接池。</p>
 
     
 
@@ -386,7 +367,7 @@ Process finished with exit code <span class="number">0</span></code></pre>
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://chengqijie.gitee.io/2020/06/09/线程的基本认识/" title="线程的基本认识" target="_blank">https://chengqijie.gitee.io/2020/06/09/线程的基本认识/</a>
+          <a href="https://chengqijie.gitee.io/2020/06/20/MySQL入门系列五-完结/" title="MySQL入门系列五-完结" target="_blank">https://chengqijie.gitee.io/2020/06/20/MySQL入门系列五-完结/</a>
         </li>
         
         <li>
@@ -408,7 +389,7 @@ Process finished with exit code <span class="number">0</span></code></pre>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库MySQL</a>
         		</li>
       		
 		</ul>
@@ -420,7 +401,7 @@ Process finished with exit code <span class="number">0</span></code></pre>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
+        			<a href="/categories/数据库MySQL//" class="article-tag-list-link color4">数据库MySQL</a>
         		</li>
       		
 		</ul>
@@ -475,7 +456,7 @@ Process finished with exit code <span class="number">0</span></code></pre>
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/06/20/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%BA%94-%E5%AE%8C%E7%BB%93/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -490,18 +471,9 @@ Process finished with exit code <span class="number">0</span></code></pre>
 
 <nav id="article-nav">
   
-    <a href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          线程的基本操作
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">单例模式简单介绍</div>
+    <a href="/2020/06/20/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E5%9B%9B/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">MySQL入门系列四</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -528,7 +500,7 @@ Process finished with exit code <span class="number">0</span></code></pre>
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#线程的基本介绍"><span class="toc-number">1.</span> <span class="toc-text">线程的基本介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#线程基本概念"><span class="toc-number">1.0.1.</span> <span class="toc-text">线程基本概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么会有线程"><span class="toc-number">1.0.2.</span> <span class="toc-text">为什么会有线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么要用多线程"><span class="toc-number">1.0.3.</span> <span class="toc-text">为什么要用多线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#多线程应用场景"><span class="toc-number">1.0.4.</span> <span class="toc-text">多线程应用场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#本质"><span class="toc-number">1.0.5.</span> <span class="toc-text">本质</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java线程的生命周期"><span class="toc-number">2.</span> <span class="toc-text">Java线程的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何在Java中应用多线程"><span class="toc-number">3.</span> <span class="toc-text">如何在Java中应用多线程</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#JDBC"><span class="toc-number">1.</span> <span class="toc-text">JDBC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PreparedStatement"><span class="toc-number">2.</span> <span class="toc-text">PreparedStatement</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Statement的不足"><span class="toc-number">2.1.</span> <span class="toc-text">Statement的不足</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PreparedStatement概述"><span class="toc-number">2.2.</span> <span class="toc-text">PreparedStatement概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PreparedStatement-vs-Statement"><span class="toc-number">2.3.</span> <span class="toc-text">PreparedStatement vs Statement</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#事务"><span class="toc-number">3.</span> <span class="toc-text">事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#批处理"><span class="toc-number">4.</span> <span class="toc-text">批处理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#数据库连接池"><span class="toc-number">5.</span> <span class="toc-text">数据库连接池</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Druid（德鲁伊）数据源"><span class="toc-number">5.1.</span> <span class="toc-text">Druid（德鲁伊）数据源</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -552,9 +524,9 @@ Process finished with exit code <span class="number">0</span></code></pre>
     <script src="/lib/giteement.browser.js"></script>
   
   <script>
-  <!-- id: "线程的基本认识" -->
+  <!-- id: "MySQL入门系列五-完结" -->
   var giteement = new Giteement({
-    id: '20200609191550',
+    id: '20200620222450',
     owner: 'chengqijie',
     repo: 'chengqijie',
     backcall_uri: 'https://chengqijie.gitee.io',
