@@ -5,24 +5,32 @@
   
   
   
-	<meta name="keywords" content="博客">
-  
+	<meta name="keywords" content="数据结构与算法,博客">
+	
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
-  <title>Category: JVM | Stephen Cheng`s blog</title>
+  <title>排序算法-第一部 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Stephen Cheng&#96;s blog">
-<meta property="og:url" content="https://chengqijie.gitee.io/categories/JVM/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="排序算法-第一部">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/06/20/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95-%E7%AC%AC%E4%B8%80%E9%83%A8/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img08.tooopen.com/20200409/tooopen_sy_1205015175987.jpg">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2019/03/bubbleSort.gif">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2019/03/selectionSort.gif">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2019/03/insertionSort.gif">
+<meta property="og:image" content="https://www.runoob.com/wp-content/uploads/2019/03/Sorting_shellsort_anim.gif">
+<meta property="article:published_time" content="2020-06-20T04:10:50.000Z">
+<meta property="article:modified_time" content="2020-06-20T04:06:01.731Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="博客">
+<meta property="article:tag" content="数据结构与算法">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img08.tooopen.com/20200409/tooopen_sy_1205015175987.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -208,292 +216,509 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-排序算法-第一部" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" class="archive-article-date">
-        <time datetime="2020-05-18T03:29:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
+	  
+   
+   
+   <center><p>
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" target="_blank">JVM常用命令</a>
-  
+    <h1 class="article-title_code_ant" itemprop="name">
+      排序算法-第一部
     </h1>
   
 
+</p></center>
+   
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
 
-        <div class="article-info info-on-right">
+<a href="/2020/06/20/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95-%E7%AC%AC%E4%B8%80%E9%83%A8/" class="archive-article-date">
+        <time datetime="2020-06-20T04:10:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-20</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">2.2k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">9分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+	
+    <img src="http://img08.tooopen.com/20200409/tooopen_sy_1205015175987.jpg" style="width:100%">  
+<a id="more"></a>    
+
+
+<h3 id="排序算法介绍"><a href="#排序算法介绍" class="headerlink" title="排序算法介绍"></a>排序算法介绍</h3><p>将一组数据依指定的顺序，进行排列的过程<br>（1）内部排序：将需要处理的所有数据都加载到内存中排序<br>（2）外部排序：数据量过大，无法全部加载到内存中，需要借助外部存储（文件等）进行排序<br>（3）常见的排序算法：插入排序（直接插入、希尔）、选择排序（简单选择、堆）、交换排序（冒泡、快速）、归并排序、基数排序  </p>
+<h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><p>通过对要排序的数据序列从左往右（元素下标小到大），一次比较相邻的两个元素，若是逆序则交换位置，使值较大的元素逐渐从左移到右。  </p>
+<p>优化：因为在排序过程中各个元素不断的接近自己的位置，所以有时候一趟下来没有进行过交换，说明已排好序。在排序过程中设置一个标志flag，来判断这一趟是否作了交换。从而避免了不必要的比较。     </p>
+<p>步骤：<br>1.比较相邻的两个元素，如果第一个比第二个大，则交换位置<br>2.对每一对相邻元素作同样的操作，从开始到结尾，元素最大值就到了最右边<br>3.针对所有的元素重复以上步骤<br>4.直到没有任何一对数据需要比较交换位置<br><img src="https://www.runoob.com/wp-content/uploads/2019/03/bubbleSort.gif">      </p>
+<p>平均时间复杂度：O(n^2)   稳定  </p>
+<p>代码实现：  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BubbleSort</span> </span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+        <span class="comment">//初始化一个随机数组</span>
+        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">8</span>];
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++) {
+            arr[i] = (<span class="keyword">int</span>) (Math.random()*<span class="number">100</span>);
+        }
+
+        bubbleSort(arr);
+
+
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">bubbleSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span></span>{
+        <span class="keyword">int</span> temp = <span class="number">0</span>; <span class="comment">//临时变量，便于交换位置</span>
+        <span class="keyword">boolean</span> flag = <span class="keyword">false</span>;  <span class="comment">//标识变量，判断是否有过交换</span>
+        <span class="comment">//外层循环：排序的趟数 n-1趟</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length -<span class="number">1</span>; i++) {
+            <span class="comment">//内层循环：当前趟数需要比较的次数</span>
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; arr.length - i - <span class="number">1</span>; j++) {
+                <span class="comment">//前者大于后者，交换位置</span>
+                <span class="keyword">if</span>(arr[j]&gt;arr[j+<span class="number">1</span>]){
+                    temp = arr[j];
+                    arr[j] = arr[j+<span class="number">1</span>];
+                    arr[j+<span class="number">1</span>] = temp;
+
+                    flag = <span class="keyword">true</span>;<span class="comment">//标志交换过位置</span>
+                }
+            }
+            <span class="keyword">if</span>(!flag){
+                <span class="keyword">break</span>;  <span class="comment">//没有交换操作，已排好，退出</span>
+            }<span class="keyword">else</span> {
+                flag = <span class="keyword">false</span>;<span class="comment">//重置flag,进行下一次判断</span>
+            }
+            System.out.println(<span class="string">"第"</span>+(i+<span class="number">1</span>)+<span class="string">"次排序后的数组："</span>);
+            System.out.println(Arrays.toString(arr));
+        }
+    }
+}</code></pre>
+<p><strong>输出：</strong>  </p>
+<pre><code class="java">第<span class="number">1</span>次排序后的数组：
+[<span class="number">19</span>, <span class="number">41</span>, <span class="number">1</span>, <span class="number">13</span>, <span class="number">17</span>, <span class="number">47</span>, <span class="number">29</span>, <span class="number">81</span>]
+第<span class="number">2</span>次排序后的数组：
+[<span class="number">19</span>, <span class="number">1</span>, <span class="number">13</span>, <span class="number">17</span>, <span class="number">41</span>, <span class="number">29</span>, <span class="number">47</span>, <span class="number">81</span>]
+第<span class="number">3</span>次排序后的数组：
+[<span class="number">1</span>, <span class="number">13</span>, <span class="number">17</span>, <span class="number">19</span>, <span class="number">29</span>, <span class="number">41</span>, <span class="number">47</span>, <span class="number">81</span>]
+
+Process finished with exit code <span class="number">0</span></code></pre>
+<h4 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h4><p>从欲排序的数据中，按指定的规则选出某一值，再依规定交换位置后达到排序的目的    </p>
+<p>基本思想：<br>第一次从arr[0]<del>arr[n]中选取最小的值与arr[0]交换；<br>第二次从arr[1]</del>arr[n]中选取最小的值与arr[1]交换；<br>第三次从arr[2]~arr[n]中选取最小的值与arr[2]交换；<br>…<br>直到排序完成    </p>
+<p>步骤：<br>首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置。<br>再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。<br>重复第二步，直到所有元素均排序完毕。  </p>
+<img src="https://www.runoob.com/wp-content/uploads/2019/03/selectionSort.gif">           
+
+<p>平均时间复杂度：O(n^2)  不稳定</p>
+<p>代码实现：  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SelectSort</span> </span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">8</span>];
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++) {
+            arr[i] = (<span class="keyword">int</span>) (Math.random()*<span class="number">100</span>);
+        }
+
+        selectSort(arr);
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">selectSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span></span>{
+        <span class="comment">//外层循环：比较趟数</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length - <span class="number">1</span>; i++) {
+            <span class="keyword">int</span> minIndex = i; <span class="comment">//保存最小值下标</span>
+            <span class="keyword">int</span> min = arr[i]; <span class="comment">//保存最小值元素</span>
+            <span class="comment">//内层循环：依次比较</span>
+            <span class="keyword">for</span> (<span class="keyword">int</span> j = i+<span class="number">1</span>; j &lt; arr.length; j++) {
+                <span class="keyword">if</span>(arr[j] &lt; min){   <span class="comment">//重置最小值和最小值的下标，便于交换</span>
+                    min = arr[j];
+                    minIndex = j;
+                }
+            }
+            <span class="comment">//如果找到其他最小值</span>
+            <span class="keyword">if</span>(minIndex != i){
+                <span class="comment">//交换位置</span>
+                arr[minIndex] = arr[i];
+                arr[i] = min;
+            }
+            System.out.println(<span class="string">"第"</span>+(i+<span class="number">1</span>)+<span class="string">"轮后~~"</span>);
+            System.out.println(Arrays.toString(arr));
+        }
+    }
+}</code></pre>
+<p><strong>输出：</strong>  </p>
+<pre><code class="java">第<span class="number">1</span>轮后~~
+[<span class="number">8</span>, <span class="number">52</span>, <span class="number">53</span>, <span class="number">84</span>, <span class="number">41</span>, <span class="number">37</span>, <span class="number">48</span>, <span class="number">59</span>]
+第<span class="number">2</span>轮后~~
+[<span class="number">8</span>, <span class="number">37</span>, <span class="number">53</span>, <span class="number">84</span>, <span class="number">41</span>, <span class="number">52</span>, <span class="number">48</span>, <span class="number">59</span>]
+第<span class="number">3</span>轮后~~
+[<span class="number">8</span>, <span class="number">37</span>, <span class="number">41</span>, <span class="number">84</span>, <span class="number">53</span>, <span class="number">52</span>, <span class="number">48</span>, <span class="number">59</span>]
+第<span class="number">4</span>轮后~~
+[<span class="number">8</span>, <span class="number">37</span>, <span class="number">41</span>, <span class="number">48</span>, <span class="number">53</span>, <span class="number">52</span>, <span class="number">84</span>, <span class="number">59</span>]
+第<span class="number">5</span>轮后~~
+[<span class="number">8</span>, <span class="number">37</span>, <span class="number">41</span>, <span class="number">48</span>, <span class="number">52</span>, <span class="number">53</span>, <span class="number">84</span>, <span class="number">59</span>]
+第<span class="number">6</span>轮后~~
+[<span class="number">8</span>, <span class="number">37</span>, <span class="number">41</span>, <span class="number">48</span>, <span class="number">52</span>, <span class="number">53</span>, <span class="number">84</span>, <span class="number">59</span>]
+第<span class="number">7</span>轮后~~
+[<span class="number">8</span>, <span class="number">37</span>, <span class="number">41</span>, <span class="number">48</span>, <span class="number">52</span>, <span class="number">53</span>, <span class="number">59</span>, <span class="number">84</span>]
+
+Process finished with exit code <span class="number">0</span></code></pre>
+<h4 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h4><p>对于欲排序的元素以插入的的方式寻找该元素的适当位置，以达到排序的目的    </p>
+<p>基本思想：<br>把N个待排序的元素看成一个有序表和一个无序表<br>刚开始有序表中只有一个元素，即第一个元素 。后面N-1个元素都在无序表里<br>排序过程中每次从无序表中取出第一个元素<br>将它插入到有序表中的适当位置 </p>
+<img src="https://www.runoob.com/wp-content/uploads/2019/03/insertionSort.gif">        
+
+<p>平均时间复杂度：O(n^2)  稳定  </p>
+<p>代码实现：   </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">InsertSort</span> </span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">8</span>];
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; arr.length; i++) {
+            arr[i] = (<span class="keyword">int</span>) (Math.random()*<span class="number">100</span>);
+        }
+        insertSort(arr);
+    }
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">insertSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span></span>{
+
+        <span class="keyword">int</span> temp = <span class="number">0</span>;
+        <span class="keyword">int</span> insertIndex = <span class="number">0</span>;
+        <span class="comment">//外层循环：排序趟数，从1开始，因为0位已有序</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length; i++) {
+            temp = arr[i]; <span class="comment">//无序表中第一个元素</span>
+            insertIndex = i - <span class="number">1</span>; <span class="comment">//有序表中最后一个元素的下标</span>
+            <span class="comment">//在有序表中进行比较插入</span>
+            <span class="keyword">while</span>(insertIndex &gt;= <span class="number">0</span> &amp;&amp; arr[insertIndex] &gt; temp){
+                <span class="comment">//需要给待插入的数据腾出空间，所以比较过的数据需要后移</span>
+                arr[insertIndex + <span class="number">1</span>] = arr[insertIndex];
+                <span class="comment">//下标继续向左走 进行后续比较</span>
+                insertIndex--;
+            }
+            <span class="comment">//退出循环说明找到</span>
+            <span class="comment">//或者当前i下标元素就是有序表中的最大值，就不用赋值了，进行下一趟循环</span>
+            <span class="keyword">if</span>(insertIndex != i-<span class="number">1</span>){
+                arr[insertIndex + <span class="number">1</span>] = temp;
+            }
+            System.out.println(<span class="string">"第"</span>+i+<span class="string">"轮插入"</span>);
+            System.out.println(Arrays.toString(arr));
+        }
+    }
+}</code></pre>
+<p><strong>输出：</strong>   </p>
+<pre><code class="java">第<span class="number">1</span>轮插入
+[<span class="number">48</span>, <span class="number">78</span>, <span class="number">39</span>, <span class="number">70</span>, <span class="number">63</span>, <span class="number">7</span>, <span class="number">39</span>, <span class="number">28</span>]
+第<span class="number">2</span>轮插入
+[<span class="number">39</span>, <span class="number">48</span>, <span class="number">78</span>, <span class="number">70</span>, <span class="number">63</span>, <span class="number">7</span>, <span class="number">39</span>, <span class="number">28</span>]
+第<span class="number">3</span>轮插入
+[<span class="number">39</span>, <span class="number">48</span>, <span class="number">70</span>, <span class="number">78</span>, <span class="number">63</span>, <span class="number">7</span>, <span class="number">39</span>, <span class="number">28</span>]
+第<span class="number">4</span>轮插入
+[<span class="number">39</span>, <span class="number">48</span>, <span class="number">63</span>, <span class="number">70</span>, <span class="number">78</span>, <span class="number">7</span>, <span class="number">39</span>, <span class="number">28</span>]
+第<span class="number">5</span>轮插入
+[<span class="number">7</span>, <span class="number">39</span>, <span class="number">48</span>, <span class="number">63</span>, <span class="number">70</span>, <span class="number">78</span>, <span class="number">39</span>, <span class="number">28</span>]
+第<span class="number">6</span>轮插入
+[<span class="number">7</span>, <span class="number">39</span>, <span class="number">39</span>, <span class="number">48</span>, <span class="number">63</span>, <span class="number">70</span>, <span class="number">78</span>, <span class="number">28</span>]
+第<span class="number">7</span>轮插入
+[<span class="number">7</span>, <span class="number">28</span>, <span class="number">39</span>, <span class="number">39</span>, <span class="number">48</span>, <span class="number">63</span>, <span class="number">70</span>, <span class="number">78</span>]
+
+Process finished with exit code <span class="number">0</span></code></pre>
+<h4 id="希尔排序"><a href="#希尔排序" class="headerlink" title="希尔排序"></a>希尔排序</h4><p>也称递减增量排序算法，是插入排序的一种更高效的改进版本。但希尔排序是非稳定排序算法  </p>
+<p>希尔排序将数组按下标的一定增量分成n组，对每一组使用直接插入排序；随着增量的逐渐减少，每组包含的关键词越来越多，当增量减至为1时，整个文件恰被分成一组，排序完成<br>增量一般是：gap = gap / 2，只是比普通插入排序多了一层分组循环</p>
+<img src="https://www.runoob.com/wp-content/uploads/2019/03/Sorting_shellsort_anim.gif">     
+
+<p>平均时间复杂度：O(nlogn)  不稳定    </p>
+<p>代码实现：  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShellSort</span> </span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+        <span class="comment">//初始化一个随机数组</span>
+        <span class="keyword">int</span>[] arr = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">8</span>];
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++) {
+            arr[i] = (<span class="keyword">int</span>) (Math.random() * <span class="number">100</span>);
+        }
+
+        shellSort(arr);
+    }
+
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">shellSort</span><span class="params">(<span class="keyword">int</span>[] arr)</span> </span>{
+        <span class="keyword">int</span> temp = <span class="number">0</span>;
+        <span class="keyword">int</span> insertIndex = <span class="number">0</span>;
+        <span class="keyword">int</span> count = <span class="number">0</span>;
+        <span class="comment">//分组，增量每次都/2</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> step = arr.length / <span class="number">2</span>; step &gt; <span class="number">0</span>; step /= <span class="number">2</span>) {
+            <span class="comment">//从增量的第一组开始进行插入排序，直至完毕</span>
+            <span class="keyword">for</span> (<span class="keyword">int</span> i = step; i &lt; arr.length; i++) {
+                temp = arr[i];<span class="comment">//同组的无序表中的第一个元素</span>
+                insertIndex = i - step;<span class="comment">//同组的有序表中的最后一个元素下标</span>
+                <span class="keyword">while</span>(insertIndex &gt;= <span class="number">0</span> &amp;&amp; arr[insertIndex] &gt; temp){
+                    arr[insertIndex + step] = arr[insertIndex];
+                    insertIndex -= step;
+                }
+                <span class="keyword">if</span>(insertIndex != i-step){
+                    arr[insertIndex+step] = temp;
+                }
+                System.out.println(<span class="string">"希尔排序第"</span> + (++count) + <span class="string">"轮 ="</span> + Arrays.toString(arr));
+            }
+        }
+    }
+}</code></pre>
+<p><strong>输出：</strong>  </p>
+<pre><code class="java">希尔排序第<span class="number">1</span>轮 =[<span class="number">65</span>, <span class="number">76</span>, <span class="number">91</span>, <span class="number">60</span>, <span class="number">88</span>, <span class="number">51</span>, <span class="number">59</span>, <span class="number">30</span>]
+希尔排序第<span class="number">2</span>轮 =[<span class="number">65</span>, <span class="number">51</span>, <span class="number">91</span>, <span class="number">60</span>, <span class="number">88</span>, <span class="number">76</span>, <span class="number">59</span>, <span class="number">30</span>]
+希尔排序第<span class="number">3</span>轮 =[<span class="number">65</span>, <span class="number">51</span>, <span class="number">59</span>, <span class="number">60</span>, <span class="number">88</span>, <span class="number">76</span>, <span class="number">91</span>, <span class="number">30</span>]
+希尔排序第<span class="number">4</span>轮 =[<span class="number">65</span>, <span class="number">51</span>, <span class="number">59</span>, <span class="number">30</span>, <span class="number">88</span>, <span class="number">76</span>, <span class="number">91</span>, <span class="number">60</span>]
+希尔排序第<span class="number">5</span>轮 =[<span class="number">59</span>, <span class="number">51</span>, <span class="number">65</span>, <span class="number">30</span>, <span class="number">88</span>, <span class="number">76</span>, <span class="number">91</span>, <span class="number">60</span>]
+希尔排序第<span class="number">6</span>轮 =[<span class="number">59</span>, <span class="number">30</span>, <span class="number">65</span>, <span class="number">51</span>, <span class="number">88</span>, <span class="number">76</span>, <span class="number">91</span>, <span class="number">60</span>]
+希尔排序第<span class="number">7</span>轮 =[<span class="number">59</span>, <span class="number">30</span>, <span class="number">65</span>, <span class="number">51</span>, <span class="number">88</span>, <span class="number">76</span>, <span class="number">91</span>, <span class="number">60</span>]
+希尔排序第<span class="number">8</span>轮 =[<span class="number">59</span>, <span class="number">30</span>, <span class="number">65</span>, <span class="number">51</span>, <span class="number">88</span>, <span class="number">76</span>, <span class="number">91</span>, <span class="number">60</span>]
+希尔排序第<span class="number">9</span>轮 =[<span class="number">59</span>, <span class="number">30</span>, <span class="number">65</span>, <span class="number">51</span>, <span class="number">88</span>, <span class="number">76</span>, <span class="number">91</span>, <span class="number">60</span>]
+希尔排序第<span class="number">10</span>轮 =[<span class="number">59</span>, <span class="number">30</span>, <span class="number">65</span>, <span class="number">51</span>, <span class="number">88</span>, <span class="number">60</span>, <span class="number">91</span>, <span class="number">76</span>]
+希尔排序第<span class="number">11</span>轮 =[<span class="number">30</span>, <span class="number">59</span>, <span class="number">65</span>, <span class="number">51</span>, <span class="number">88</span>, <span class="number">60</span>, <span class="number">91</span>, <span class="number">76</span>]
+希尔排序第<span class="number">12</span>轮 =[<span class="number">30</span>, <span class="number">59</span>, <span class="number">65</span>, <span class="number">51</span>, <span class="number">88</span>, <span class="number">60</span>, <span class="number">91</span>, <span class="number">76</span>]
+希尔排序第<span class="number">13</span>轮 =[<span class="number">30</span>, <span class="number">51</span>, <span class="number">59</span>, <span class="number">65</span>, <span class="number">88</span>, <span class="number">60</span>, <span class="number">91</span>, <span class="number">76</span>]
+希尔排序第<span class="number">14</span>轮 =[<span class="number">30</span>, <span class="number">51</span>, <span class="number">59</span>, <span class="number">65</span>, <span class="number">88</span>, <span class="number">60</span>, <span class="number">91</span>, <span class="number">76</span>]
+希尔排序第<span class="number">15</span>轮 =[<span class="number">30</span>, <span class="number">51</span>, <span class="number">59</span>, <span class="number">60</span>, <span class="number">65</span>, <span class="number">88</span>, <span class="number">91</span>, <span class="number">76</span>]
+希尔排序第<span class="number">16</span>轮 =[<span class="number">30</span>, <span class="number">51</span>, <span class="number">59</span>, <span class="number">60</span>, <span class="number">65</span>, <span class="number">88</span>, <span class="number">91</span>, <span class="number">76</span>]
+希尔排序第<span class="number">17</span>轮 =[<span class="number">30</span>, <span class="number">51</span>, <span class="number">59</span>, <span class="number">60</span>, <span class="number">65</span>, <span class="number">76</span>, <span class="number">88</span>, <span class="number">91</span>]
+
+Process finished with exit code <span class="number">0</span></code></pre>
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/Wechat.jpg">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Stephen Cheng
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://chengqijie.gitee.io/2020/06/20/排序算法-第一部/" title="排序算法-第一部" target="_blank">https://chengqijie.gitee.io/2020/06/20/排序算法-第一部/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">数据结构与算法</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
+        			<a href="/categories/数据结构与算法//" class="article-tag-list-link color3">数据结构与算法</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/06/20/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95-%E7%AC%AC%E4%B8%80%E9%83%A8/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="archive-article-date">
-        <time datetime="2020-05-17T16:05:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/06/19/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%80%E9%83%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">J.U.C核心-第一部</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" target="_blank">JVM垃圾回收</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#排序算法介绍"><span class="toc-number">1.</span> <span class="toc-text">排序算法介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#冒泡排序"><span class="toc-number">1.1.</span> <span class="toc-text">冒泡排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#选择排序"><span class="toc-number">1.2.</span> <span class="toc-text">选择排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#插入排序"><span class="toc-number">1.3.</span> <span class="toc-text">插入排序</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#希尔排序"><span class="toc-number">1.4.</span> <span class="toc-text">希尔排序</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+
+
+  <div id="giteement-ctn"></div>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" class="archive-article-date">
-        <time datetime="2020-05-17T14:28:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-
-        </div>
-    	 
+    <link rel="stylesheet" href="/lib/default.css">
+    <script src="/lib/giteement.browser.js"></script>
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" target="_blank">JVM内存模型</a>
-  
-    </h1>
-  
+  <script>
+  <!-- id: "排序算法-第一部" -->
+  var giteement = new Giteement({
+    id: '20200620121050',
+    owner: 'chengqijie',
+    repo: 'chengqijie',
+    backcall_uri: 'https://chengqijie.gitee.io',
+    oauth_uri: 'https://cors-anywhere.herokuapp.com/https://gitee.com/oauth/token',
+    oauth: {
+      client_id: 'e551fed6367a77dcf3a8672bede3eff5e038f747e7d5e674dc58b215488d5545',
+      client_secret: 'fc2cd40a7b35bff445412d26248a22323155df97d0eb8f3802625f533d723a54'
+    },
+  })
+  giteement.render('giteement-ctn')
+  </script>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" class="archive-article-date">
-        <time datetime="2020-05-17T13:18:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/17/JVM%E8%BF%90%E8%A1%8C%E6%97%B6%E6%95%B0%E6%8D%AE%E5%8C%BA/" target="_blank">JVM运行时数据区</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/05/17/%E5%88%9D%E5%A7%8BJVM/" class="archive-article-date">
-        <time datetime="2020-05-17T02:30:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-17</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/05/17/%E5%88%9D%E5%A7%8BJVM/" target="_blank">初识JVM</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
 
 
           </div>
@@ -534,10 +759,10 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
-		isCategory: true,
+		isCategory: false,
 		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
