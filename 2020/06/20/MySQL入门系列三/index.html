@@ -5,24 +5,28 @@
   
   
   
-	<meta name="keywords" content="博客">
-  
+	<meta name="keywords" content="数据库MySQL,博客">
+	
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
-  <title>Archives: 2020/6 | Stephen Cheng`s blog</title>
+  <title>MySQL入门系列三 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Stephen Cheng&#96;s blog">
-<meta property="og:url" content="https://chengqijie.gitee.io/archives/2020/06/page/2/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="MySQL入门系列三">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/06/20/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%B8%89/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://img3.iqilu.com/data/attachment/forum/201308/21/201715axoicisqece61jxh.jpg">
+<meta property="article:published_time" content="2020-06-20T09:55:50.000Z">
+<meta property="article:modified_time" content="2020-06-20T09:11:04.141Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="博客">
+<meta property="article:tag" content="数据库MySQL">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://img3.iqilu.com/data/attachment/forum/201308/21/201715axoicisqece61jxh.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -208,296 +212,367 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-MySQL入门系列三" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2020" class="archive-year">2020</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/06/16/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%89%E9%83%A8/" class="archive-article-date">
-        <time datetime="2020-06-16T09:05:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-16</time>
-</a>
-
-        </div>
-    	 
+      <header class="article-header">
+	  
+   
+   
+   <center><p>
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/06/16/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%89%E9%83%A8/" target="_blank">线程的安全性分析-第三部</a>
-  
+    <h1 class="article-title_code_ant" itemprop="name">
+      MySQL入门系列三
     </h1>
   
 
+</p></center>
+   
+  
+  
+        
+        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
+              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+        </span>
 
-        <div class="article-info info-on-right">
+<a href="/2020/06/20/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%B8%89/" class="archive-article-date">
+        <time datetime="2020-06-20T09:55:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-20</time>
+</a>
+
+  
+  
+    
+<div style="margin-top:10px;">
+  <span class="post-time">
+    <span class="post-meta-item-icon">
+      <!-- fonts.scss -->
+      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
+      <i class="icon-statistics"></i>
+      <span class="post-meta-item-text"> 字数统计:</span>
+      <span class="post-count">1.6k字</span>
+    </span>
+  </span>
+
+  <span class="post-time">
+    &nbsp; | &nbsp;
+    <span class="post-meta-item-icon">
+      <i class="icon-book icon"></i>
+      <span class="post-meta-item-text"> 阅读时长≈</span>
+      <span class="post-count">6分</span>
+    </span>
+  </span>
+</div>
+
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+	
+    <img src="http://img3.iqilu.com/data/attachment/forum/201308/21/201715axoicisqece61jxh.jpg" style="width:100%">  
+<a id="more"></a>    
+
+
+
+<h2 id="子查询"><a href="#子查询" class="headerlink" title="子查询"></a>子查询</h2><p>当一个查询语句中又嵌套了另一个完整的select语句，则被嵌套的select语句称为子查询或内查询<br>外面的select语句称为主查询或外查询。  </p>
+<p>按子查询出现的位置进行分类：</p>
+<p>1、select后面<br>    要求：子查询的结果为单行单列（标量子查询）<br>2、from后面<br>    要求：子查询的结果可以为多行多列<br>3、where或having后面 ★<br>    要求：子查询的结果必须为单列<br>        单行子查询<br>        多行子查询<br>4、exists后面<br>    要求：子查询结果必须为单列（相关子查询）</p>
+<p>特点：<br>    1、子查询放在条件中，要求必须放在条件的右侧<br>    2、子查询一般放在小括号中<br>    3、子查询的执行优先于主查询<br>    4、单行子查询对应了 单行操作符：&gt; &lt; &gt;= &lt;= = &lt;&gt;<br>       多行子查询对应了 多行操作符：any/some  all in     </p>
+<h3 id="放在where或having后面"><a href="#放在where或having后面" class="headerlink" title="放在where或having后面"></a>放在where或having后面</h3><h4 id="单行子查询"><a href="#单行子查询" class="headerlink" title="单行子查询"></a>单行子查询</h4><p>案例1：谁的工资比 Abel 高?</p>
+<p>①查询Abel的工资<br>SELECT salary<br>FROM employees<br>WHERE last_name  = ‘Abel’<br>②查询salary&gt;①的员工信息<br>SELECT last_name,salary<br>FROM employees<br>WHERE salary&gt;(<br>    SELECT salary<br>    FROM employees<br>    WHERE last_name  &lt;&gt; ‘Abel’</p>
+<p>);</p>
+<p>案例2：返回job_id与141号员工相同，salary比143号员工多的员工姓名，job_id 和工资<br>①查询141号员工的job_id<br>SELECT job_id<br>FROM employees<br>WHERE employee_id = 141</p>
+<p>②查询143号员工的salary</p>
+<p>SELECT salary<br>FROM employees<br>WHERE employee_id = 143</p>
+<p>③查询job_id=① and salary&gt;②的信息<br>SELECT last_name,job_id,salary<br>FROM employees<br>WHERE job_id = (<br>    SELECT job_id<br>    FROM employees<br>    WHERE employee_id = 141<br>) AND salary&gt;(<br>   SELECT salary<br>    FROM employees<br>    WHERE employee_id = 143</p>
+<p>);</p>
+<p>案例3：返回公司工资最少的员工的last_name,job_id和salary</p>
+<p>①查询最低工资<br>SELECT MIN(salary)<br>FROM employees</p>
+<p>②查询salary=①的员工的last_name,job_id和salary<br>SELECT last_name,job_id,salary<br>FROM employees<br>WHERE salary=(<br>    SELECT MIN(salary)<br>    FROM employees</p>
+<p>);</p>
+<p>案例4：查询最低工资大于50号部门最低工资的部门id和其最低工资</p>
+<p>①查询50号部门的最低工资<br>SELECT MIN(salary)<br>FROM employees<br>WHERE department_id = 50</p>
+<p>②查询各部门的最低工资，筛选看哪个部门的最低工资&gt;①</p>
+<p>SELECT MIN(salary),department_id<br>FROM employees<br>GROUP BY department_id<br>HAVING MIN(salary)&gt;(<br>SELECT MIN(salary)<br>FROM employees<br>WHERE department_id = 50<br>);</p>
+<h4 id="多行子查询"><a href="#多行子查询" class="headerlink" title="多行子查询"></a>多行子查询</h4><p>in:判断某字段是否在指定列表内<br>x in(10,30,50)  </p>
+<p>any/some:判断某字段的值是否满足其中任意一个  </p>
+<p>x&gt;any(10,30,50)<br>x&gt;min()</p>
+<p>x=any(10,30,50)等价于x in(10,30,50)</p>
+<p>all:判断某字段的值是否满足里面所有的</p>
+<p>x &gt;all(10,30,50)<br>x &gt;max()</p>
+<p>案例1：返回location_id是1400或1700的部门中的所有员工姓名</p>
+<p>①查询location_id是1400或1700的部门<br>SELECT department_id<br>FROM departments<br>WHERE location_id IN(1400,1700)</p>
+<p>②查询department_id = ①的姓名<br>SELECT last_name<br>FROM employees<br>WHERE department_id IN(<br>    SELECT DISTINCT department_id<br>    FROM departments<br>    WHERE location_id IN(1400,1700)</p>
+<p>);</p>
+<p>题目：返回其它部门中比job_id为‘IT_PROG’部门任一工资低的员工的员工号、姓名、job_id 以及salary</p>
+<p>①查询job_id为‘IT_PROG’部门的工资<br>SELECT DISTINCT salary<br>FROM employees<br>WHERE job_id = ‘IT_PROG’</p>
+<p>②查询其他部门的工资&lt;任意一个①的结果</p>
+<p>SELECT employee_id,last_name,job_id,salary<br>FROM employees<br>WHERE salary&lt;ANY(</p>
+<p>SELECT DISTINCT salary<br>    FROM employees<br>    WHERE job_id = ‘IT_PROG’</p>
+<p>);</p>
+<p>等价于<br>SELECT employee_id,last_name,job_id,salary<br>FROM employees<br>WHERE salary&lt;(</p>
+<p>SELECT MAX(salary)<br>FROM employees<br>WHERE job_id = ‘IT_PROG’</p>
+<p>);</p>
+<p>案例3：返回其它部门中比job_id为‘IT_PROG’部门所有工资都低的员工 的员工号、姓名、job_id 以及salary</p>
+<p>①查询job_id为‘IT_PROG’部门的工资<br>SELECT DISTINCT salary<br>FROM employees<br>WHERE job_id = ‘IT_PROG’</p>
+<p>②查询其他部门的工资&lt;所有①的结果</p>
+<p>SELECT employee_id,last_name,job_id,salary<br>FROM employees<br>WHERE salary&lt;ALL(</p>
+<p>SELECT DISTINCT salary<br>FROM employees<br>WHERE job_id = ‘IT_PROG’</p>
+<p>);</p>
+<p>等价于<br>SELECT employee_id,last_name,job_id,salary<br>FROM employees<br>WHERE salary&lt;(</p>
+<p>SELECT MIN(salary)<br>FROM employees<br>WHERE job_id = ‘IT_PROG’<br>);     </p>
+<h3 id="放在select后面"><a href="#放在select后面" class="headerlink" title="放在select后面"></a>放在select后面</h3><p>案例；查询部门编号是50的员工个数</p>
+<p>SELECT<br>(<br>    SELECT COUNT(*)<br>    FROM employees<br>    WHERE department_id = 50<br>)  个数;</p>
+<h3 id="放在from后面"><a href="#放在from后面" class="headerlink" title="放在from后面"></a>放在from后面</h3><p>案例：查询每个部门的平均工资的工资级别<br>①查询每个部门的平均工资</p>
+<p>SELECT AVG(salary),department_id<br>FROM employees<br>GROUP BY department_id</p>
+<p>②将①和sal_grade两表连接查询</p>
+<p>SELECT dep_ag.department_id,dep_ag.ag,g.grade<br>FROM sal_grade g<br>JOIN (</p>
+<p>SELECT AVG(salary) ag,department_id<br>FROM employees<br>GROUP BY department_id</p>
+<p>) dep_ag ON dep_ag.ag BETWEEN g.min_salary AND g.max_salary;</p>
+<h3 id="放在exists后面"><a href="#放在exists后面" class="headerlink" title="放在exists后面"></a>放在exists后面</h3><p>案例1 ：查询有无名字叫“张三丰”的员工信息<br>SELECT EXISTS(<br>    SELECT *<br>    FROM employees<br>    WHERE last_name = ‘Abel’</p>
+<p>) 有无Abel;</p>
+<p>案例2：查询没有女朋友的男神信息</p>
+<p>USE girls;</p>
+<p>SELECT bo.*<br>FROM boys bo<br>WHERE bo.<code>id</code> NOT IN(<br>    SELECT boyfriend_id<br>    FROM beauty b<br>)</p>
+<p>SELECT bo.*<br>FROM boys bo<br>WHERE NOT EXISTS(<br>    SELECT boyfriend_id<br>    FROM beauty b<br>    WHERE bo.id = b.boyfriend_id<br>);  </p>
+<h2 id="分页查询"><a href="#分页查询" class="headerlink" title="分页查询"></a>分页查询</h2><p>应用场景：当页面上的数据，一页显示不全，则需要分页显示<br>分页查询的sql命令请求数据库服务器——&gt;服务器响应查询到的多条数据——&gt;前台页面   </p>
+<p>语法：</p>
+<p>select 查询列表<br>from 表1 别名<br>join 表2 别名<br>on 连接条件<br>where 筛选条件<br>group by 分组<br>having 分组后筛选<br>order by 排序列表<br>limit 起始条目索引,显示的条目数</p>
+<p>执行顺序：</p>
+<p>1》from子句<br>2》join子句<br>3》on子句<br>4》where子句<br>5》group by子句<br>6》having子句<br>7》select子句<br>8》order by子句<br>9》limit子句</p>
+<p>特点：<br>①起始条目索引如果不写，默认是0<br>②limit后面支持两个参数<br>参数1：显示的起始条目索引<br>参数2：条目数</p>
+<p>公式：</p>
+<p>假如要显示的页数是page，每页显示的条目数为size  </p>
+<p>select *<br>from employees<br>limit (page-1)*size,size;   </p>
+<p>案例1：查询员工信息表的前5条<br>SELECT * FROM employees LIMIT 0,5;<br>完全等价于<br>SELECT * FROM employees LIMIT 5;</p>
+<p>案例2：查询有奖金的，且工资较高的第11名到第20名<br>SELECT<br>    *<br>FROM<br>    employees<br>WHERE commission_pct IS NOT NULL<br>ORDER BY salary DESC<br>LIMIT 10,10 ;</p>
+<p>练习：查询年薪最高的前10名<br>SELECT last_name,salary,salary<em>12</em>(1+IFNULL(commission_pct,0)) 年薪<br>FROM employees<br>ORDER BY 年薪 DESC<br>LIMIT 0,10;</p>
+<h2 id="联合查询"><a href="#联合查询" class="headerlink" title="联合查询"></a>联合查询</h2><p>当查询结果来自于多张表，但多张表之间没有关联，这个时候往往使用联合查询，也称为union查询    </p>
+<p><strong>语法：</strong><br>select 查询列表 from 表1  where 筛选条件<br>    union<br>select 查询列表 from 表2  where 筛选条件<br><strong>特点：</strong><br>1、多条待联合的查询语句的查询列数必须一致，查询类型、字段意义最好一致<br>2、union实现去重查询<br>union all 实现全部查询，包含重复项      </p>
+<p>案例：查询所有国家的年龄&gt;20岁的用户信息</p>
+<p>SELECT * FROM usa WHERE uage &gt;20 UNION<br>SELECT * FROM chinese WHERE age &gt;20 ;</p>
+<p>案例2：查询所有国家的用户姓名和年龄</p>
+<p>SELECT uname,uage FROM usa<br>UNION<br>SELECT <code>name</code>,age FROM chinese;</p>
+<p>案例3：union自动去重 /union all 可以支持重复项</p>
+<p>SELECT 1,’范冰冰’<br>UNION ALL<br>SELECT 1,’范冰冰’<br>UNION  ALL<br>SELECT 1,’范冰冰’<br>UNION  ALL<br>SELECT 1,’范冰冰’ ;<br>所以结果不止一条</p>
+
+    
+
+    
+    <div class="page-reward">
+      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
+        <div class="tooltip tooltip-east">
+          <span class="tooltip-item">
+            赏
+          </span>
+          <span class="tooltip-content">
+            <span class="tooltip-text">
+              <span class="tooltip-inner">
+                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
+                    class="icon icon-quo-right"></i></p>
+                <div class="reward-box">
+                  
+                  
+                  <div class="reward-box-item">
+                    <img class="reward-img" src="/img/Wechat.jpg">
+                    <span class="reward-type">微信</span>
+                  </div>
+                  
+                </div>
+              </span>
+            </span>
+          </span>
+        </div>
+      </a>
+    </div>
+    
+
+    
+    <div class="declare"> 
+      <ul class="post-copyright">
+        <li>
+          <strong>本文作者：</strong>
+          Stephen Cheng
+        </li>
+        <li>
+          <strong>本文链接：</strong>
+          <a href="https://chengqijie.gitee.io/2020/06/20/MySQL入门系列三/" title="MySQL入门系列三" target="_blank">https://chengqijie.gitee.io/2020/06/20/MySQL入门系列三/</a>
+        </li>
+        
+        <li>
+          <strong>版权声明： </strong>
           
+          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
+        </li>
+        
+      </ul>
+    </div>
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库MySQL</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+    
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
+        			<a href="/categories/数据库MySQL//" class="article-tag-list-link color4">数据库MySQL</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+    
+
+    
+    
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a> -->
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/06/20/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%B8%89/" alt="微信分享二维码"> -->
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+
+    
+    <div class="clearfix"></div>
+  </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/" class="archive-article-date">
-        <time datetime="2020-06-14T00:06:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-14</time>
-</a>
 
+
+<nav id="article-nav">
+  
+  
+    <a href="/2020/06/20/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95-%E7%AC%AC%E4%B8%80%E9%83%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">排序算法-第一部</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/06/14/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%BA%8C%E9%83%A8/" target="_blank">线程的安全性分析-第二部</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#子查询"><span class="toc-number">1.</span> <span class="toc-text">子查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#放在where或having后面"><span class="toc-number">1.1.</span> <span class="toc-text">放在where或having后面</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#单行子查询"><span class="toc-number">1.1.1.</span> <span class="toc-text">单行子查询</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#多行子查询"><span class="toc-number">1.1.2.</span> <span class="toc-text">多行子查询</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#放在select后面"><span class="toc-number">1.2.</span> <span class="toc-text">放在select后面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#放在from后面"><span class="toc-number">1.3.</span> <span class="toc-text">放在from后面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#放在exists后面"><span class="toc-number">1.4.</span> <span class="toc-text">放在exists后面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#分页查询"><span class="toc-number">2.</span> <span class="toc-text">分页查询</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#联合查询"><span class="toc-number">3.</span> <span class="toc-text">联合查询</span></a></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
+
+
+
+
+
+
+
+  <div id="giteement-ctn"></div>
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" class="archive-article-date">
-        <time datetime="2020-06-13T00:49:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-13</time>
-</a>
-
-        </div>
-    	 
+    <link rel="stylesheet" href="/lib/default.css">
+    <script src="/lib/giteement.browser.js"></script>
   
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/06/13/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7%E5%88%86%E6%9E%90-%E7%AC%AC%E4%B8%80%E9%83%A8/" target="_blank">线程的安全性分析-第一部</a>
-  
-    </h1>
-  
+  <script>
+  <!-- id: "MySQL入门系列三" -->
+  var giteement = new Giteement({
+    id: '20200620175550',
+    owner: 'chengqijie',
+    repo: 'chengqijie',
+    backcall_uri: 'https://chengqijie.gitee.io',
+    oauth_uri: 'https://cors-anywhere.herokuapp.com/https://gitee.com/oauth/token',
+    oauth: {
+      client_id: 'e551fed6367a77dcf3a8672bede3eff5e038f747e7d5e674dc58b215488d5545',
+      client_secret: 'fc2cd40a7b35bff445412d26248a22323155df97d0eb8f3802625f533d723a54'
+    },
+  })
+  giteement.render('giteement-ctn')
+  </script>
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" class="archive-article-date">
-        <time datetime="2020-06-10T15:15:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-10</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" target="_blank">线程的基本操作</a>
-  
-    </h1>
-  
 
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	
-<a href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" class="archive-article-date">
-        <time datetime="2020-06-09T11:15:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-09</time>
-</a>
-
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-	
-	  <a class="archive-article-title" href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" target="_blank">线程的基本认识</a>
-  
-    </h1>
-  
-
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/2020/06/">&amp;laquo; Prev</a><a class="page-number" href="/archives/2020/06/">1</a><span class="page-number current">2</span>
-    </nav>
-  
 
 
           </div>
@@ -538,8 +613,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: true,
