@@ -5,28 +5,28 @@
   
   
   
-	<meta name="keywords" content="工厂模式,博客">
+	<meta name="keywords" content="多线程,博客">
 	
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
-  <title>三大工厂模式 | Stephen Cheng`s blog</title>
+  <title>J.U.C核心-第三部 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta property="og:type" content="article">
-<meta property="og:title" content="三大工厂模式">
-<meta property="og:url" content="https://chengqijie.gitee.io/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/index.html">
+<meta property="og:title" content="J.U.C核心-第三部">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/06/21/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%89%E9%83%A8/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://images.unsplash.com/photo-1591942784858-88b13d392d6a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
-<meta property="article:published_time" content="2020-05-19T07:11:50.000Z">
-<meta property="article:modified_time" content="2020-06-16T01:07:45.796Z">
+<meta property="og:image" content="http://static.jwcyber.com/wp-content/uploads/2017/10/1459086602935351.jpg">
+<meta property="article:published_time" content="2020-06-21T04:57:50.000Z">
+<meta property="article:modified_time" content="2020-06-21T03:45:18.785Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="工厂模式">
+<meta property="article:tag" content="多线程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1591942784858-88b13d392d6a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
+<meta name="twitter:image" content="http://static.jwcyber.com/wp-content/uploads/2017/10/1459086602935351.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -212,7 +212,7 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-三大工厂模式" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-J.U.C核心-第三部" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -222,7 +222,7 @@
    <center><p>
   
     <h1 class="article-title_code_ant" itemprop="name">
-      三大工厂模式
+      J.U.C核心-第三部
     </h1>
   
 
@@ -235,8 +235,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" class="archive-article-date">
-        <time datetime="2020-05-19T07:11:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-19</time>
+<a href="/2020/06/21/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%89%E9%83%A8/" class="archive-article-date">
+        <time datetime="2020-06-21T04:57:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-21</time>
 </a>
 
   
@@ -249,7 +249,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.7k字</span>
+      <span class="post-count">2.3k字</span>
     </span>
   </span>
 
@@ -258,7 +258,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">6分</span>
+      <span class="post-count">8分</span>
     </span>
   </span>
 </div>
@@ -269,249 +269,147 @@
   
   <div class="article-entry" itemprop="articleBody">
 	
-    <img src="https://images.unsplash.com/photo-1591942784858-88b13d392d6a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" style="width:100%">  
-<a id="more"></a>  
+    <img src="http://static.jwcyber.com/wp-content/uploads/2017/10/1459086602935351.jpg" style="width:100%">  
+<a id="more"></a>    
 
 
+<h2 id="Condition"><a href="#Condition" class="headerlink" title="Condition"></a>Condition</h2><p>是一个多线程协调通信的额工具类，可以让某些线程一起等待某个条件，只有满足条件时线程才会被唤醒 。它比Sychronized更加灵活和精确。<br>（1）通过Condition能够精细的控制多线程的休眠与唤醒。<br>（2）对于一个锁，我们可以为多个线程间建立不同的Condition。 </p>
+<p>Condition接口的主要方法：  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Condition</span> </span>{
 
-<h3 id="Simple-Factory-Pattern-简单工厂模式"><a href="#Simple-Factory-Pattern-简单工厂模式" class="headerlink" title="Simple Factory Pattern 简单工厂模式"></a>Simple Factory Pattern 简单工厂模式</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p>简单工厂模式（Simple Factory Pattern）是指由一个工厂对象决定创建出哪一种产品类的实例。  </p>
-<p>属于创建型模式，但它不属于GOF 23种设计模式。  </p>
-<h4 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h4><p>（1）工厂类创建的对象较少。<br>（2）客户端只需要传入工厂类的参数，对于如何创建对象的逻辑不需要关心。  </p>
-<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><p>只需要传入一个正确的参数就可以获取你想需要的对象，无需关心其创建细节。  </p>
-<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4> <!--more-->
-<p>（1）工厂类的职责相对过重，增加新产品时需要修改工厂类相应的判断逻辑，违背开闭原则。<br>（2）不易于扩展过于复杂的产品结构。  </p>
-<h4 id="举例代码说明"><a href="#举例代码说明" class="headerlink" title="举例代码说明"></a>举例代码说明</h4><p><strong>创建一个CourseFactory工厂：</strong></p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CourseFactory</span> </span>{
+ <span class="comment">/**</span>
+<span class="comment">  * 使当前线程进入等待状态直到被通知(signal)或中断</span>
+<span class="comment">  * 当其他线程调用singal()或singalAll()方法时，该线程将被唤醒</span>
+<span class="comment">  * 当其他线程调用interrupt()方法中断当前线程</span>
+<span class="comment">  * await()相当于synchronized等待唤醒机制中的wait()方法</span>
+<span class="comment">  */</span>
+ <span class="function"><span class="keyword">void</span> <span class="title">await</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException</span>;
 
-<span class="comment">//    public ICourse create(String name){</span>
-<span class="comment">//        if("java".equals(name)){</span>
-<span class="comment">//            return new JavaCourse();</span>
-<span class="comment">//        }else if("python".equals(name)){</span>
-<span class="comment">//            return new PythonCourse();</span>
-<span class="comment">//        }else {</span>
-<span class="comment">//            return null;</span>
-<span class="comment">//        }</span>
-<span class="comment">//    }</span>
+ <span class="comment">//当前线程进入等待状态，直到被唤醒，该方法不响应中断要求</span>
+ <span class="function"><span class="keyword">void</span> <span class="title">awaitUninterruptibly</span><span class="params">()</span></span>;
 
-<span class="comment">//    public ICourse create(String className){</span>
-<span class="comment">//        try {</span>
-<span class="comment">//            if (!(null == className || "".equals(className))) {</span>
-<span class="comment">//                return (ICourse) Class.forName(className).newInstance();</span>
-<span class="comment">//            }</span>
-<span class="comment">//</span>
-<span class="comment">//        }catch (Exception e){</span>
-<span class="comment">//            e.printStackTrace();</span>
-<span class="comment">//        }</span>
-<span class="comment">//        return null;</span>
-<span class="comment">//    }</span>
+ <span class="comment">//调用该方法，当前线程进入等待状态，直到被唤醒或被中断或超时</span>
+ <span class="comment">//其中nanosTimeout指的等待超时时间，单位纳秒</span>
+ <span class="function"><span class="keyword">long</span> <span class="title">awaitNanos</span><span class="params">(<span class="keyword">long</span> nanosTimeout)</span> <span class="keyword">throws</span> InterruptedException</span>;
 
-    <span class="function"><span class="keyword">public</span> ICourse <span class="title">create</span><span class="params">(Class&lt;? extends ICourse&gt; clazz)</span></span>{
-        <span class="keyword">try</span> {
-            <span class="keyword">if</span> (<span class="keyword">null</span> != clazz) {
-                <span class="keyword">return</span> clazz.newInstance();
-            }
-        }<span class="keyword">catch</span> (Exception e){
-            e.printStackTrace();
+  <span class="comment">//同awaitNanos，但可以指明时间单位</span>
+  <span class="function"><span class="keyword">boolean</span> <span class="title">await</span><span class="params">(<span class="keyword">long</span> time, TimeUnit unit)</span> <span class="keyword">throws</span> InterruptedException</span>;
+
+ <span class="comment">//调用该方法当前线程进入等待状态，直到被唤醒、中断或到达某个时</span>
+ <span class="comment">//间期限(deadline),如果没到指定时间就被唤醒，返回true，其他情况返回false</span>
+  <span class="function"><span class="keyword">boolean</span> <span class="title">awaitUntil</span><span class="params">(Date deadline)</span> <span class="keyword">throws</span> InterruptedException</span>;
+
+ <span class="comment">//唤醒一个等待在Condition上的线程，该线程从等待方法返回前必须</span>
+ <span class="comment">//获取与Condition相关联的锁，功能与notify()相同</span>
+  <span class="function"><span class="keyword">void</span> <span class="title">signal</span><span class="params">()</span></span>;
+
+ <span class="comment">//唤醒所有等待在Condition上的线程，该线程从等待方法返回前必须</span>
+ <span class="comment">//获取与Condition相关联的锁，功能与notifyAll()相同</span>
+  <span class="function"><span class="keyword">void</span> <span class="title">signalAll</span><span class="params">()</span></span>;
+}</code></pre>
+<h3 id="原理分析"><a href="#原理分析" class="headerlink" title="原理分析"></a>原理分析</h3><p>Condition的具体实现类是AQS的内部类ConditionObject，前面我们分析过AQS中存在两种队列，一种是同步队列，一种是等待队列，而等待队列就相对于Condition而言的。注意在使用Condition前必须获得锁，同时在Condition的等待队列上的结点与前面同步队列的结点是同一个类即Node，其结点的waitStatus的值为CONDITION。在实现类ConditionObject中有两个结点分别是firstWaiter和lastWaiter，firstWaiter代表等待队列第一个等待结点，lastWaiter代表等待队列最后一个等待结点</p>
+<pre><code class="java"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConditionObject</span> <span class="keyword">implements</span> <span class="title">Condition</span>, <span class="title">java</span>.<span class="title">io</span>.<span class="title">Serializable</span> </span>{
+    <span class="comment">//等待队列第一个等待结点</span>
+    <span class="keyword">private</span> <span class="keyword">transient</span> Node firstWaiter;
+    <span class="comment">//等待队列最后一个等待结点</span>
+    <span class="keyword">private</span> <span class="keyword">transient</span> Node lastWaiter;
+    <span class="comment">//省略其他代码.......</span>
+}</code></pre>
+<p>每个Condition都对应着一个等待队列，也就是说如果一个锁上创建了多个Condition对象，那么也就存在多个等待队列。等待队列是一个FIFO的队列，在队列中每一个节点都包含了一个线程的引用，而该线程就是Condition对象上等待的线程。当一个线程调用了await()相关的方法，那么该线程将会释放锁，并构建一个Node节点封装当前线程的相关信息加入到等待队列中进行等待，直到被唤醒、中断、超时才从队列中移出<br>Node节点的数据结构: waitStatus|Thread|nextWaiter  </p>
+<p>firstWaiter指向等待队列的头结点，lastWaiter指向等待队列的尾结点，等待队列中结点的状态只有两种即CANCELLED和CONDITION，前者表示线程已结束需要从等待队列中移除，后者表示条件结点等待被唤醒。再次强调每个Codition对象对应一个等待队列，也就是说AQS中只能存在一个同步队列，但可拥有多个等待队列。  </p>
+<p>下面从代码层面看看被调用await()方法(其他await()实现原理类似)的线程是如何加入等待队列的，而又是如何从等待队列中被唤醒的  </p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">await</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException </span>{
+      <span class="comment">//判断线程是否被中断</span>
+      <span class="keyword">if</span> (Thread.interrupted())
+          <span class="keyword">throw</span> <span class="keyword">new</span> InterruptedException();
+      <span class="comment">//创建新结点加入等待队列并返回</span>
+      Node node = addConditionWaiter();
+      <span class="comment">//释放当前线程锁即释放同步状态</span>
+      <span class="keyword">int</span> savedState = fullyRelease(node);
+      <span class="keyword">int</span> interruptMode = <span class="number">0</span>;
+      <span class="comment">//判断结点是否同步队列(SyncQueue)中,即是否被唤醒</span>
+      <span class="keyword">while</span> (!isOnSyncQueue(node)) {
+          <span class="comment">//挂起线程</span>
+          LockSupport.park(<span class="keyword">this</span>);
+          <span class="comment">//判断是否被中断唤醒，如果是退出循环。</span>
+          <span class="keyword">if</span> ((interruptMode = checkInterruptWhileWaiting(node)) != <span class="number">0</span>)
+              <span class="keyword">break</span>;
+      }
+      <span class="comment">//被唤醒后执行自旋操作争取获得锁，同时判断线程是否被中断</span>
+      <span class="keyword">if</span> (acquireQueued(node, savedState) &amp;&amp; interruptMode != THROW_IE)
+          interruptMode = REINTERRUPT;
+       <span class="comment">// clean up if cancelled</span>
+      <span class="keyword">if</span> (node.nextWaiter != <span class="keyword">null</span>) 
+          <span class="comment">//清理等待队列中不为CONDITION状态的结点</span>
+          unlinkCancelledWaiters();
+      <span class="keyword">if</span> (interruptMode != <span class="number">0</span>)
+          reportInterruptAfterWait(interruptMode);
+  }</code></pre>
+<p>执行addConditionWaiter()添加到等待队列。  </p>
+<pre><code class="java"><span class="function"><span class="keyword">private</span> Node <span class="title">addConditionWaiter</span><span class="params">()</span> </span>{
+   Node t = lastWaiter;
+     <span class="comment">// 判断是否为结束状态的结点并移除</span>
+     <span class="keyword">if</span> (t != <span class="keyword">null</span> &amp;&amp; t.waitStatus != Node.CONDITION) {
+         unlinkCancelledWaiters();
+         t = lastWaiter;
+     }
+     <span class="comment">//创建新结点状态为CONDITION</span>
+     Node node = <span class="keyword">new</span> Node(Thread.currentThread(), Node.CONDITION);
+     <span class="comment">//加入等待队列</span>
+     <span class="keyword">if</span> (t == <span class="keyword">null</span>)
+         firstWaiter = node;
+     <span class="keyword">else</span>
+         t.nextWaiter = node;
+     lastWaiter = node;
+     <span class="keyword">return</span> node;
+       }</code></pre>
+<p>await()方法主要做了3件事：<br>（1）调用addConditionWaiter()方法将当前线程封装成node结点加入等待队列<br>（2）调用fullyRelease(node)方法释放同步状态并唤醒后继结点的线程<br>（3）调用isOnSyncQueue(node)方法判断结点是否在同步队列中，注意是个while循环，如果同步队列中没有该结点就直接挂起该线程<br>（4）如果线程被唤醒后就调用acquireQueued(node, savedState)执行自旋操作争取锁，即当前线程结点从等待队列转移到同步队列并开始努力获取锁。  </p>
+<p>唤醒操作singal()方法 ： </p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">signal</span><span class="params">()</span> </span>{
+    <span class="comment">//判断是否持有独占锁，如果不是抛出异常</span>
+  <span class="keyword">if</span> (!isHeldExclusively())
+         <span class="keyword">throw</span> <span class="keyword">new</span> IllegalMonitorStateException();
+     Node first = firstWaiter;
+     <span class="comment">//唤醒等待队列第一个结点的线程</span>
+     <span class="keyword">if</span> (first != <span class="keyword">null</span>)
+         doSignal(first);
+}</code></pre>
+<p>这里signal()方法做了两件事 ：<br>（1）判断当前线程是否持有独占锁，没有就抛出异常，从这点也可以看出只有独占模式才采用等待队列，而共享模式下是没有等待队列的，也就没法使用Condition<br>（2）唤醒等待队列的第一个结点，即执行doSignal(first)  </p>
+<pre><code class="java"> <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doSignal</span><span class="params">(Node first)</span> </span>{
+     <span class="keyword">do</span> {
+             <span class="comment">//移除条件等待队列中的第一个结点，</span>
+             <span class="comment">//如果后继结点为null，那么说没有其他结点将尾结点也设置为null</span>
+            <span class="keyword">if</span> ( (firstWaiter = first.nextWaiter) == <span class="keyword">null</span>)
+                 lastWaiter = <span class="keyword">null</span>;
+             first.nextWaiter = <span class="keyword">null</span>;
+          <span class="comment">//如果被通知节点没有进入到同步队列并且条件等待队列还有不为空的节点，则继续循环通知后续结点</span>
+         } <span class="keyword">while</span> (!transferForSignal(first) &amp;&amp;
+                  (first = firstWaiter) != <span class="keyword">null</span>);
         }
-        <span class="keyword">return</span> <span class="keyword">null</span>;
-    }
 
-}</code></pre>
-<p><strong>创建一个ICourse接口</strong>    </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ICourse</span> </span>{
-    <span class="comment">/**</span>
-<span class="comment">     * 录制视频</span>
-<span class="comment">     * <span class="doctag">@return</span></span>
-<span class="comment">     */</span>
-    <span class="function"><span class="keyword">void</span> <span class="title">record</span><span class="params">()</span></span>;
-}</code></pre>
-<p><strong>创建两个课程分别实现这个接口</strong>    </p>
-<pre><code class="java"><span class="comment">//产品一号类</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaCourse</span> <span class="keyword">implements</span> <span class="title">ICourse</span> </span>{
+<span class="comment">//transferForSignal方法</span>
+<span class="function"><span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">transferForSignal</span><span class="params">(Node node)</span> </span>{
+    <span class="comment">//尝试设置唤醒结点的waitStatus为0，即初始化状态</span>
+    <span class="comment">//如果设置失败，说明当期结点node的waitStatus已不为</span>
+    <span class="comment">//CONDITION状态，那么只能是结束状态了，因此返回false</span>
+    <span class="comment">//返回doSignal()方法中继续唤醒其他结点的线程，注意这里并</span>
+    <span class="comment">//不涉及并发问题，所以CAS操作失败只可能是预期值不为CONDITION，</span>
+    <span class="comment">//而不是多线程设置导致预期值变化，毕竟操作该方法的线程是持有锁的。</span>
+    <span class="keyword">if</span> (!compareAndSetWaitStatus(node, Node.CONDITION, <span class="number">0</span>))
+         <span class="keyword">return</span> <span class="keyword">false</span>;
 
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"录制Java课程"</span>);
-    }
-}  
-<span class="comment">//产品二号类</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonCourse</span> <span class="keyword">implements</span> <span class="title">ICourse</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"录制Python课程"</span>);
-    }
-}</code></pre>
-<p><strong>工厂测试类</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleFactoryTest</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-
-<span class="comment">//        ICourse course = new JavaCourse();</span>
-<span class="comment">//        course.record();</span>
-
-<span class="comment">//        ICourseFactory factory = new ICourseFactory();</span>
-<span class="comment">//        ICourse course = factory.create("com.gupaoedu.vip.pattern.factory.JavaCourse");</span>
-<span class="comment">//        course.record();</span>
-
-        CourseFactory factory = <span class="keyword">new</span> CourseFactory();
-        ICourse course = factory.create(JavaCourse<span class="class">.<span class="keyword">class</span>)</span>;
-        course.record();
-
-    }
-}</code></pre>
-<h3 id="Factory-Method-Pattern-工厂方法模式"><a href="#Factory-Method-Pattern-工厂方法模式" class="headerlink" title="Factory Method Pattern 工厂方法模式"></a>Factory Method Pattern 工厂方法模式</h3><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><p>工厂方法模式（Factory Method Pattern）指的是定义一个创建对象的接口，但让实现这个接口的类来决定实例化哪个类，工厂方法让实例化类推迟到子类中进行。在工厂方法模式中用户只需关心所需产品对应的工厂，无心关心创建细节，而且增加产品时符合开闭原则。  </p>
-<p> 工厂方法模式主要解决产品扩展的问题，在简单工厂中，随着产品链的丰富，如果每个产品的创建逻辑有区别的话，工厂的职责会变得越来愈多，有点像万能工厂，并不便于维护。根据单一职责原则，我们将职能继续拆分，专人干专事。java课程由java工厂创建，python课程由python工厂创建，对工厂本身也做一个抽象。  </p>
-<h4 id="适用场景-1"><a href="#适用场景-1" class="headerlink" title="适用场景"></a>适用场景</h4><p>   （1）创建对象需要大量重复的代码。<br>   （2）客户端（应用层）不依赖于产品类实例如何创建，实现等细节。<br>   （3）一个类通过其子类来指定创建哪个对象。</p>
-<h4 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h4><p>（1）用户只需关心产品对应的工厂，无需关心其创建细节。<br>（2）加入新产品符合开闭原则，提高了可扩展性。  </p>
-<h4 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h4><p>（1）类的个数增多，增加了代码结构的复杂度。<br>（2）增加了系统的抽象性和理解难度。  </p>
-<h4 id="举例代码说明-1"><a href="#举例代码说明-1" class="headerlink" title="举例代码说明"></a>举例代码说明</h4><p><strong>先创建ICourseFactory接口</strong>   </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ICourseFactory</span> </span>{
-
-    <span class="function">ICourse <span class="title">create</span><span class="params">()</span></span>;
-
-}</code></pre>
-<p><strong>再分别创建其子工厂</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaCourseFactory</span> <span class="keyword">implements</span> <span class="title">ICourseFactory</span> </span>{
-    <span class="function"><span class="keyword">public</span> ICourse <span class="title">create</span><span class="params">()</span> </span>{
-        <span class="keyword">return</span> <span class="keyword">new</span> JavaCourse();
-    }
-}
-<span class="comment">//</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonCourseFactory</span> <span class="keyword">implements</span> <span class="title">ICourseFactory</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> ICourse <span class="title">create</span><span class="params">()</span> </span>{
-        <span class="keyword">return</span> <span class="keyword">new</span> PythonCourse();
-    }
-}</code></pre>
-<p><strong>创建一个产品接口，在创建两个产品分别实现此接口</strong>   </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ICourse</span> </span>{
-    <span class="comment">/**</span>
-<span class="comment">     * 录制视频</span>
-<span class="comment">     * <span class="doctag">@return</span></span>
-<span class="comment">     */</span>
-    <span class="function"><span class="keyword">void</span> <span class="title">record</span><span class="params">()</span></span>;
-}
-<span class="comment">//</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaCourse</span> <span class="keyword">implements</span> <span class="title">ICourse</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"录制Java课程"</span>);
-    }
-}
-<span class="comment">//</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonCourse</span> <span class="keyword">implements</span> <span class="title">ICourse</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"录制Python课程"</span>);
-    }
-}</code></pre>
-<p><strong>测试类测试</strong>    </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FactoryMethodTest</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-
-        ICourseFactory factory = <span class="keyword">new</span> PythonCourseFactory();
-        ICourse course = factory.create();
-        course.record();
-
-        factory = <span class="keyword">new</span> JavaCourseFactory();
-        course = factory.create();
-        course.record();
-    }
-}</code></pre>
-<h3 id="Abstract-Factory-Paterrn-抽象工厂模式"><a href="#Abstract-Factory-Paterrn-抽象工厂模式" class="headerlink" title="Abstract Factory Paterrn 抽象工厂模式"></a>Abstract Factory Paterrn 抽象工厂模式</h3><h4 id="定义-2"><a href="#定义-2" class="headerlink" title="定义"></a>定义</h4><p>抽象工厂模式（Abstract Factory Paterrn）是一种为访问类提供一个创建一组相关或相互依赖对象的接口，且访问类无须指定所要产品的具体类就能得到同族的不同等级的产品的模式结构。</p>
-<p>抽象工厂模式是工厂方法模式的升级版本，工厂方法模式只生产一个等级的产品，而抽象工厂模式可生产多个等级的产品。  </p>
-<h4 id="适用场景-2"><a href="#适用场景-2" class="headerlink" title="适用场景"></a>适用场景</h4><p>（1）当需要创建的对象是一系列相互关联或相互依赖的产品族时，如电器工厂中的电视机、洗衣机、空调等。<br>（2）系统中有多个产品族，但每次只使用其中的某一族产品。如有人只喜欢穿某一个品牌的衣服和鞋。<br>（3）系统中提供了产品的类库，且所有产品的接口相同，客户端不依赖产品实例的创建细节和内部结构。</p>
-<h4 id="优点-2"><a href="#优点-2" class="headerlink" title="优点"></a>优点</h4><p>抽象工厂模式除了具有工厂方法模式的优点外，其他主要优点如下。<br>可以在类的内部对产品族中相关联的多等级产品共同管理，而不必专门引入多个新的类来进行管理。<br>当增加一个新的产品族时不需要修改原代码，满足开闭原则。</p>
-<h4 id="缺点-2"><a href="#缺点-2" class="headerlink" title="缺点"></a>缺点</h4><p>其缺点是：当产品族中需要增加一个新的产品时，所有的工厂类都需要进行修改。  </p>
-<h4 id="代码举例说明"><a href="#代码举例说明" class="headerlink" title="代码举例说明"></a>代码举例说明</h4><p><strong>在产品等级中增加两个产品</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">INote</span> </span>{
-    <span class="function"><span class="keyword">void</span> <span class="title">edit</span><span class="params">()</span></span>;
-}
-<span class="comment">//</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">IVideo</span> </span>{
-    <span class="function"><span class="keyword">void</span> <span class="title">record</span><span class="params">()</span></span>;
-}</code></pre>
-<p><strong>然后再创建一个抽象工厂</strong>  </p>
-<pre><code class="java"><span class="comment">/**</span>
-<span class="comment"> * 抽象工厂是用户的主入口</span>
-<span class="comment"> * 在Spring中应用得最为广泛的一种设计模式</span>
-<span class="comment"> * 易于扩展</span>
-<span class="comment"> */</span>
-<span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">CourseFactory</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>{
-        System.out.println(<span class="string">"初始化基础数据"</span>);
-    }
-
-    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> INote <span class="title">createNote</span><span class="params">()</span></span>;
-
-    <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> IVideo <span class="title">createVideo</span><span class="params">()</span></span>;
-}</code></pre>
-<p><strong>接下来，创建java产品族</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaNote</span> <span class="keyword">implements</span> <span class="title">INote</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">edit</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"编写Java笔记"</span>);
-    }
-}
-<span class="comment">//</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaVideo</span> <span class="keyword">implements</span> <span class="title">IVideo</span> </span>{
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"录制Java视频"</span>);
-    }
-}</code></pre>
-<p><strong>创建java产品族的具体工厂</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaCourseFactory</span> <span class="keyword">extends</span> <span class="title">CourseFactory</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> INote <span class="title">createNote</span><span class="params">()</span> </span>{
-        <span class="keyword">super</span>.init();
-        <span class="keyword">return</span> <span class="keyword">new</span> JavaNote();
-    }
-
-    <span class="function"><span class="keyword">public</span> IVideo <span class="title">createVideo</span><span class="params">()</span> </span>{
-        <span class="keyword">super</span>.init();
-        <span class="keyword">return</span> <span class="keyword">new</span> JavaVideo();
-    }
-}</code></pre>
-<p><strong>接下来，创建python产品族</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonNote</span> <span class="keyword">implements</span> <span class="title">INote</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">edit</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"编写Python笔记"</span>);
-    }
-}
-<span class="comment">//</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonVideo</span> <span class="keyword">implements</span> <span class="title">IVideo</span> </span>{
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">record</span><span class="params">()</span> </span>{
-        System.out.println(<span class="string">"录制Python视频"</span>);
-    }
-}</code></pre>
-<p><strong>创建python产品族的具体工厂</strong></p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonCourseFactory</span> <span class="keyword">extends</span> <span class="title">CourseFactory</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> INote <span class="title">createNote</span><span class="params">()</span> </span>{
-        <span class="keyword">super</span>.init();
-        <span class="keyword">return</span> <span class="keyword">new</span> PythonNote();
-    }
-
-
-    <span class="function"><span class="keyword">public</span> IVideo <span class="title">createVideo</span><span class="params">()</span> </span>{
-        <span class="keyword">super</span>.init();
-        <span class="keyword">return</span> <span class="keyword">new</span> PythonVideo();
-    }
-}</code></pre>
-<p><strong>来看客户端的调用</strong>  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFactoryTest</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-
-        JavaCourseFactory factory = <span class="keyword">new</span> JavaCourseFactory();
-
-        factory.createNote().edit();
-        factory.createVideo().record();
-    }
-}</code></pre>
-<p>上面的代码完整的诠释了两个产品族Java和python，也描述了两个产品等级视频和笔记。抽象工厂非常完美清晰的描述了这样一层复杂的关系。但是，当我们需要新增一个产品等级：产品三号的话。那么我们从抽象工厂到具体工厂都要全部调整，很显然不符合开闭原则，这也是它缺点之一。</p>
+        <span class="comment">//加入同步队列并返回前驱结点p</span>
+        Node p = enq(node);
+        <span class="keyword">int</span> ws = p.waitStatus;
+        <span class="comment">//判断前驱结点是否为结束结点(CANCELLED=1)或者在设置</span>
+        <span class="comment">//前驱节点状态为Node.SIGNAL状态失败时，唤醒被通知节点代表的线程</span>
+        <span class="keyword">if</span> (ws &gt; <span class="number">0</span> || !compareAndSetWaitStatus(p, ws, Node.SIGNAL))
+            <span class="comment">//唤醒node结点的线程</span>
+            LockSupport.unpark(node.thread);
+        <span class="keyword">return</span> <span class="keyword">true</span>;
+    }</code></pre>
+<p>doSignal(first)方法中做了两件事  ：<br>（1）从条件等待队列移除被唤醒的节点，然后重新维护条件等待队列的firstWaiter和lastWaiter的指向<br>（2）将从等待队列移除的结点加入同步队列(在transferForSignal()方法中完成的)，如果进入到同步队列失败并且条件等待队列还有不为空的节点，则继续循环唤醒后续其他结点的线程。  </p>
+<p>到此整个signal()的唤醒过程就很清晰了：<br>（1）signal()被调用后，先判断当前线程是否持有独占锁，如果有，那么唤醒当前Condition对象中等待队列的第一个结点的线程，并从等待队列中移除该结点，移动到同步队列中<br>（2）如果加入同步队列失败，那么继续循环唤醒等待队列中的其他结点的线程<br>（3）如果成功加入同步队列，那么如果其前驱结点还未结束或者设置前驱节点状态为Node.SIGNAL状态失败，则通过LockSupport.unpark()唤醒被通知节点代表的线程，到此signal()任务完成<br>注意被唤醒后的线程，将从前面的await()方法中的while循环中退出，因为此时该线程的结点已在同步队列中，那么while (!isOnSyncQueue(node))将不在符合循环条件，进而调用AQS的acquireQueued()方法加入获取同步状态的竞争中，这就是等待唤醒机制的整个流程实现原理（注意无论是同步队列还是等待队列使用的Node数据结构都是同一个，不过是使用的内部变量不同罢了）<br>Thanks For :<br><a href="https://blog.csdn.net/javazejian/article/details/75043422" target="_blank" rel="noopener">https://blog.csdn.net/javazejian/article/details/75043422</a></p>
 
     
 
@@ -553,7 +451,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://chengqijie.gitee.io/2020/05/19/三大工厂模式/" title="三大工厂模式" target="_blank">https://chengqijie.gitee.io/2020/05/19/三大工厂模式/</a>
+          <a href="https://chengqijie.gitee.io/2020/06/21/J.U.C核心-第三部/" title="J.U.C核心-第三部" target="_blank">https://chengqijie.gitee.io/2020/06/21/J.U.C核心-第三部/</a>
         </li>
         
         <li>
@@ -575,7 +473,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">设计模式</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
         		</li>
       		
 		</ul>
@@ -587,7 +485,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/设计模式//" class="article-tag-list-link color5">设计模式</a>
+        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
         		</li>
       		
 		</ul>
@@ -642,7 +540,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/05/19/%E4%B8%89%E5%A4%A7%E5%B7%A5%E5%8E%82%E6%A8%A1%E5%BC%8F/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/06/21/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%B8%89%E9%83%A8/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -657,18 +555,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2020/05/19/IO%E6%A8%A1%E5%9E%8B%E7%AE%80%E4%BB%8B/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          IO模型简介
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM常用命令</div>
+    <a href="/2020/06/21/J.U.C%E6%A0%B8%E5%BF%83-%E7%AC%AC%E4%BA%8C%E9%83%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">J.U.C核心-第二部</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -695,7 +584,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Simple-Factory-Pattern-简单工厂模式"><span class="toc-number">1.</span> <span class="toc-text">Simple Factory Pattern 简单工厂模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义"><span class="toc-number">1.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#适用场景"><span class="toc-number">1.2.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优点"><span class="toc-number">1.3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺点"><span class="toc-number">1.4.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#举例代码说明"><span class="toc-number">1.5.</span> <span class="toc-text">举例代码说明</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Factory-Method-Pattern-工厂方法模式"><span class="toc-number">2.</span> <span class="toc-text">Factory Method Pattern 工厂方法模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义-1"><span class="toc-number">2.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#适用场景-1"><span class="toc-number">2.2.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优点-1"><span class="toc-number">2.3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺点-1"><span class="toc-number">2.4.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#举例代码说明-1"><span class="toc-number">2.5.</span> <span class="toc-text">举例代码说明</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Abstract-Factory-Paterrn-抽象工厂模式"><span class="toc-number">3.</span> <span class="toc-text">Abstract Factory Paterrn 抽象工厂模式</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#定义-2"><span class="toc-number">3.1.</span> <span class="toc-text">定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#适用场景-2"><span class="toc-number">3.2.</span> <span class="toc-text">适用场景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优点-2"><span class="toc-number">3.3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#缺点-2"><span class="toc-number">3.4.</span> <span class="toc-text">缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#代码举例说明"><span class="toc-number">3.5.</span> <span class="toc-text">代码举例说明</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Condition"><span class="toc-number">1.</span> <span class="toc-text">Condition</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#原理分析"><span class="toc-number">1.1.</span> <span class="toc-text">原理分析</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -719,9 +608,9 @@
     <script src="/lib/giteement.browser.js"></script>
   
   <script>
-  <!-- id: "三大工厂模式" -->
+  <!-- id: "J.U.C核心-第三部" -->
   var giteement = new Giteement({
-    id: '20200519151150',
+    id: '20200621125750',
     owner: 'chengqijie',
     repo: 'chengqijie',
     backcall_uri: 'https://chengqijie.gitee.io',
