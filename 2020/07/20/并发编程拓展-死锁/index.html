@@ -5,29 +5,28 @@
   
   
   
-	<meta name="keywords" content="多线程,博客">
+	<meta name="keywords" content="并发编程,博客">
 	
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
-  <title>线程的基本认识 | Stephen Cheng`s blog</title>
+  <title>并发编程拓展-死锁 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta property="og:type" content="article">
-<meta property="og:title" content="线程的基本认识">
-<meta property="og:url" content="https://chengqijie.gitee.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/index.html">
+<meta property="og:title" content="并发编程拓展-死锁">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/07/20/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E6%8B%93%E5%B1%95-%E6%AD%BB%E9%94%81/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://images.unsplash.com/photo-1591705599349-febbe70ed494?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/thread01.png">
-<meta property="article:published_time" content="2020-06-09T11:15:50.000Z">
-<meta property="article:modified_time" content="2020-06-16T01:08:45.883Z">
+<meta property="og:image" content="http://pic4.bbzhi.com/fengjingbizhi/2560x1600gaoqingfengjingbizhi/2560x1600gaoqingfengjingbizhi_349929_13.jpg">
+<meta property="article:published_time" content="2020-07-20T14:55:50.000Z">
+<meta property="article:modified_time" content="2020-07-20T14:55:51.175Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="多线程">
+<meta property="article:tag" content="并发编程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1591705599349-febbe70ed494?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
+<meta name="twitter:image" content="http://pic4.bbzhi.com/fengjingbizhi/2560x1600gaoqingfengjingbizhi/2560x1600gaoqingfengjingbizhi_349929_13.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -213,7 +212,7 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-线程的基本认识" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-并发编程拓展-死锁" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -223,7 +222,7 @@
    <center><p>
   
     <h1 class="article-title_code_ant" itemprop="name">
-      线程的基本认识
+      并发编程拓展-死锁
     </h1>
   
 
@@ -236,8 +235,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" class="archive-article-date">
-        <time datetime="2020-06-09T11:15:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-09</time>
+<a href="/2020/07/20/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E6%8B%93%E5%B1%95-%E6%AD%BB%E9%94%81/" class="archive-article-date">
+        <time datetime="2020-07-20T14:55:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-20</time>
 </a>
 
   
@@ -250,7 +249,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">1.8k字</span>
+      <span class="post-count">2.8k字</span>
     </span>
   </span>
 
@@ -259,7 +258,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">6分</span>
+      <span class="post-count">9分</span>
     </span>
   </span>
 </div>
@@ -270,81 +269,29 @@
   
   <div class="article-entry" itemprop="articleBody">
 	
-    <img src="https://images.unsplash.com/photo-1591705599349-febbe70ed494?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" style="width:100%">  
-<a id="more"></a>  
+    <img src="http://pic4.bbzhi.com/fengjingbizhi/2560x1600gaoqingfengjingbizhi/2560x1600gaoqingfengjingbizhi_349929_13.jpg" style="width:100%">  
+<a id="more"></a>    
 
 
-
-<h3 id="线程的基本介绍"><a href="#线程的基本介绍" class="headerlink" title="线程的基本介绍"></a>线程的基本介绍</h3><h5 id="线程基本概念"><a href="#线程基本概念" class="headerlink" title="线程基本概念"></a>线程基本概念</h5><p>线程是操作系统能够进行运算调度的最小单位，它被包含在进程中，是进程中的实际运作单位。  </p>
-<h5 id="为什么会有线程"><a href="#为什么会有线程" class="headerlink" title="为什么会有线程"></a>为什么会有线程</h5><p>（1）在多核CPU中，利用多线程可以实现真正意义上的并行执行。<br>（2）在一个应用进程中，会存在多个同时执行的任务，如果其中一个任务被阻塞，那么会导致并不依赖于此任务的其他任务也被阻塞。通过对不同任务创建不同的线程去处理，可以提升程序处理的实时性。<br>（3）线程可以认为是一种轻量级的进程，因此线程的创建、销毁比进程快。  </p>
-<h5 id="为什么要用多线程"><a href="#为什么要用多线程" class="headerlink" title="为什么要用多线程"></a>为什么要用多线程</h5><p>（1）异步执行<br>（2）利用多CPU资源实现真正意义上的并行执行<br> <!--more--><br>（3）线程作为调度和执行的单位，每个线程拥有独立的运行栈和程序计数器(pc)，线程切换的开<br>销小<br>（4）一个进程中的多个线程共享相同的内存单元/内存地址空间它们从同一堆中分配对象，可以<br>访问相同的变量和对象。这就使得线程间通信更简便、高效。但多个线程操作共享的系统资<br>源可能就会带来安全的隐患。  </p>
-<h5 id="多线程应用场景"><a href="#多线程应用场景" class="headerlink" title="多线程应用场景"></a>多线程应用场景</h5><p>（1）使用多线程实现文件下载<br>（2）后台任务：如定时向大量用户发送邮件<br>（3）异步处理：记录日志<br>（4）多步骤的任务处理，可根据任务步骤的特征选用不用个数和特征的线程来协作处理，多任务的分割，由一个主线程分割给多个线程去完成。  </p>
-<h5 id="本质"><a href="#本质" class="headerlink" title="本质"></a>本质</h5><p>多线程的本质是：合理的利用多核心CPU资源来实现线程的并行处理，来实现同一个进程内不同任务的并行执行，同时基于线程本身的异步执行特性，提升任务处理的效率。  </p>
-<h3 id="Java线程的生命周期"><a href="#Java线程的生命周期" class="headerlink" title="Java线程的生命周期"></a>Java线程的生命周期</h3><p><strong>Java线程从创建到销毁，一共可能经历六种状态：</strong><br><code>NEW：</code>  初始状态，线程被构建，当一个Thread类或其子类的对象被声明并创建时，新生的线程对象处于新建状态。但是还没有调用start方法     </p>
-<p><code>RUNNABLED：</code> 运行状态，Java线程把操作系统中的就绪和运行两种状态统一称为“运行中”  。线程对象创建后，其他线程(比如main线程）调用了该对象的start()方法。该状态的线程位于可运行线程池中，等待被线程调度选中，获取CPU的使用权，此时处于就绪状态（ready）。就绪状态的线程在获得CPU时间片后变为运行中状态（running）。也就是start方法调用之后，线程并没有立即运行，线程的运行是需要OS去调度的（抢占式或者时间片）。<br>1.调用线程的start()方法，此线程进入就绪状态。<br>2.当前线程sleep()方法结束，其他线程join()结束，等待用户输入完毕，某个线程拿到对象锁，这些线程也将进入就绪状态。<br>3.当前线程时间片用完了，调用当前线程的yield()方法，当前线程进入就绪状态。<br>4.锁池里的线程拿到对象锁后，进入就绪状态。<br>5.运行中状态是线程调度程序从可运行池中选择一个线程作为当前线程时所处的状态。这也是线程进入运行状态的唯一一种方式。  </p>
-<p><code>BLOCKED：</code>   阻塞状态，表示线程进入等待状态，也就是线程因为某种原因放弃了CPU的使用权，阻塞状态是线程被阻塞在进入synchronized关键字修饰的方法或代码块时的状态。<br><code>WAITING</code>  等待状态，进入该状态的线程需要等待其他线程做出一些特定动作（通知或中断）。  它们不会被分配CPU时间，要等待被显示的唤醒，否则处于无限期等待状态。<br><code>TIME_WAITING</code>  超时等待状态，超时以后自动返回 ，该状态不同于WAITING，处于这种状态的线程不会被分配CPU执行时间，不过无须无限期等待被其他线程显示地唤醒，在达到一定时间后它们会自动唤醒。<br><code>RERMINATED</code>  终止状态，表示当前线程的run方法执行结束或者主线程的main方法完成时，我们就认为它终止了，而且不能复生。<br><img src="/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/thread01.png" alt="图片加载中">  </p>
-<h3 id="如何在Java中应用多线程"><a href="#如何在Java中应用多线程" class="headerlink" title="如何在Java中应用多线程"></a>如何在Java中应用多线程</h3><p>使用多线程的方式：<br>（1）继承Thread类 （本质上Thread类里面也实现了Runnable接口）<br>-&gt; 定义Thread类的子类，并重写该类的run方法，也被称为线程执行体。<br>-&gt; 创建Thread类的子类实例，也就是创建了线程对象。<br>-&gt; 调用start方法，启动线程。  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>{
-        System.out.println(<span class="string">"当前线程："</span>+Thread.currentThread().getName());
-    }
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-        ThreadDemo demo1 = <span class="keyword">new</span> ThreadDemo();
-        demo1.start();
-    }
-} 
---------------------------------------------------------------------
-lamoda表达式：  
-
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-        <span class="keyword">new</span> Thread(() -&gt; {
-            System.out.println(<span class="string">"当前线程："</span> + Thread.currentThread().getName());
-        }, <span class="string">"thread1"</span>).start();
-    }
-}</code></pre>
-<p>（2）实现Runnable接口<br>-&gt;  定义Runnable接口的实现类，重写run方法。<br>-&gt;  创建Runnable实现类的实例，并用这个实例作为Thread的target来创建Thread对象，这个Thread对象才是真正的线程对象。<br>-&gt;  调用线程对象的start方法，启动线程。  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>{
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span></span>{
-        System.out.println(<span class="string">"当前线程："</span>+Thread.currentThread().getName());
-    }
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
-        ThreadDemo demo1 = <span class="keyword">new</span> ThreadDemo();
-        Thread thread1 = <span class="keyword">new</span> Thread(demo1);
-        thread1.start();
-    }
-}</code></pre>
-<p>两者输出： </p>
-<pre><code class="java">当前线程：Thread-<span class="number">0</span>
-
-Process finished with exit code <span class="number">0</span></code></pre>
-<p>（3）实现Callable接口（想要得到返回值）<br>-&gt; 创建Callable接口的实现类，并实现call()方法，<br>-&gt; 创建线程池对象<br>-&gt; 将Callable实现类的实例对象传入submit()参数中，得到Future返回值对象。<br>-&gt; 调用get（）方法得到返回值。  </p>
-<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">String</span>&gt; </span>{
-
-    <span class="meta">@Override</span>
-    <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>{
-        System.out.println(<span class="string">"当前线程："</span>+Thread.currentThread().getName());
-        Thread.sleep(<span class="number">1000</span>);
-        <span class="keyword">return</span> <span class="string">"Hello Callable"</span>;
-    }
-
-    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>{
-      ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">1</span>);
-      Future&lt;String&gt; future = executorService.submit(<span class="keyword">new</span> ThreadDemo());
-        <span class="comment">//future.get()是一个阻塞方法，阻塞在返回值之前</span>
-   System.out.println(Thread.currentThread().getName()+<span class="string">"-"</span>+future.get());
-    }
-}</code></pre>
-<p>————三者的简单区别————    </p>
-<p>实现Runnable和实现Callable接口的方式基本相同，不过后者执行call()方法有返回值，前者线程执行体run()方法无返回值，因此可以把这两种方式归为一种方式与继承Thread类的方法之间的差别如下：</p>
-<p>1、线程只是实现Runnable或实现Callable接口，还可以继承其他类。</p>
-<p>2、实现接口的方式时，多个线程可以共享一个target对象，非常适合多线程处理同一份资源的情形。</p>
-<p>3、但是编程稍微复杂，如果需要访问当前线程，必须调用Thread.currentThread()方法。</p>
-<p>4、继承Thread类的线程类不能再继承其他父类（Java单继承决定）。</p>
-<p>注：一般推荐采用实现接口的方式来创建多线程</p>
+<h2 id="不小心死锁怎么办"><a href="#不小心死锁怎么办" class="headerlink" title="不小心死锁怎么办"></a>不小心死锁怎么办</h2><h3 id="什么是死锁"><a href="#什么是死锁" class="headerlink" title="什么是死锁"></a>什么是死锁</h3><p>死锁是指两个或两个以上的进程在执行过程中，由于竞争资源或者由于彼此通信而造成的一种阻塞的现象，若无外力作用，它们都将无法推进下去。此时称系统处于死锁状态或系统产生了死锁，这些永远在互相等待的进程称为死锁进程。    </p>
+<p>死锁的规范定义：集合中的每一个进程都在等待只能由本集合中的其他进程才能引发的事件，那么该组进程是死锁的。  </p>
+<h3 id="产生条件"><a href="#产生条件" class="headerlink" title="产生条件"></a>产生条件</h3><p>虽然进程在运行过程中，可能发生死锁，但死锁的发生也必须具备一定的条件，死锁的发生必须具备以下四个必要条件。<br>1）互斥条件：指进程对所分配到的资源进行排它性使用，即在一段时间内某资源只由一个进程占用。如果此时还有其它进程请求资源，则请求者只能等待，直至占有资源的进程用毕释放。<br>2）请求和保持条件：指进程已经保持至少一个资源，但又提出了新的资源请求，而该资源已被其它进程占有，此时请求进程阻塞，但又对自己已获得的其它资源保持不放。<br>3）不剥夺条件：指进程已获得的资源，在未使用完之前，不能被剥夺，只能在使用完时由自己释放。<br>4）环路等待条件：指在发生死锁时，必然存在一个进程——资源的环形链，即进程集合{P0，P1，P2，···，Pn}中的P0正在等待一个P1占用的资源；P1正在等待P2占用的资源，……，Pn正在等待已被P0占用的资源。  </p>
+<h3 id="产生原因"><a href="#产生原因" class="headerlink" title="产生原因"></a>产生原因</h3><p>（1）竞争不可剥夺资源；在系统中所配置的不可剥夺资源，由于它们的数量不能满足诸进程运行的需要，会使进程在运行过程中，因争夺这些资源而陷于僵局。例如，系统中只有一台打印机R1和一台磁带机R2，可供进程P1和P2共享。假定PI已占用了打印机R1，P2已占用了磁带机R2，若P2继续要求打印机R1，P2将阻塞；P1若又要求磁带机，P1也将阻塞。于是，在P1和P2之间就形成了僵局，两个进程都在等待对方释放自己所需要的资源，但是它们又都因不能继续获得自己所需要的资源而不能继续推进，从而也不能释放自己所占有的资源，以致进入死锁状态。<br>（2）竞争临时资源；上面所说的打印机资源属于可顺序重复使用型资源，称为永久资源。还有一种所谓的临时资源，这是指由一个进程产生，被另一个进程使用，短时间后便无用的资源，故也称为消耗性资源，如硬件中断、信号、消息、缓冲区内的消息等，它也可能引起死锁。例如，SI，S2，S3是临时性资源，进程P1产生消息S1，又要求从P3接收消息S3；进程P3产生消息S3，又要求从进程P2处接收消息S2；进程P2产生消息S2，又要求从P1处接收产生的消息S1。<br>P1: ···Request（S3）；Relese（S1）；···<br>P2: ···Request（S1）；Relese（S2）； ···<br>P3: ···Request（S2）；Relese（S3）； ···<br>则可能发生死锁。<br>也就是进程推进顺序非法可能会导致死锁。</p>
+<h3 id="解决死锁"><a href="#解决死锁" class="headerlink" title="解决死锁"></a>解决死锁</h3><p>解决死锁的最好办法就是提前规避      </p>
+<p>只要打破四个必要条件之一就能有效预防死锁的发生。<br>①打破互斥条件：改造独占性资源为虚拟资源，大部分资源已无法改造。<br>②打破不可抢占条件：当一进程占有一独占性资源后又申请一独占性资源而无法满足，则退出原占有的资源。<br>③打破占有且申请条件：采用资源预先分配策略，即进程运行前申请全部资源，满足则运行，不然就等待，这样就不会占有且申请。<br>④打破循环等待条件：实现资源有序分配策略，对所有设备实现分类编号，所有进程只能采用按序号递增的形式申请资源 。 </p>
+<p>*<em>预防死锁：  *</em><br>（1）资源一次性分配：一次性分配所有资源，这样就不会再有请求了：（破坏请求条件）<br>（2）只要有一个资源得不到分配，也不给这个进程分配其他的资源：（破坏请保持条件）<br>（3）可剥夺资源：即当某进程获得了部分资源，但得不到其它资源，则释放已占有的资源（破坏不可剥夺条件）<br>（4）资源有序分配法：系统给每类资源赋予一个编号，每一个进程按编号递增的顺序请求资源，释放则相反（破坏环路等待条件）</p>
+<p>  1.以确定的顺序获得锁<br>  2.当使用synchronized关键词提供的内置锁时，只要线程没有获得锁，那么就会永远等待下去，然而Lock接口提供了boolean tryLock(long time, TimeUnit unit) throws InterruptedException方法，该方法可以按照固定时长等待锁，因此线程可以在获取锁超时以后，主动释放之前已经获得的所有的锁。通过这种方式，也可以很有效地避免死锁。  </p>
+<p>** 检测死锁：  **<br>（1）首先为每个进程和每个资源指定一个唯一的号码；<br>（2）然后建立资源分配表和进程等待表。    </p>
+<p><strong>死锁检测</strong>是一个更好的死锁预防机制，它主要是针对那些不可能实现按序加锁并且锁超时也不可行的场景。</p>
+<p>每当一个线程获得了锁，会在线程和锁相关的数据结构中（map、graph等等）将其记下。除此之外，每当有线程请求锁，也需要记录在这个数据结构中。</p>
+<p>当一个线程请求锁失败时，这个线程可以遍历锁的关系图看看是否有死锁发生。例如，线程A请求锁7，但是锁7这个时候被线程B持有，这时线程A就可以检查一下线程B是否已经请求了线程A当前所持有的锁。如果线程B确实有这样的请求，那么就是发生了死锁（线程A拥有锁1，请求锁7；线程B拥有锁7，请求锁1）。</p>
+<p>当然，死锁一般要比两个线程互相持有对方的锁这种情况要复杂的多。线程A等待线程B，线程B等待线程C，线程C等待线程D，线程D又在等待线程A。线程A为了检测死锁，它需要递进地检测所有被B请求的锁。从线程B所请求的锁开始，线程A找到了线程C，然后又找到了线程D，发现线程D请求的锁被线程A自己持有着。这是它就知道发生了死锁。  </p>
+<p>那么当检测出死锁时，这些线程该做些什么呢？</p>
+<p>一个可行的做法是释放所有锁，回退，并且等待一段随机的时间后重试。这个和简单的加锁超时类似，不一样的是只有死锁已经发生了才回退，而不会是因为加锁的请求超时了。虽然有回退和等待，但是如果有大量的线程竞争同一批锁，它们还是会重复地死锁（编者注：原因同超时类似，不能从根本上减轻竞争）。</p>
+<p>一个更好的方案是给这些线程设置优先级，让一个（或几个）线程回退，剩下的线程就像没发生死锁一样继续保持着它们需要的锁。如果赋予这些线程的优先级是固定不变的，同一批线程总是会拥有更高的优先级。为避免这个问题，可以在死锁发生的时候设置随机的优先级。</p>
+<p><strong>解除死锁：</strong><br>（1）剥夺资源：从其它进程剥夺足够数量的资源给死锁进程，以解除死锁状态；<br>（2）撤消进程：可以直接撤消死锁进程或撤消代价最小的进程，直至有足够的资源可用，死锁状态消除为止；所谓代价是指优先级、运行代价、进程的重要性和价值等。</p>
+<h3 id="银行家算法"><a href="#银行家算法" class="headerlink" title="银行家算法"></a>银行家算法</h3><p>是最具代表性的避免死锁的算法<br><strong>安全状态：</strong><br>如果存在一个由系统中所有进程构成的安全序列P1，…，Pn，则系统处于安全状态。安全状态一定是没有死锁发生。<br><strong>不安全状态：</strong><br>不存在一个安全序列。不安全状态不一定导致死锁。<br><strong>算法原理：</strong><br>我们可以把操作系统看作是银行家，操作系统管理的资源相当于银行家管理的资金，进程向操作系统请求分配资源相当于用户向银行家贷款。<br>为保证资金的安全，银行家规定：<br>(1) 当一个顾客对资金的最大需求量不超过银行家现有的资金时就可接纳该顾客；<br>(2) 顾客可以分期贷款，但贷款的总数不能超过最大需求量；<br>(3) 当银行家现有的资金不能满足顾客尚需的贷款数额时，对顾客的贷款可推迟支付，但总能使顾客在有限的时间里得到贷款；<br>(4) 当顾客得到所需的全部资金后，一定能在有限的时间里归还所有的资金.<br>操作系统按照银行家制定的规则为进程分配资源，当进程首次申请资源时，要测试该进程对资源的最大需求量，如果系统现存的资源可以满足它的最大需求量则按当前的申请量分配资源，否则就推迟分配。当进程在执行中继续申请资源时，先测试该进程本次申请的资源数是否超过了该资源所剩余的总量。若超过则拒绝分配资源，若能满足则按当前的申请量分配资源，否则也要推迟分配。  </p>
+<p>在避免死锁的方法中，所施加的限制条件较弱，有可能获得令人满意的系统性能。在该方法中把系统的状态分为安全状态和不安全状态，只要能使系统始终都处于安全状态，便可以避免发生死锁。<br>银行家算法的基本思想是分配资源之前，判断系统是否是安全的；若是，才分配。它是最具有代表性的避免死锁的算法。</p>
 
     
 
@@ -386,7 +333,7 @@ Process finished with exit code <span class="number">0</span></code></pre>
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://chengqijie.gitee.io/2020/06/09/线程的基本认识/" title="线程的基本认识" target="_blank">https://chengqijie.gitee.io/2020/06/09/线程的基本认识/</a>
+          <a href="https://chengqijie.gitee.io/2020/07/20/并发编程拓展-死锁/" title="并发编程拓展-死锁" target="_blank">https://chengqijie.gitee.io/2020/07/20/并发编程拓展-死锁/</a>
         </li>
         
         <li>
@@ -475,7 +422,7 @@ Process finished with exit code <span class="number">0</span></code></pre>
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/06/09/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/07/20/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B%E6%8B%93%E5%B1%95-%E6%AD%BB%E9%94%81/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -490,18 +437,9 @@ Process finished with exit code <span class="number">0</span></code></pre>
 
 <nav id="article-nav">
   
-    <a href="/2020/06/10/%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          线程的基本操作
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/20/%E5%8D%95%E4%BE%8B%E6%A8%A1%E5%BC%8F%E7%AE%80%E5%8D%95%E4%BB%8B%E7%BB%8D/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">单例模式简单介绍</div>
+    <a href="/2020/07/20/%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">线程调度之线程池</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -528,7 +466,7 @@ Process finished with exit code <span class="number">0</span></code></pre>
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#线程的基本介绍"><span class="toc-number">1.</span> <span class="toc-text">线程的基本介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#线程基本概念"><span class="toc-number">1.0.1.</span> <span class="toc-text">线程基本概念</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么会有线程"><span class="toc-number">1.0.2.</span> <span class="toc-text">为什么会有线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#为什么要用多线程"><span class="toc-number">1.0.3.</span> <span class="toc-text">为什么要用多线程</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#多线程应用场景"><span class="toc-number">1.0.4.</span> <span class="toc-text">多线程应用场景</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#本质"><span class="toc-number">1.0.5.</span> <span class="toc-text">本质</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java线程的生命周期"><span class="toc-number">2.</span> <span class="toc-text">Java线程的生命周期</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何在Java中应用多线程"><span class="toc-number">3.</span> <span class="toc-text">如何在Java中应用多线程</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#不小心死锁怎么办"><span class="toc-number">1.</span> <span class="toc-text">不小心死锁怎么办</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是死锁"><span class="toc-number">1.1.</span> <span class="toc-text">什么是死锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#产生条件"><span class="toc-number">1.2.</span> <span class="toc-text">产生条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#产生原因"><span class="toc-number">1.3.</span> <span class="toc-text">产生原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#解决死锁"><span class="toc-number">1.4.</span> <span class="toc-text">解决死锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#银行家算法"><span class="toc-number">1.5.</span> <span class="toc-text">银行家算法</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -552,9 +490,9 @@ Process finished with exit code <span class="number">0</span></code></pre>
     <script src="/lib/giteement.browser.js"></script>
   
   <script>
-  <!-- id: "线程的基本认识" -->
+  <!-- id: "并发编程拓展-死锁" -->
   var giteement = new Giteement({
-    id: '20200609191550',
+    id: '20200720225550',
     owner: 'chengqijie',
     repo: 'chengqijie',
     backcall_uri: 'https://chengqijie.gitee.io',
