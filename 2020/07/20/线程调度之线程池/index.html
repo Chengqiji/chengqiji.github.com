@@ -5,28 +5,30 @@
   
   
   
-	<meta name="keywords" content="数据库MySQL,博客">
+	<meta name="keywords" content="并发编程,博客">
 	
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
-  <title>MySQL入门系列二 | Stephen Cheng`s blog</title>
+  <title>线程调度之线程池 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL入门系列二">
-<meta property="og:url" content="https://chengqijie.gitee.io/2020/06/18/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%BA%8C/index.html">
+<meta property="og:title" content="线程调度之线程池">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/07/20/%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://attach.bbs.miui.com/forum/201501/29/154912worftckqkkv55trf.jpg">
-<meta property="article:published_time" content="2020-06-18T15:55:50.000Z">
-<meta property="article:modified_time" content="2020-06-19T00:01:18.255Z">
+<meta property="og:image" content="http://file06.16sucai.com/2016/0405/84718ddec417fa0fc36385af212f17c7.jpg">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/07/20/%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0/threadpool.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/07/20/%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0/threadpool01.png">
+<meta property="article:published_time" content="2020-07-20T08:10:50.000Z">
+<meta property="article:modified_time" content="2020-07-20T08:21:36.918Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="数据库MySQL">
+<meta property="article:tag" content="并发编程">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://attach.bbs.miui.com/forum/201501/29/154912worftckqkkv55trf.jpg">
+<meta name="twitter:image" content="http://file06.16sucai.com/2016/0405/84718ddec417fa0fc36385af212f17c7.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -212,7 +214,7 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-MySQL入门系列二" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-线程调度之线程池" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -222,7 +224,7 @@
    <center><p>
   
     <h1 class="article-title_code_ant" itemprop="name">
-      MySQL入门系列二
+      线程调度之线程池
     </h1>
   
 
@@ -235,8 +237,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/06/18/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%BA%8C/" class="archive-article-date">
-        <time datetime="2020-06-18T15:55:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-06-18</time>
+<a href="/2020/07/20/%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0/" class="archive-article-date">
+        <time datetime="2020-07-20T08:10:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-20</time>
 </a>
 
   
@@ -249,7 +251,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">4.1k字</span>
+      <span class="post-count">3.2k字</span>
     </span>
   </span>
 
@@ -258,7 +260,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">17分</span>
+      <span class="post-count">12分</span>
     </span>
   </span>
 </div>
@@ -269,169 +271,292 @@
   
   <div class="article-entry" itemprop="articleBody">
 	
-    <img src="http://attach.bbs.miui.com/forum/201501/29/154912worftckqkkv55trf.jpg" style="width:100%">  
+    <img src="http://file06.16sucai.com/2016/0405/84718ddec417fa0fc36385af212f17c7.jpg" style="width:100%">  
 <a id="more"></a>    
 
 
-<h3 id="常见函数介绍"><a href="#常见函数介绍" class="headerlink" title="常见函数介绍"></a>常见函数介绍</h3><p>函数：类似于java中学过的“方法”，为了解决某个问题，将编写的一系列的命令集合封装在一起，对外仅仅暴露方法名，供外部调用。<br><code>注意:</code>因为是入门系列，所以只介绍调用它们  </p>
-<h4 id="字符函数"><a href="#字符函数" class="headerlink" title="字符函数"></a>字符函数</h4><p>CONCAT(S1,S2,……,Sn)    连接S1,S2,……,Sn为一个字符串<br>CONCAT(s, S1,S2,……,Sn)    同CONCAT(s1,s2,…)函数，但是每个字符串之间要加上s<br>CHAR_LENGTH(s)    返回字符串s的字符数<br>LENGTH(s)    返回字符串s的字节数，和字符集有关<br>INSERT(str, index , len, instr)    将字符串str从第index位置开始，len个字符长的子串替换为字符串instr<br>UPPER(s) 或 UCASE(s)    将字符串s的所有字母转成大写字母<br>LOWER(s)  或LCASE(s)    将字符串s的所有字母转成小写字母<br>LEFT(s,n)    返回字符串s最左边的n个字符<br>RIGHT(s,n)    返回字符串s最右边的n个字符<br>LPAD(str, len, pad)    用字符串pad对str最左边进行填充，直到str的长度为len个字符<br>RPAD(str ,len, pad)    用字符串pad对str最右边进行填充，直到str的长度为len个字符<br>LTRIM(s)    去掉字符串s左侧的空格<br>RTRIM(s)    去掉字符串s右侧的空格<br>TRIM(s)    去掉字符串s开始与结尾的空格<br>TRIM(【BOTH 】s1 FROM s)    去掉字符串s开始与结尾的s1<br>TRIM(【LEADING】s1 FROM s)    去掉字符串s开始处的s1<br>TRIM(【TRAILING】s1 FROM s)    去掉字符串s结尾处的s1<br>REPEAT(str, n)    返回str重复n次的结果<br>REPLACE（str, a, b）    用字符串b替换字符串str中所有出现的字符串a<br>STRCMP(s1,s2)    比较字符串s1,s2<br>SUBSTRING(s,index,len)    返回从字符串s的index位置其len个字符</p>
-<p> 案例：查询员工表的姓名，要求格式：姓首字符大写，其他字符小写，名所有字符大写，且姓和名之间用_分割，最后起别名“OUTPUT”</p>
-<p>SELECT UPPER(SUBSTR(first_name,1,1)),first_name FROM employees;<br>SELECT LOWER(SUBSTR(first_name,2)),first_name FROM employees;<br>SELECT UPPER(last_name) FROM employees;</p>
-<p>SELECT CONCAT(UPPER(SUBSTR(first_name,1,1)),LOWER(SUBSTR(first_name,2)),’_’,UPPER(last_name)) “OUTPUT”<br>FROM employees;    </p>
-<h4 id="数学函数"><a href="#数学函数" class="headerlink" title="数学函数"></a>数学函数</h4><p>1、ABS 绝对值<br>SELECT ABS(-2.4);<br>2、CEIL 向上取整  返回&gt;=该参数的最小整数<br>SELECT CEIL(-1.09);<br>SELECT CEIL(0.09);<br>SELECT CEIL(1.00);</p>
-<p>3、FLOOR 向下取整，返回&lt;=该参数的最大整数<br>SELECT FLOOR(-1.09);<br>SELECT FLOOR(0.09);<br>SELECT FLOOR(1.00);</p>
-<p>4、ROUND 四舍五入，返回参数x的四舍五入的有y位的小数的值<br>SELECT ROUND(1.8712345);<br>SELECT ROUND(1.8712345,2);</p>
-<p>5、TRUNCATE 截断，返回数字x截断为y位小数的结果</p>
-<p>SELECT TRUNCATE(1.8712345,1);</p>
-<p>6、MOD 取余</p>
-<p>SELECT MOD(-10,3);<br>a%b = a-(INT)a/b<em>b<br>-10%3 = -10 - (-10)/3</em>3   = -1</p>
-<p>SELECT -10%3;<br>SELECT 10%3;<br>SELECT -10%-3;<br>SELECT 10%-3;  </p>
-<h4 id="日期函数"><a href="#日期函数" class="headerlink" title="日期函数"></a>日期函数</h4><p>CURDATE() 或 CURRENT_DATE()    返回当前日期<br>CURTIME() 或 CURRENT_TIME()    返回当前时间<br>NOW()</p>
-<p>SYSDATE()<br>CURRENT_TIMESTAMP()<br>LOCALTIME()<br>LOCALTIMESTAMP()    返回当前系统日期时间<br>YEAR(date)<br>MONTH(date)<br>DAY(date)<br>HOUR(time)<br>MINUTE(time)<br>SECOND(time)    返回具体的时间值<br>WEEK(date)<br>WEEKOFYEAR(date)    返回一年中的第几周<br>DAYOFWEEK()    返回周几，注意：周日是1，周一是2，。。。周六是7<br>WEEKDAY(date)    返回周几，注意，周1是0，周2是1，。。。周日是6<br>DAYNAME(date)    返回星期：MONDAY,TUESDAY…..SUNDAY<br>MONTHNAME(date)    返回月份：January，。。。。。<br>DATEDIFF(date1,date2)<br>TIMEDIFF(time1, time2)    返回date1 - date2的日期间隔<br>返回time1 - time2的时间间隔<br>DATE_ADD(datetime, INTERVALE  expr  type)    返回与给定日期时间相差INTERVAL时间段的日期时间<br>DATE_FORMAT(datetime ,fmt)    按照字符串fmt格式化日期datetime值<br>STR_TO_DATE(str, fmt)    按照字符串fmt对str进行解析，解析为一个日期  </p>
-<p>（1）DATE_ADD(datetime,INTERVAL  expr  type)  </p>
-<p>SELECT DATE_ADD(NOW(), INTERVAL 1 YEAR);<br>SELECT DATE_ADD(NOW(), INTERVAL -1 YEAR);   #可以是负数<br>SELECT DATE_ADD(NOW(), INTERVAL ‘1_1’ YEAR_MONTH);   #需要单引号<br>表达式类型    YEAR_MONTH<br>YEAR    DAY_HOUR<br>MONTH    DAY_MINUTE<br>DAY    DAY_SECOND<br>HOUR    HOUR_MINUTE<br>MINUTE    HOUR_SECOND<br>SECOND    MINUTE_SECOND  </p>
-<p>（2）DATE_FORMAT(datetime ,fmt)和STR_TO_DATE(str, fmt)  </p>
-<p>格式符    说明    格式符    说明<br>%Y    4位数字表示年份    %y    表示两位数字表示年份<br>%M    月名表示月份（January,….）    %m    两位数字表示月份（01,02,03。。。）<br>%b    缩写的月名（Jan.，Feb.，….）    %c    数字表示月份（1,2,3,…）<br>%D    英文后缀表示月中的天数（1st,2nd,3rd,…）    %d    两位数字表示月中的天数(01,02…)<br>%e    数字形式表示月中的天数（1,2,3,4,5…..）<br>%H    两位数字表示小数，24小时制（01,02..）    %h和%I    两位数字表示小时，12小时制（01,02..）<br>%k    数字形式的小时，24小时制(1,2,3)    %l    数字形式表示小时，12小时制（1,2,3,4….）<br>%i    两位数字表示分钟（00,01,02）    %S和%s    两位数字表示秒(00,01,02…)<br>%W    一周中的星期名称（Sunday…）    %a    一周中的星期缩写（Sun.，Mon.,Tues.，..）<br>%w    以数字表示周中的天数(0=Sunday,1=Monday….)<br>%j    以3位数字表示年中的天数(001,002…)    %U    以数字表示年中的第几周，（1,2,3。。）其中Sunday为周中第一天<br>%u    以数字表示年中的第几周，（1,2,3。。）其中Monday为周中第一天<br>%T    24小时制    %r    12小时制<br>%p    AM或PM    %%    表示%</p>
-<h4 id="流程控制函数"><a href="#流程控制函数" class="headerlink" title="流程控制函数"></a>流程控制函数</h4><p>1、IF函数</p>
-<p>SELECT IF(100&gt;9,’好’,’坏’);</p>
-<p>需求：如果有奖金，则显示最终奖金，如果没有，则显示0<br>SELECT IF(commission_pct IS NULL,0,salary<em>12</em>commission_pct)  奖金,commission_pct<br>FROM employees;</p>
-<p>2、CASE函数</p>
-<p>①情况1 ：类似于switch语句，可以实现等值判断<br>CASE 表达式<br>WHEN 值1 THEN 结果1<br>WHEN 值2 THEN 结果2<br>…<br>ELSE 结果n<br>END</p>
-<p>案例：<br>部门编号是30，工资显示为2倍<br>部门编号是50，工资显示为3倍<br>部门编号是60，工资显示为4倍<br>否则不变</p>
-<p>显示 部门编号，新工资，旧工资</p>
-<p>SELECT department_id,salary,<br>CASE department_id<br>WHEN 30 THEN salary<em>2<br>WHEN 50 THEN salary</em>3<br>WHEN 60 THEN salary*4<br>ELSE salary<br>END  newSalary<br>FROM employees;</p>
-<p>②情况2：类似于多重IF语句，实现区间判断<br>CASE<br>WHEN 条件1 THEN 结果1<br>WHEN 条件2 THEN 结果2<br>…</p>
-<p>ELSE 结果n</p>
-<p>END</p>
-<p>案例：如果工资&gt;20000,显示级别A<br>      工资&gt;15000,显示级别B<br>      工资&gt;10000,显示级别C<br>      否则，显示D</p>
-<p> SELECT salary,<br> CASE<br> WHEN salary&gt;20000 THEN ‘A’<br> WHEN salary&gt;15000 THEN ‘B’<br> WHEN salary&gt;10000 THEN ‘C’<br> ELSE ‘D’<br> END<br> AS  a<br> FROM employees;   </p>
-<h4 id="分组函数"><a href="#分组函数" class="headerlink" title="分组函数"></a>分组函数</h4><p>分组函数往往用于实现将一组数据进行统计计算，最终得到一个值，又称为聚合函数或统计函数</p>
-<p>聚合函数是用来做纵向运算的函数：<br>COUNT()：统计指定列不为NULL的记录行数；<br>MAX()：计算指定列的最大值，如果指定列是字符串类型，那么使用字符串排序运算；<br>MIN()：计算指定列的最小值，如果指定列是字符串类型，那么使用字符串排序运算；<br>SUM()：计算指定列的数值和，如果指定列类型不是数值类型，那么计算结果为0；<br>AVG()：计算指定列的平均值，如果指定列类型不是数值类型，那么计算结果为0；</p>
-<p>案例1 ：查询员工信息表中，所有员工的工资和、工资平均值、最低工资、最高工资、有工资的个数</p>
-<p>SELECT SUM(salary),AVG(salary),MIN(salary),MAX(salary),COUNT(salary) FROM employees;  </p>
-<p>案例2：添加筛选条件  </p>
-<p>查询emp表中记录数：<br>SELECT COUNT(employee_id) FROM employees;</p>
-<p>查询emp表中有佣金的人数：<br>SELECT COUNT(salary) FROM employees;</p>
-<p>查询emp表中月薪大于2500的人数：<br>SELECT COUNT(salary) FROM employees WHERE salary&gt;2500;</p>
-<p>查询有领导的人数：<br>SELECT COUNT(manager_id) FROM employees;    </p>
-<p>1、统计结果集的行数，推荐使用count(*)</p>
-<p>SELECT COUNT(<em>) FROM employees;<br>SELECT COUNT(</em>) FROM employees WHERE department_id = 30;</p>
-<p>SELECT COUNT(1) FROM employees;<br>SELECT COUNT(1) FROM employees WHERE department_id = 30;  </p>
-<p>2、搭配distinct实现去重的统计</p>
-<p>需求：查询有员工的部门个数</p>
-<p>SELECT COUNT(DISTINCT department_id) FROM employees;</p>
-<p>思考：每个部门的总工资、平均工资？</p>
-<p>SELECT SUM(salary)  FROM employees WHERE department_id = 30;<br>SELECT SUM(salary)  FROM employees WHERE department_id = 50;</p>
-<p>SELECT SUM(salary) ,department_id<br>FROM employees<br>GROUP BY department_id;  </p>
-<h4 id="分组查询"><a href="#分组查询" class="headerlink" title="分组查询"></a>分组查询</h4><p>语法：</p>
-<p>select 查询列表<br>from 表名<br>where 筛选条件<br>group by 分组列表<br>having 分组后筛选<br>order by 排序列表;</p>
-<p>执行顺序：from子句、where子句、group by 子句、having子句、select子句、order by子句  </p>
-<p>特点：<br>（1）查询列表往往是  分组函数和被分组的字段 ★<br>（2）分组查询中的筛选分为两类<br>            筛选的基表    使用的关键词        位置<br>分组前筛选        原始表        where            group by 的前面</p>
-<p>分组后筛选        分组后的结果集  having            group by的后面</p>
-<p>where——group by ——having</p>
-<p>问题：分组函数做条件只可能放在having后面！！！  </p>
-<h5 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h5><p>1）简单的分组<br>案例1：查询每个工种的员工平均工资</p>
-<p>SELECT AVG(salary),job_id<br>FROM employees<br>GROUP BY job_id;  </p>
-<p>案例2：查询每个领导的手下人数</p>
-<p>SELECT COUNT(*),manager_id<br>FROM employees<br>WHERE manager_id IS NOT NULL<br>GROUP BY manager_id;  </p>
-<p>2）可以实现分组前的筛选<br>案例1：查询邮箱中包含a字符的 每个部门的最高工资<br>SELECT MAX(salary) 最高工资,department_id<br>FROM employees<br>WHERE email LIKE ‘%a%’<br>GROUP BY department_id;</p>
-<p>案例2：查询每个领导手下有奖金的员工的平均工资<br>SELECT AVG(salary) 平均工资,manager_id<br>FROM employees<br>WHERE commission_pct IS NOT NULL<br>GROUP BY manager_id;  </p>
-<p>3）可以实现分组后的筛选<br>案例1：查询哪个部门的员工个数&gt;5<br>分析1：查询每个部门的员工个数<br>SELECT COUNT(*) 员工个数,department_id<br>FROM employees<br>GROUP BY department_id</p>
-<p>分析2：在刚才的结果基础上，筛选哪个部门的员工个数&gt;5</p>
-<p>SELECT COUNT(*) 员工个数,department_id<br>FROM employees</p>
-<p>GROUP BY department_id<br>HAVING  COUNT(*)&gt;5;</p>
-<p>案例2：每个工种有奖金的员工的最高工资&gt;12000的工种编号和最高工资</p>
-<p>SELECT job_id,MAX(salary)<br>FROM employees<br>WHERE commission_pct  IS NOT NULL<br>GROUP BY job_id<br>HAVING MAX(salary)&gt;12000;</p>
-<p>案例3：领导编号&gt;102的    每个领导手下的最低工资大于5000的最低工资<br>分析1：查询每个领导手下员工的最低工资<br>SELECT MIN(salary) 最低工资,manager_id<br>FROM employees<br>GROUP BY manager_id;</p>
-<p>分析2：筛选刚才1的结果<br>SELECT MIN(salary) 最低工资,manager_id<br>FROM employees<br>WHERE manager_id&gt;102<br>GROUP BY manager_id<br>HAVING MIN(salary)&gt;5000 ;</p>
-<p>4）可以实现排序<br>案例：查询没有奖金的员工的最高工资&gt;6000的工种编号和最高工资,按最高工资升序<br>分析1：按工种分组，查询每个工种有奖金的员工的最高工资<br>SELECT MAX(salary) 最高工资,job_id<br>FROM employees<br>WHERE commission_pct IS  NULL<br>GROUP BY job_id</p>
-<p>分析2：筛选刚才的结果，看哪个最高工资&gt;6000<br>SELECT MAX(salary) 最高工资,job_id<br>FROM employees<br>WHERE commission_pct IS  NULL<br>GROUP BY job_id<br>HAVING MAX(salary)&gt;6000</p>
-<p>分析3：按最高工资升序<br>SELECT MAX(salary) 最高工资,job_id<br>FROM employees<br>WHERE commission_pct IS  NULL<br>GROUP BY job_id<br>HAVING MAX(salary)&gt;6000<br>ORDER BY MAX(salary) ASC;  </p>
-<p>5）按多个字段分组<br>案例：查询每个工种每个部门的最低工资,并按最低工资降序<br>提示：工种和部门都一样，才是一组</p>
-<p>工种    部门  工资<br>1    10    10000<br>1       20      2000<br>2    20<br>3       20<br>1       10<br>2       30<br>2       20</p>
-<p>SELECT MIN(salary) 最低工资,job_id,department_id<br>FROM employees<br>GROUP BY job_id,department_id;</p>
-<h4 id="连接查询"><a href="#连接查询" class="headerlink" title="连接查询"></a>连接查询</h4><p>说明：又称多表查询，当查询语句涉及到的字段来自于多个表时，就会用到连接查询</p>
-<p>笛卡尔乘积现象：表1 有m行，表2有n行，结果=m*n行</p>
-<p>发生原因：没有有效的连接条件<br>如何避免：添加有效的连接条件</p>
-<p>分类：</p>
-<pre><code>按年代分类：
-1、sql92标准:仅仅支持内连接
-    内连接：
-        等值连接
-        非等值连接
-        自连接
-2、sql99标准【推荐】：支持内连接+外连接（左外和右外）+交叉连接
+<h2 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h2><h3 id="什么是线程池？"><a href="#什么是线程池？" class="headerlink" title="什么是线程池？"></a>什么是线程池？</h3><p>提前创建好若干个线程存放在一个容器中，如果有任务需要处理，则将任务直接分配给线程池中的线程来执行，执行处理完后这个线程不会被销毁，而是等待后续分配任务。</p>
+<h3 id="线程池的好处"><a href="#线程池的好处" class="headerlink" title="线程池的好处"></a>线程池的好处</h3><ol>
+<li>降低创建线程和销毁线程的性能开销  </li>
+<li>提高响应速度，当有新任务需要执行时不需要等待创建线程就可以立马执行  </li>
+<li>合理的设置线程池的大小可以避免因为线程数超过硬件资源瓶颈带来的问题</li>
+<li>池化技术最突出的一个特点就是可以帮助我们对池子里的资源进行管理。由线程池统一分配和管理<h3 id="Java提供的线程池"><a href="#Java提供的线程池" class="headerlink" title="Java提供的线程池"></a>Java提供的线程池</h3></li>
+</ol>
+<p><strong>newCachedThreadPool</strong>创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。  </p>
+<p>*<em>newFixedThreadPool *</em>创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。  </p>
+<p>*<em>newScheduledThreadPool *</em>创建一个定长线程池，支持定时（scheduleWithFixedDelay（）函数的initdelay 参数）及周期（delay 参数）任务执行。</p>
+<p>*<em>newSingleThreadExecutor *</em>创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。</p>
+<p>*<em>newSingleThreadScheduledExecutor *</em>创建一个单线程化的支持定时的线程池，可以用一个线程周期性执行任务(比如周期7天，一次任务才用1小时,使用多线程就会浪费资源)  </p>
+<p>举例：</p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPoolDemo</span> <span class="keyword">implements</span> <span class="title">Runnable</span></span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{
+        ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">3</span>);
+        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) {
+            executorService.execute(<span class="keyword">new</span> ThreadPoolDemo());
+        }
+        executorService.shutdown();
+    }
 
-按功能分类：
-    内连接：
-        等值连接
-        非等值连接
-        自连接
-    外连接：
-        左外连接
-        右外连接
-        全外连接
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{
+        <span class="keyword">try</span> {
+            Thread.sleep(<span class="number">10</span>);
+        } <span class="keyword">catch</span> (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println(Thread.currentThread().getName());
+    }
+}</code></pre>
+<p>对应部分输出：  </p>
+<pre><code class="java">pool-<span class="number">1</span>-thread-<span class="number">1</span>
+pool-<span class="number">1</span>-thread-<span class="number">2</span>
+pool-<span class="number">1</span>-thread-<span class="number">3</span>
+pool-<span class="number">1</span>-thread-<span class="number">3</span>
+pool-<span class="number">1</span>-thread-<span class="number">2</span>
+pool-<span class="number">1</span>-thread-<span class="number">1</span>
+pool-<span class="number">1</span>-thread-<span class="number">3</span>
+pool-<span class="number">1</span>-thread-<span class="number">2</span>
 
-    交叉连接  </code></pre><h5 id="sql92标准"><a href="#sql92标准" class="headerlink" title="sql92标准"></a>sql92标准</h5><p>一、内连接</p>
-<p>语法:<br>select 查询列表<br>from 表1 别名,表2 别名<br>where 连接条件<br>and 筛选条件<br>group by 分组列表<br>having 分组后筛选<br>order by 排序列表</p>
-<p>执行顺序：</p>
-<p>1、from子句<br>2、where子句<br>3、and子句<br>4、group by子句<br>5、having子句<br>6、select子句<br>7、order by子句  </p>
-<p>一）等值连接<br>① 多表等值连接的结果为多表的交集部分<br>②n表连接，至少需要n-1个连接条件<br>③ 多表的顺序没有要求<br>④一般需要为表起别名<br>⑤可以搭配前面介绍的所有子句使用，比如排序、分组、筛选</p>
-<p>案例1：查询女神名和对应的男神名<br>SELECT NAME,boyName<br>FROM boys,beauty<br>WHERE beauty.boyfriend_id= boys.id;</p>
-<p>案例2：查询员工名和对应的部门名</p>
-<p>SELECT last_name,department_name<br>FROM employees,departments<br>WHERE employees.<code>department_id</code>=departments.<code>department_id</code>;  </p>
-<p>2、为表起别名</p>
-<p>①提高语句的简洁度<br>②区分多个重名的字段</p>
-<p>注意：如果为表起了别名，则查询的字段就不能使用原来的表名去限定</p>
-<p>:查询员工名、工种号、工种名</p>
-<p>SELECT e.last_name,e.job_id,j.job_title<br>FROM employees  e,jobs j<br>WHERE e.<code>job_id</code>=j.<code>job_id</code>;  </p>
-<p>案例：查询有奖金的每个部门的部门名和部门的领导编号和该部门的最低工资<br>SELECT department_name,d.<code>manager_id</code>,MIN(salary)<br>FROM departments d,employees e<br>WHERE d.<code>department_id</code>=e.<code>department_id</code><br>AND commission_pct IS NOT NULL<br>GROUP BY department_name,d.<code>manager_id</code>;  </p>
-<p>案例：查询每个工种的工种名和员工的个数，并且按员工个数降序</p>
-<p>SELECT job_title,COUNT(<em>)<br>FROM employees e,jobs j<br>WHERE e.<code>job_id</code>=j.<code>job_id</code><br>GROUP BY job_title<br>ORDER BY COUNT(</em>) DESC;  </p>
-<p>二）非等值连接</p>
-<p>案例1：查询员工的工资和工资级别</p>
-<p>SELECT salary,grade_level<br>FROM employees e,job_grades g<br>WHERE salary BETWEEN g.<code>lowest_sal</code> AND g.<code>highest_sal</code><br>AND g.<code>grade_level</code>=’A’;</p>
-<p>select salary,employee_id from employees;<br>select * from job_grades;<br>CREATE TABLE job_grades<br>(grade_level VARCHAR(3),<br> lowest_sal  int,<br> highest_sal int);</p>
-<p>INSERT INTO job_grades<br>VALUES (‘A’, 1000, 2999);</p>
-<p>INSERT INTO job_grades<br>VALUES (‘B’, 3000, 5999);</p>
-<p>INSERT INTO job_grades<br>VALUES(‘C’, 6000, 9999);</p>
-<p>INSERT INTO job_grades<br>VALUES(‘D’, 10000, 14999);</p>
-<p>INSERT INTO job_grades<br>VALUES(‘E’, 15000, 24999);</p>
-<p>INSERT INTO job_grades<br>VALUES(‘F’, 25000, 40000);</p>
-<p>三）自连接</p>
-<p>案例：查询 员工名和上级的名称</p>
-<p>SELECT e.employee_id,e.last_name,m.employee_id,m.last_name<br>FROM employees e,employees m<br>WHERE e.<code>manager_id</code>=m.<code>employee_id</code>;  </p>
-<h5 id="SQL99语法"><a href="#SQL99语法" class="headerlink" title="SQL99语法"></a>SQL99语法</h5><p>一、内连接<br>语法：</p>
-<p>SELECT 查询列表<br>FROM 表名1 别名<br>【INNER】 JOIN  表名2 别名<br>ON 连接条件<br>WHERE 筛选条件<br>GROUP BY 分组列表<br>HAVING 分组后筛选<br>ORDER BY 排序列表;</p>
-<p>SQL92和SQL99的区别：</p>
-<pre><code>SQL99，使用JOIN关键字代替了之前的逗号，并且将连接条件和筛选条件进行了分离，提高阅读性！！！  </code></pre><p>一）等值连接<br>①简单连接<br>案例：查询员工名和部门名</p>
-<p>SELECT last_name,department_name<br>FROM departments d<br> JOIN  employees e<br>ON e.department_id =d.department_id;</p>
-<p>②添加筛选条件<br>案例1：查询部门编号&gt;100的部门名和所在的城市名<br>SELECT department_name,city<br>FROM departments d<br>JOIN locations l<br>ON d.<code>location_id</code> = l.<code>location_id</code><br>WHERE d.<code>department_id</code>&gt;100;</p>
-<p>③添加分组+筛选<br>案例1：查询每个城市的部门个数</p>
-<p>SELECT COUNT(*) 部门个数,l.<code>city</code><br>FROM departments d<br>JOIN locations l<br>ON d.<code>location_id</code>=l.<code>location_id</code><br>GROUP BY l.<code>city</code>;</p>
-<p>④添加分组+筛选+排序<br>案例1：查询部门中员工个数&gt;10的部门名，并按员工个数降序</p>
-<p>SELECT COUNT(*) 员工个数,d.department_name<br>FROM employees e<br>JOIN departments d<br>ON e.<code>department_id</code>=d.<code>department_id</code><br>GROUP BY d.<code>department_id</code><br>HAVING 员工个数&gt;10<br>ORDER BY 员工个数 DESC;  </p>
-<p>二）非等值连接</p>
-<p>案例：查询部门编号在10-90之间的员工的工资级别，并按级别进行分组<br>SELECT * FROM sal_grade;</p>
-<p>SELECT COUNT(*) 个数,grade<br>FROM employees e<br>JOIN sal_grade g<br>ON e.<code>salary</code> BETWEEN g.<code>min_salary</code> AND g.<code>max_salary</code><br>WHERE e.<code>department_id</code> BETWEEN 10 AND 90<br>GROUP BY g.grade;  </p>
-<p>三）自连接</p>
-<p>案例：查询员工名和对应的领导名</p>
-<p>SELECT e.<code>last_name</code>,m.<code>last_name</code><br>FROM employees e<br>JOIN employees m<br>ON e.<code>manager_id</code>=m.<code>employee_id</code>;  </p>
-<p>二、外连接</p>
-<p>说明：查询结果为主表中所有的记录，如果从表有匹配项，则显示匹配项；如果从表没有匹配项，则显示null</p>
-<p>应用场景：一般用于查询主表中有但从表没有的记录</p>
-<p>特点：</p>
-<p>1、外连接分主从表，两表的顺序不能任意调换<br>2、左连接的话，left join左边为主表<br>   右连接的话，right join右边为主表</p>
-<p>语法：</p>
-<p>select 查询列表<br>from 表1 别名<br>left|right|full 【outer】 join 表2 别名<br>on 连接条件<br>where 筛选条件;</p>
-<p>USE girls;<br>案例1：查询所有女神记录，以及对应的男神名，如果没有对应的男神，则显示为null</p>
-<p>左连接<br>SELECT b.<em>,bo.</em><br>FROM beauty b<br>LEFT JOIN boys bo ON b.<code>boyfriend_id</code> = bo.<code>id</code>;</p>
-<p>右连接<br>SELECT b.<em>,bo.</em><br>FROM boys bo<br>RIGHT JOIN  beauty b ON b.<code>boyfriend_id</code> = bo.<code>id</code>;</p>
-<p>案例2：查哪个女神没有男朋友</p>
-<p>左连接<br>SELECT b.<code>name</code><br>FROM beauty b<br>LEFT JOIN boys bo ON b.<code>boyfriend_id</code> = bo.<code>id</code><br>WHERE bo.<code>id</code>  IS NULL;</p>
-<p>右连接<br>SELECT b.<em>,bo.</em><br>FROM boys bo<br>RIGHT JOIN  beauty b ON b.<code>boyfriend_id</code> = bo.<code>id</code><br>WHERE bo.<code>id</code>  IS NULL;</p>
-<p>案例3：查询哪个部门没有员工，并显示其部门编号和部门名</p>
-<p>SELECT d.<code>department_id</code> , d.<code>department_name</code><br>FROM departments d<br>LEFT JOIN employees e ON d.<code>department_id</code> = e.<code>department_id</code><br>WHERE e.<code>employee_id</code> IS NULL;</p>
+Process finished with exit code <span class="number">0</span></code></pre>
+<h3 id="线程池原理分析"><a href="#线程池原理分析" class="headerlink" title="线程池原理分析"></a>线程池原理分析</h3><p>ThreadPoolExecutor是线程池的真正实现，它通过构造方法的一系列参数，来构成不同配置的线程池。</p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> ExecutorService <span class="title">newFixedThreadPool</span><span class="params">(<span class="keyword">int</span> nThreads)</span> </span>{
+        <span class="keyword">return</span> <span class="keyword">new</span> ThreadPoolExecutor(nThreads, nThreads,
+                                      <span class="number">0L</span>, TimeUnit.MILLISECONDS,
+                                      <span class="keyword">new</span> LinkedBlockingQueue&lt;Runnable&gt;());
+    }</code></pre>
+<p>ThreadPoolExecutor的构造方法：  </p>
+<pre><code class="java">ThreadPoolExecutor(<span class="keyword">int</span> corePoolSize,<span class="comment">//核心线程数量。线程池刚创建的时候，其中并没有创建任何线程，而是等任务来才去创建线程</span>
+                    <span class="keyword">int</span> maximumPoolSize,<span class="comment">//最大线程数</span>
+                    <span class="keyword">long</span> keepAliveTime,<span class="comment">//超出核心线程数量意外的线程存活时间</span>
+                    TimeUnit unit,<span class="comment">//存活时间单位</span>
+                    BlockingQueue&lt;Runnable&gt; workQueue,<span class="comment">//保存执行任务的队列</span>
+                    ThreadFactory threadFactory,<span class="comment">//创建线程使用的工厂</span>
+                    RejectedExecutionHandler handler)<span class="comment">//当任务无法处理的时候的处理方式</span></code></pre>
+<p>线程池的执行流程原理：  </p>
+<p><img src="/2020/07/20/%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0/threadpool.png" alt="Alt text"><br>1）当提交一个新任务到线程池时，线程池判断corePoolSize线程池是否都在执行任务，如果有空闲线程，则创建一个新的工作线程来执行任务，直到当前线程数等于corePoolSize；</p>
+<p>2）如果当前线程数为corePoolSize，继续提交的任务被保存到阻塞队列中，等待被执行；</p>
+<p>3）如果阻塞队列满了，那就创建新的线程执行当前任务，直到线程池中的线程数达到maxPoolSize，这时再有任务来，由饱和策略来处理提交的任务</p>
+<p>我们进入execute方法源码：  </p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">(Runnable command)</span> </span>{
+        <span class="keyword">if</span> (command == <span class="keyword">null</span>)   <span class="comment">//需要执行的任务command为空，抛空指针异常</span>
+            <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();
+        <span class="comment">/*</span>
+<span class="comment">   *执行的流程实际上分为三步</span>
+<span class="comment">   *1、如果运行的线程小于corePoolSize，以用户给定的Runable对象新开一个线程去执行</span>
+<span class="comment">   *    并且执行addWorker方法会以原子性操作去检查runState和workerCount，以防止当返回false的</span>
+<span class="comment">   *    时候添加了不应该添加的线程</span>
+<span class="comment">   *2、 如果任务能够成功添加到队列当中，我们仍需要对添加的线程进行双重检查，有可能添加的线程在前</span>
+<span class="comment">   *    一次检查时已经死亡，又或者在进入该方法的时候线程池关闭了。所以我们需要复查状态，并有有必</span>
+<span class="comment">   *    要的话需要在停止时回滚入列操作，或者在没有线程的时候新开一个线程</span>
+<span class="comment">   *3、如果任务无法入列，那我们需要尝试新增一个线程，如果新建线程失败了，我们就知道线程可能关闭了</span>
+<span class="comment">   *    或者饱和了，就需要拒绝这个任务</span>
+<span class="comment">   *</span>
+<span class="comment">   */</span>
+         <span class="comment">//获取线程池的控制状态</span>
+        <span class="keyword">int</span> c = ctl.get();
+        <span class="comment">//工作线程数小于核心线程的话</span>
+        <span class="keyword">if</span> (workerCountOf(c) &lt; corePoolSize) {
+         <span class="comment">////添加任务到worker集合当中</span>
+            <span class="keyword">if</span> (addWorker(command, <span class="keyword">true</span>))
+                <span class="keyword">return</span>;
+            <span class="comment">//失败的话再次获取线程池的控制状态</span>
+            c = ctl.get();<span class="comment">//ctl中高三位存储运行状态，低29位存储数量</span>
+        }
+         <span class="comment">/*</span>
+<span class="comment">   *判断线程池是否正处于RUNNING状态</span>
+<span class="comment">   *是的话添加Runnable对象到workQueue队列当中</span>
+<span class="comment">   */</span>
+        <span class="keyword">if</span> (isRunning(c) &amp;&amp; workQueue.offer(command)) {
+           <span class="comment">//再次获取线程池的状态</span>
+            <span class="keyword">int</span> recheck = ctl.get();
+             <span class="comment">//再次检查状态</span>
+           <span class="comment">//线程池不处于RUNNING状态，将任务从workQueue队列中移除</span>
+            <span class="keyword">if</span> (! isRunning(recheck) &amp;&amp; remove(command))
+                reject(command);
+            <span class="keyword">else</span> <span class="keyword">if</span> (workerCountOf(recheck) == <span class="number">0</span>)
+                addWorker(<span class="keyword">null</span>, <span class="keyword">false</span>);
+        }
+        <span class="comment">//加入阻塞队列失败，则尝试以线程池最大线程数新开线程去执行该任务</span>
+        <span class="keyword">else</span> <span class="keyword">if</span> (!addWorker(command, <span class="keyword">false</span>))
+             <span class="comment">//执行失败则拒绝任务，饱和策略</span>
+            reject(command);
+    }</code></pre>
+<p>ctl是主要的控制状态，是一个复合类型的变量，其中包括了两个概念。<br>workerCount：表示有效的线程数目<br>runState：线程池里线程的运行状态    </p>
+<p>上面源码的大致流程就是：<br>1、首先判断任务是否为空，空则抛出空指针异常<br>2、不为空则获取线程池控制状态，判断小于corePoolSize，添加到worker集合当中执行，如成功，则返回。失败的话再接着获取线程池控制状态，因为只有状态变了才会失败，所以重新获取<br>3、判断线程池是否处于运行状态，是的话则添加command到阻塞队列，加入时也会再次获取状态并且检测状态是否不处于运行状态，不处于的话则将command从阻塞队列移除，并且拒绝任务<br>4、如果线程池里没有了线程，则创建新的线程去执行获取阻塞队列的任务执行<br>5、如果以上都没执行成功，则需要开启最大线程池里的线程来执行任务，失败的话就丢弃</p>
+<p>从上面的源码可以看出，addWorker方法出现频率高，是重要的组成部分。  </p>
+<pre><code class="java"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">addWorker</span><span class="params">(Runnable firstTask, <span class="keyword">boolean</span> core)</span> </span>{
+        retry:<span class="comment">//外部循环标记</span>
+        <span class="keyword">for</span> (;;) {
+        <span class="comment">//获取线程池控制状态</span>
+            <span class="keyword">int</span> c = ctl.get();
+            <span class="comment">//获取runState</span>
+            <span class="keyword">int</span> rs = runStateOf(c);
+
+            <span class="comment">// Check if queue empty only if necessary.</span>
+            <span class="keyword">if</span> (rs &gt;= SHUTDOWN &amp;&amp;
+                ! (rs == SHUTDOWN &amp;&amp;
+                   firstTask == <span class="keyword">null</span> &amp;&amp;
+                   ! workQueue.isEmpty()))
+                <span class="keyword">return</span> <span class="keyword">false</span>;
+
+            <span class="keyword">for</span> (;;) {
+            <span class="comment">//获取线程池的workerCount数量</span>
+                <span class="keyword">int</span> wc = workerCountOf(c);
+                <span class="comment">//如果workerCount超出最大值或者大于corePoolSize/maximumPoolSize</span>
+           <span class="comment">//返回false</span>
+                <span class="keyword">if</span> (wc &gt;= CAPACITY ||
+                    wc &gt;= (core ? corePoolSize : maximumPoolSize))
+                    <span class="keyword">return</span> <span class="keyword">false</span>;
+                    <span class="comment">//通过CAS操作，使workerCount数量+1，成功则跳出循环，回到retry标记</span>
+                <span class="keyword">if</span> (compareAndIncrementWorkerCount(c))
+                    <span class="keyword">break</span> retry;
+                    <span class="comment">//CAS操作失败，再次获取线程池的控制状态</span>
+                c = ctl.get();  <span class="comment">// Re-read ctl</span>
+                <span class="keyword">if</span> (runStateOf(c) != rs)
+                    <span class="keyword">continue</span> retry;
+                <span class="comment">// else CAS failed due to workerCount change; retry inner loop</span>
+            }
+        }
+<span class="comment">//通过以上循环，能执行到这是workerCount成功+1了</span>
+        <span class="keyword">boolean</span> workerStarted = <span class="keyword">false</span>;
+        <span class="keyword">boolean</span> workerAdded = <span class="keyword">false</span>;
+        Worker w = <span class="keyword">null</span>;
+        <span class="keyword">try</span> {
+        <span class="comment">//初始化一个当前Runnable对象的worker对象</span>
+            w = <span class="keyword">new</span> Worker(firstTask);
+             <span class="comment">//获取该worker对应的线程</span>
+            <span class="keyword">final</span> Thread t = w.thread;
+            <span class="comment">//如果线程不为null</span>
+            <span class="keyword">if</span> (t != <span class="keyword">null</span>) {
+                <span class="comment">//初始线程池的锁，重入锁避免并发问题</span>
+                <span class="keyword">final</span> ReentrantLock mainLock = <span class="keyword">this</span>.mainLock;
+                mainLock.lock();
+                <span class="keyword">try</span> {
+                    <span class="comment">// Recheck while holding lock.</span>
+                    <span class="comment">// Back out on ThreadFactory failure or if</span>
+                    <span class="comment">// shut down before lock acquired.</span>
+                    <span class="keyword">int</span> rs = runStateOf(ctl.get());
+ <span class="comment">//当runState小于SHUTDOWN或者runState等于SHUTDOWN并且firstTask为null</span>
+                    <span class="keyword">if</span> (rs &lt; SHUTDOWN ||
+                        (rs == SHUTDOWN &amp;&amp; firstTask == <span class="keyword">null</span>)) {
+                        <span class="keyword">if</span> (t.isAlive()) <span class="comment">// precheck that t is startable</span>
+                            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalThreadStateException();
+<span class="comment">//private final HashSet&lt;Worker&gt; workers = new HashSet&lt;Worker&gt;();</span>
+                        workers.add(w);
+                        <span class="keyword">int</span> s = workers.size();
+                        <span class="keyword">if</span> (s &gt; largestPoolSize)
+                            largestPoolSize = s;
+                        workerAdded = <span class="keyword">true</span>;
+                    }
+                } <span class="keyword">finally</span> {
+                    mainLock.unlock();
+                }
+                <span class="keyword">if</span> (workerAdded) {
+                    t.start();
+                    workerStarted = <span class="keyword">true</span>;
+                }
+            }
+        } <span class="keyword">finally</span> {
+            <span class="keyword">if</span> (! workerStarted)
+                addWorkerFailed(w);
+        }
+        <span class="keyword">return</span> workerStarted;
+    }</code></pre>
+<p>上面源码大致流程：<br>1、获取线程池的控制状态，进行判断，不符合则返回false，符合则下一步<br>2、死循环，判断workerCount是否大于上限，或者大于corePoolSize/maximumPoolSize，没有的话则对workerCount+1操作，<br>3、如果不符合上述判断或+1操作失败，再次获取线程池的控制状态，获取runState与刚开始获取的runState相比，不一致则跳出内层循环继续外层循环，否则继续内层循环<br>4、+1操作成功后，使用重入锁ReentrantLock来保证往workers当中添加worker实例，添加成功就启动该实例。  </p>
+<p>RejectedExecutionHandler（饱和策略）：当队列和线程池都满了，说明线程池处于饱和状态，那么必须采取一种策略处理提交的新任务。这个策略默认情况下是AbortPolicy，表示无法处理新任务时抛出异常。</p>
+<pre><code class="java"><span class="function"><span class="keyword">final</span> <span class="keyword">void</span> <span class="title">reject</span><span class="params">(Runnable command)</span> </span>{
+        handler.rejectedExecution(command, <span class="keyword">this</span>);
+        <span class="comment">//AbortPolicy：不处理，直接抛出异常。</span>
+        <span class="comment">//CallerRunsPolicy：若线程池还没关闭，调用当前所在线程来运行任务，r.run()执行。</span>
+        <span class="comment">//DiscardOldestPolicy：LRU策略，丢弃队列里最近最久不使用的一个任务，并执行当前任务。</span>
+        <span class="comment">//DiscardPolicy：不处理，丢弃掉，不抛出异常。</span>
+
+    }</code></pre>
+<h3 id="线程池的监控"><a href="#线程池的监控" class="headerlink" title="线程池的监控"></a>线程池的监控</h3><p>taskCount：线程池需要执行的任务数量。<br>completedTaskCount：线程池在运行过程中已完成的任务数量，小于或等于taskCount。<br>largestPoolSize：线程池里曾经创建过的最大线程数量。通过这个数据可以知道线程池是<br>否曾经满过。如该数值等于线程池的最大大小，则表示线程池曾经满过。<br>getPoolSize：线程池的线程数量。如果线程池不销毁的话，线程池里的线程不会自动销<br>毁，所以这个大小只增不减。<br>getActiveCount：获取活动的线程数。  </p>
+<p>也可以通过扩展线程池进行监控。可以通过继承线程池来自定义线程池，重写线程池的beforeExecute、afterExecute和terminated方法，也可以在任务执行前、执行后和线程池关闭前执行一些代码来进行监控。例如，监控任务的平均执行时间、最大执行时间和最小执行时间等，这几个方法在线程池里是空方法   </p>
+<h3 id="带返回值的线程处理"><a href="#带返回值的线程处理" class="headerlink" title="带返回值的线程处理"></a>带返回值的线程处理</h3><p>(1)Callable能接受一个泛型，然后在call方法中返回一个这个类型的值。而Runnable的run方法没有返回值<br>(2)Callable的call方法可以抛出异常，而Runnable的run方法不会抛出异常。  </p>
+<p>所以返回值的任务必须实现Callable接口。<br>执行Callable任务后，可以获取一个Future的对象，在该对象上调用get就可以获取到Callable任务返回的Object了。  </p>
+<p>Future就是对于具体的Runnable或者Callable任务的执行结果进行取消、查询是否完成、获取结果。必要时可以通过get方法获取执行结果，该方法会阻塞直到任务返回结果。</p>
+<p>但是Future只是一个接口，所以是无法直接用来创建对象使用的，因此就有了FutureTask。</p>
+<p>演示简单代码：  </p>
+<pre><code class="java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CallableFutureDemo</span> <span class="keyword">implements</span> <span class="title">Callable</span>&lt;<span class="title">String</span>&gt; </span>{
+    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ExecutionException, InterruptedException </span>{
+        CallableFutureDemo callableFutureDemo = <span class="keyword">new</span> CallableFutureDemo();
+<span class="comment">//        FutureTask futureTask = new FutureTask(callableFutureDemo);</span>
+<span class="comment">//        new Thread(futureTask).start();</span>
+        ExecutorService executorService = Executors.newFixedThreadPool(<span class="number">1</span>);
+        FutureTask futureTask = (FutureTask) executorService.submit(callableFutureDemo);
+        System.out.println(futureTask.get());
+        executorService.shutdown();
+    }
+
+    <span class="meta">@Override</span>
+    <span class="function"><span class="keyword">public</span> String <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>{
+        System.out.println(<span class="string">"Hello "</span>);
+        Thread.sleep(<span class="number">3000</span>);
+        <span class="keyword">return</span> <span class="string">"Stephen"</span>;
+    }
+}
+
+
+输出：  
+Hello 
+Stephen
+
+Process finished with exit code <span class="number">0</span></code></pre>
+<p>Callable是一个函数接口  ,只有一个抽象方法，符合lamda表达式</p>
+<pre><code class="java"><span class="meta">@FunctionalInterface</span>
+<span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Callable</span>&lt;<span class="title">V</span>&gt; </span>{
+    <span class="comment">/**</span>
+<span class="comment">     * Computes a result, or throws an exception if unable to do so.</span>
+<span class="comment">     *</span>
+<span class="comment">     * <span class="doctag">@return</span> computed result</span>
+<span class="comment">     * <span class="doctag">@throws</span> Exception if unable to compute a result</span>
+<span class="comment">     */</span>
+    <span class="function">V <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>;
+}</code></pre>
+<p>FutureTask类得关系图：<br><img src="/2020/07/20/%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0/threadpool01.png" alt="Alt text"><br>Futrue表示了一个任务生命周期，里面提供了一些方法  </p>
+<pre><code class="java"><span class="function"><span class="keyword">boolean</span> <span class="title">cancel</span><span class="params">(<span class="keyword">boolean</span> mayInterruptIfRunning)</span></span>;
+<span class="function"><span class="keyword">boolean</span> <span class="title">isCancelled</span><span class="params">()</span></span>;
+<span class="function"><span class="keyword">boolean</span> <span class="title">isDone</span><span class="params">()</span></span>;
+<span class="function">V <span class="title">get</span><span class="params">()</span> <span class="keyword">throws</span> InterruptedException, ExecutionException</span>;
+<span class="function">V <span class="title">get</span><span class="params">(<span class="keyword">long</span> timeout, TimeUnit unit)</span></span>
+<span class="function">        <span class="keyword">throws</span> InterruptedException, ExecutionException, TimeoutException</span>;</code></pre>
+<p>上诉例子中线程启动，会执行FutureTask里面的run方法。</p>
+<pre><code class="java"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>{
+        <span class="keyword">if</span> (state != NEW ||
+            !UNSAFE.compareAndSwapObject(<span class="keyword">this</span>, runnerOffset,
+                                         <span class="keyword">null</span>, Thread.currentThread()))
+            <span class="keyword">return</span>;
+        <span class="keyword">try</span> {
+            <span class="comment">//拿到对象实例</span>
+            Callable&lt;V&gt; c = callable;
+            <span class="keyword">if</span> (c != <span class="keyword">null</span> &amp;&amp; state == NEW) {
+                V result;
+                <span class="keyword">boolean</span> ran;
+                <span class="keyword">try</span> {
+                    result = c.call();
+                    ran = <span class="keyword">true</span>;
+                } <span class="keyword">catch</span> (Throwable ex) {
+                    result = <span class="keyword">null</span>;
+                    ran = <span class="keyword">false</span>;
+                    setException(ex);
+                }
+                <span class="keyword">if</span> (ran)
+                    set(result);
+            }
+        } <span class="keyword">finally</span> {
+            <span class="comment">// runner must be non-null until state is settled to</span>
+            <span class="comment">// prevent concurrent calls to run()</span>
+            runner = <span class="keyword">null</span>;
+            <span class="comment">// state must be re-read after nulling runner to prevent</span>
+            <span class="comment">// leaked interrupts</span>
+            <span class="keyword">int</span> s = state;
+            <span class="keyword">if</span> (s &gt;= INTERRUPTING)
+                handlePossibleCancellationInterrupt(s);
+        }
+    }</code></pre>
+<p>get方法里面通过s = awaitDone(false, 0L);方法去实现阻塞。会将阻塞的线程加入到队列（单向链表）中。</p>
 
     
 
@@ -473,7 +598,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://chengqijie.gitee.io/2020/06/18/MySQL入门系列二/" title="MySQL入门系列二" target="_blank">https://chengqijie.gitee.io/2020/06/18/MySQL入门系列二/</a>
+          <a href="https://chengqijie.gitee.io/2020/07/20/线程调度之线程池/" title="线程调度之线程池" target="_blank">https://chengqijie.gitee.io/2020/07/20/线程调度之线程池/</a>
         </li>
         
         <li>
@@ -495,7 +620,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库MySQL</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">并发编程</a>
         		</li>
       		
 		</ul>
@@ -507,7 +632,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据库MySQL//" class="article-tag-list-link color4">数据库MySQL</a>
+        			<a href="/categories/并发编程//" class="article-tag-list-link color5">并发编程</a>
         		</li>
       		
 		</ul>
@@ -562,7 +687,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/06/18/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%BA%8C/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/07/20/%E7%BA%BF%E7%A8%8B%E8%B0%83%E5%BA%A6%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -577,18 +702,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2020/06/19/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%AE%97%E6%B3%95-%E9%93%BE%E8%A1%A8/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          数据结构与算法-链表
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/06/18/MySQL%E5%85%A5%E9%97%A8%E7%B3%BB%E5%88%97%E4%B8%80/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">MySQL入门系列一</div>
+    <a href="/2020/07/20/%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95-%E7%AC%AC%E4%BA%8C%E9%83%A8/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">排序算法-第二部</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -615,7 +731,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#常见函数介绍"><span class="toc-number">1.</span> <span class="toc-text">常见函数介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#字符函数"><span class="toc-number">1.1.</span> <span class="toc-text">字符函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#数学函数"><span class="toc-number">1.2.</span> <span class="toc-text">数学函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#日期函数"><span class="toc-number">1.3.</span> <span class="toc-text">日期函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#流程控制函数"><span class="toc-number">1.4.</span> <span class="toc-text">流程控制函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分组函数"><span class="toc-number">1.5.</span> <span class="toc-text">分组函数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分组查询"><span class="toc-number">1.6.</span> <span class="toc-text">分组查询</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#案例"><span class="toc-number">1.6.1.</span> <span class="toc-text">案例</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#连接查询"><span class="toc-number">1.7.</span> <span class="toc-text">连接查询</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#sql92标准"><span class="toc-number">1.7.1.</span> <span class="toc-text">sql92标准</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#SQL99语法"><span class="toc-number">1.7.2.</span> <span class="toc-text">SQL99语法</span></a></li></ol></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#线程池"><span class="toc-number">1.</span> <span class="toc-text">线程池</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是线程池？"><span class="toc-number">1.1.</span> <span class="toc-text">什么是线程池？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程池的好处"><span class="toc-number">1.2.</span> <span class="toc-text">线程池的好处</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Java提供的线程池"><span class="toc-number">1.3.</span> <span class="toc-text">Java提供的线程池</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程池原理分析"><span class="toc-number">1.4.</span> <span class="toc-text">线程池原理分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#线程池的监控"><span class="toc-number">1.5.</span> <span class="toc-text">线程池的监控</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#带返回值的线程处理"><span class="toc-number">1.6.</span> <span class="toc-text">带返回值的线程处理</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -639,9 +755,9 @@
     <script src="/lib/giteement.browser.js"></script>
   
   <script>
-  <!-- id: "MySQL入门系列二" -->
+  <!-- id: "线程调度之线程池" -->
   var giteement = new Giteement({
-    id: '20200618235550',
+    id: '20200720161050',
     owner: 'chengqijie',
     repo: 'chengqijie',
     backcall_uri: 'https://chengqijie.gitee.io',
