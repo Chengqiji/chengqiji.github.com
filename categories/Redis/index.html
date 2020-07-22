@@ -5,89 +5,24 @@
   
   
   
-	<meta name="keywords" content="hashmap,博客">
-	
+	<meta name="keywords" content="博客">
+  
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
-  <title>哈希表的前世今生 | Stephen Cheng`s blog</title>
+  <title>Category: Redis | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
-  <meta property="og:type" content="article">
-<meta property="og:title" content="哈希表的前世今生">
-<meta property="og:url" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Stephen Cheng&#96;s blog">
+<meta property="og:url" content="https://chengqijie.gitee.io/categories/Redis/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://images.unsplash.com/photo-1591792111137-5b8219d5fad6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted0.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted1.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted2.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted3.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted4.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted5.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted7.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted8.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted9.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted12.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted13.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted14.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted15.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted16.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted17.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted18.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted19.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted20.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted21.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted22.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted23.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted24.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted25.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted26.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted27.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted28.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted29.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted30.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted31.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted32.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted33.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted34.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted35.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted36.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted37.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted38.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted39.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted40.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted41.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted42.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted43.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted44.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted45.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted46.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted47.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted48.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted49.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted50.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted51.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted52.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted53.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted54.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted55.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted56.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted57.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted58.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted59.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted61.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted62.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted63.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted64.png">
-<meta property="article:published_time" content="2020-05-14T10:56:30.000Z">
-<meta property="article:modified_time" content="2020-06-16T01:07:13.820Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="hashmap">
+<meta property="article:tag" content="博客">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1591792111137-5b8219d5fad6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -273,565 +208,76 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-哈希表的前世今生" class="article article-type-post " itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-	  
-   
-   
-   <center><p>
+            
   
-    <h1 class="article-title_code_ant" itemprop="name">
-      哈希表的前世今生
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2020" class="archive-year">2020</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      	<div class="article-meta">
+	      	
+<a href="/2020/07/22/Redis%E5%9F%BA%E7%A1%80/" class="archive-article-date">
+        <time datetime="2020-07-22T13:55:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-22</time>
+</a>
+
+        </div>
+    	 
+  
+    <h1 itemprop="name">
+	
+	  <a class="archive-article-title" href="/2020/07/22/Redis%E5%9F%BA%E7%A1%80/" target="_blank">Redis基础</a>
+  
     </h1>
   
 
-</p></center>
-   
-  
-  
-        
-        <span id="busuanzi_container_page_pv" style='display:none' class="archive-article-date">
-              <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
-        </span>
 
-<a href="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" class="archive-article-date">
-        <time datetime="2020-05-14T10:56:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-14</time>
-</a>
-
-  
-  
-    
-<div style="margin-top:10px;">
-  <span class="post-time">
-    <span class="post-meta-item-icon">
-      <!-- fonts.scss -->
-      <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
-      <i class="icon-statistics"></i>
-      <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">8.4k字</span>
-    </span>
-  </span>
-
-  <span class="post-time">
-    &nbsp; | &nbsp;
-    <span class="post-meta-item-icon">
-      <i class="icon-book icon"></i>
-      <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">31分</span>
-    </span>
-  </span>
-</div>
-
-
-  
-  </header>
-  
-  <div class="article-entry" itemprop="articleBody">
-	
-    <img src="https://images.unsplash.com/photo-1591792111137-5b8219d5fad6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" style="width:100%">  
-<a id="more"></a>  
-
-
-<h3 id="主要内容："><a href="#主要内容：" class="headerlink" title="主要内容："></a><em>主要内容：</em></h3><p>（不足处会不断更新，还请谅解）</p>
-<ol>
-<li>开篇</li>
-<li>哈希表原理</li>
-<li>JDK7 HashMap</li>
-<li>JDK8 HashMap</li>
-<li>Hashtable</li>
-<li>JDK7 ConcurrentHashMap</li>
-<li>JDK8 ConcurrentHashMap</li>
-<li>最后的总结和交流<!--more-->
-</li>
-</ol>
-<hr>
-<h3 id="一、开篇"><a href="#一、开篇" class="headerlink" title="一、开篇"></a><em>一、开篇</em></h3><h4 id="问题1：哈希表的前世今生是什么"><a href="#问题1：哈希表的前世今生是什么" class="headerlink" title="问题1：哈希表的前世今生是什么"></a>问题1：哈希表的前世今生是什么</h4><p>&emsp;&emsp;哈希表（hashtable 散列表）是一种数据结构，查询、添加、删除效率非常快，时间复杂度可以达到O（1）。  </p>
-<p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted0.png" alt="upload successful"><br>&emsp;&emsp;Java的集合中给出了底层结构采用哈希表数据结构的实现类，按照时间顺序分别为：&emsp;第一代HashTable、&emsp;第二代HashMap、&emsp;第三代ConcurrentHashMap（concurrent并发）。相同点：底层结构都是哈希表，都是用来存储key-value映射，都实现了Map接口。  </p>
-<p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted1.png" alt="upload successful"><br>&emsp;&emsp;1) Hashtable 线程安全，但是效率太低，底层使用synchronized 同步方法，已不再使用。<br>&emsp;&emsp;2) HashMap 线程不安全，效率提升，适用单线程情况下。可以借助Collections.<br>synchronziedMap()保证线程安全，底层使用synchronized 同步代码块，效率比<br>Hashtable 高。<br>&emsp;&emsp;3) 在大量并发情况下如何提高集合的效率和安全呢？ ConcurrentHashMap：JDK7 底层采用Lock 锁，但是JDK8 的ConcurrentHashMap 不使用Lock 锁，而是使用了<br>CAS + synchronized 代码块锁。保证安全的同时，性能均也很高。  </p>
-<p>  <strong>注意：</strong><br>&emsp;&emsp; ConcurrentHashMap 推出后，HashMap 并未过时，适用不同场景。两者同时进行性能提高和结构完善。<br>&emsp;&emsp; 和三种线程同步技术的发展密切相关。<br>&emsp;&emsp; Hashtable 不可以null key-value，HashMap 可以，ConcurrentHashMap 不可以。  </p>
-<p>  <strong>重点：</strong>JavaSE 是Java 的技术基础，集合是JavaSE 的重点，HashMap 是集合的重点   <img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted2.png" alt="upload successful"><br>  <strong>难点：</strong>综合了数组、链表、红黑树等多种数据结构。其设计和实现充满着哲学、智慧的光芒<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted3.png" alt="upload successful"><br>  <strong>新点</strong>：HashMap 在7，8 中有较大变化；ConcurrentHashMap 是新一代并发集合类，在JDK7、JDK8 中也有很大的变化<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted4.png" alt="upload successful"><br>  <strong>综合点：</strong>如果你想和别人讨论一下这个知识点，单独这一个技能点就可以聊上1 小时，并且还可以辐射到其他集合类、数据结构、多线程等多个技能点。  </p>
-<h4 id="问题2（若干子问题）："><a href="#问题2（若干子问题）：" class="headerlink" title="问题2（若干子问题）："></a>问题2（若干子问题）：</h4><ol>
-<li>哈希表的由来，它究竟解决了什么问题，为什么神奇？</li>
-<li>哈希表的原理（结构、添加步骤、查询步骤）</li>
-<li>JDK7 中HashMap 的关键点<br>&emsp;&emsp;1) 为什么要把hash 也放到Entity 中？<br>&emsp;&emsp;2) 第一步为什么还要多次散列，为什么这样实现？<br>&emsp;&emsp;3) 为什么求索引不使用h%length，而是使用h&amp;(length-1)？<br>&emsp;&emsp;4) 为什么主数组的长度必须是2 的幂？<br>&emsp;&emsp;5) 为什么加载因子选择0.75？<br>&emsp;&emsp;6) JDK7 的死循环问题（并不是死锁）？<br>&emsp;&emsp;7) 多线程put 的时候为什么可能导致元素丢失？  </li>
-<li>JDK8 中HashMap 的变化</li>
-<li>JDK8 HashMap 为什么是当链表长度&gt;=8 后变成红黑树，而不是其他值？</li>
-<li>Hashtable 和HashMap 的不同之处</li>
-<li>Hashtable 的缺点</li>
-<li>为什么Hashtable 主数组默认长度是11，为何扩容2 倍还要+1？</li>
-<li>JDK7 ConcurrentHashMap 关键技能点</li>
-<li>JDK7 ConcurrentHashMap 通过无参构造方法创建对象的结果</li>
-<li>Unsafe 类是怎么回事？</li>
-<li>JDK7 ConcurrentHashMap 的缺点是什么？</li>
-<li>JDK8 中ConcurrentHashMap 变化</li>
-<li>JDK8 ConcurrentHashMap 怎么放弃Lock 使用synchronized了？</li>
-<li>JDK8 中ConcurrentHashMap 的sizeCtl 属性的作用   </li>
-</ol>
-<hr>
-<h3 id="二、哈希表的原理"><a href="#二、哈希表的原理" class="headerlink" title="二、哈希表的原理"></a><em>二、哈希表的原理</em></h3><h4 id="2-1-问题1：哈希表的由来，它究竟解决了什么问题，为什么神奇？"><a href="#2-1-问题1：哈希表的由来，它究竟解决了什么问题，为什么神奇？" class="headerlink" title="2.1 问题1：哈希表的由来，它究竟解决了什么问题，为什么神奇？"></a>2.1 问题1：哈希表的由来，它究竟解决了什么问题，为什么神奇？</h4><p><strong>如何解决数据查询、添加、删除等效率呢？此处以查询为例进行说明。</strong><br> 在无序数组中按照内容查找，效率低下，时间复杂度是O（n）<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted5.png" alt="upload successful"><br> 在有序数组中按照内容查找，可以使用折半查找，时间复杂度O（log2n）<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted7.png" alt="upload successful"><br> 在二叉平衡树中按照内容查找，时间复杂度O（log2n）<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted8.png" alt="upload successful"><br> 在数组中按照索引查找，不进行比较和计数，直接计算得到，效率最高，时间复杂<br>度O（1）<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted9.png" alt="upload successful"><br><strong>问题：按照内容查找，能否也不进行比较，而是通过计算得到地址，实现类似数组按照索引查询的高效率呢？O（1）</strong>  </p>
-<p>有！！！哈希表来实现</p> 
-前面查找方法共同特点：通过将关键字值与给定值比较，来确定位置。效率取决比较次数。理想的方法是：不需要比较，根据给定值能直接定位记录的存储位置。这样，需要在记录的存储位置与该记录的关键字之间建立一种确定的对应关系,使每个记录的关键字与一个存储位置相对应。  
-#### 2.2 问题2：哈希表的原理（结构、添加步骤、查询步骤）
-**1. 哈希表的结构和特点**  
- hashtable 也叫散列表  
- 特点：快很快神奇的快  
- 结构：结构有多种  
-&emsp;&emsp; 最流行、最容易理解：顺序表+链表  
-&emsp;&emsp; 主结构：顺序表  
-&emsp;&emsp; 每个顺序表的节点在单独引出一个链表 
-![upload successful](pasted10.png)  
-桶bucket ：每个元素后面可以拉一个链表，成为一个桶。  
-bucketIndex：桶索引。数组元素的索引。  
-**2. 哈希表是如何添加数据的**  
-1.计算哈希码(调用hashCode(),结果是一个int 值，整数的哈希码取自身即可)  
-2.计算在哈希表中的存储位置y=k(x)=x%11  
-x:哈希码k(x) 函数y：在哈希表中的存储位置（位置就是数组的索引）  
-3.存入哈希表  
- 情况1：一次添加成功  
- 情况2：多次添加成功（出现了冲突（碰撞collision），调用equals()和对应链表的元素进行比较，比较到最后，结果都是false，创建新节点，存储数据，并加入链表）  
- 情况3：不添加（出现了冲突，调用equals()和对应链表的元素进行比较， 经过一次或者多次比较后，结果是true，表明重复，不添加）  
-结论1：哈希表添加数据快（3 步即可，不考虑冲突）  
-结论2：唯一  
-结论3：无序 
-![upload successful](pasted11.png)   
-**3. 哈希表是如何查询数据的**  
-和添加数据的过程是相同的  
- 情况1：一次找到23 86 76  
- 情况2：多次找到67 56 78  
- 情况3：找不到100 200  
-结论：哈希表查询数据快    
-
-<hr>
-<h3 id="三、JDK7-HashMap"><a href="#三、JDK7-HashMap" class="headerlink" title="三、JDK7 HashMap"></a><em>三、JDK7 HashMap</em></h3><h4 id="3-1-问题3：JDK7-中HashMap-的关键点"><a href="#3-1-问题3：JDK7-中HashMap-的关键点" class="headerlink" title="3.1 问题3：JDK7 中HashMap 的关键点"></a>3.1 问题3：JDK7 中HashMap 的关键点</h4><p> JDK7 及之前，HashMap 底层是一个table 数组+链表的哈希表存储结构<br> 链表上每个节点的就是一个Entry，字段包括四部分<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted12.png" alt="upload successful"><br> 默认主数组长度16；<br> 主数组的长度可以直接指定，但最终长度会变为刚刚大于指定值的2 的幂。<br> 默认装填因子0.75（元素个数达到主数组长度75%时扩容）<br> 每次主数组扩容为原来的2倍<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted13.png" alt="upload successful"><br> 发生冲突，经过比较不存在相同key 的元素，要添加一个新的节点。不是加到链表最后，而是添加到链表最前面。<br> 发生冲突，经过比较存在相同key 的元素，使用新的value 替换旧的value，并返回旧的value。  </p>
-<h4 id="3-2-源码阅读"><a href="#3-2-源码阅读" class="headerlink" title="3.2 源码阅读"></a>3.2 源码阅读</h4><p> 如果key 是null，直接存入到索引是0 的桶中。不进行第一步和第二步操作。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(key == <span class="keyword">null</span>)  </span><br><span class="line">	<span class="keyword">return</span> putForNullKey(value);</span><br></pre></td></tr></table></figure>
-<p> 第一步计算哈希码，不仅调用了hashCode()，有进行了多次散列。目的在于key 不同，哈希码尽量不同，减少冲突。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted14.png" alt="upload successful"><br>极端情况下，对String 的哈希值的判断，采用JDK 内部的特殊算法计算。<br>了解即可。<br> 第二步，计算存储位置，使用了位运算来提高效率<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted15.png" alt="upload successful"><br> 第三步判断key 是否存在的条件是比较哈希码&amp;&amp; 内容。其实直接调用equals()即可，这个条件是为了提高效率。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted16.png" alt="upload successful"><br> 扩容的条件是：节点数量达到阈值&amp;&amp; 新元素的位置已经有节点<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted17.png" alt="upload successful"><br>尽量减少扩容的次数，因为扩容会导致原来的节点要重新散列到新数组的位置。如果能够预估到节点的数量，可以直接指定哈希表主数组的长度。  </p>
-<p> 真正的扩容是有transfer()实现的。扩容需要重新创建一个新的哈希表（主数组），原来的节点Entry 都要重新计算存储位置并添加到新哈希表中。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted18.png" alt="upload successful"><br> 发生冲突，经过比较不存在相同key 的元素，要添加一个新的节点。不是加到链表最后，而是添加到链表最前。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted19.png" alt="upload successful"></p>
-<h4 id="3-3-更多的细节问题"><a href="#3-3-更多的细节问题" class="headerlink" title="3.3 更多的细节问题"></a>3.3 更多的细节问题</h4><p> 问题3-1：为什么要把hash也放到Entity 中<br>–扩容时不用重新计算hash，省去第一步，直接使用来计算存储位置即可<br>–判断key 是否存在时，可以先判断hash，只是一个整数，效率高。Hash 不同，直接短路，提高效率。<br> 问题3-2：第一步为什么还要多次散列，为什么这样实现<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted20.png" alt="upload successful"><br>–目的：保证高低bit 位都能参与到Hash 的计算中，一句话就是为了减少hash 冲突的几率。保证在默认的加载因子下，每个链表的长度一般不会超过8。<br> 问题3-3：为什么求索引不使用h%length，而是使用h&amp;(length-1)<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted21.png" alt="upload successful"><br>–使用位运算可以提升效率。直接取模，如果h是负数，计算的索引会是负数。<br> 问题3-4：为什么主数组的长度必须是2 的幂；<br>–因为计算存储位置的公式：h&amp;(length-1)。如果主数组的长度必须是2 的幂，该表达式实现不了取模的效果。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted22.png" alt="upload successful"><br>保证length-1 的二进制的低x 位都是1，进行&amp;运算。因为0&amp;1=0，1&amp;1=1，可以让h 的低x 位值完整保存下来，正好作为余数，还不冲突。如果length 不是2 的幂，使用该表达式会导致不同数据产生相同哈希码，进而导致地址冲突。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted23.png" alt="upload successful"><br> 问题3-5：为什么加载因子选择0.75<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted24.png" alt="upload successful"><br>–通常，默认负载因子（0.75）在时间和空间成本之间提供了一个很好的权衡。较高的值会减少空间开销，但会增加查找成本。设置其初始容量时，应考虑映射中的预期条目数及其负载因子，以最大程度地减少重新哈希操作的数量。如果初始容量大于最大条目数除以负载因子，则不会发生任何哈希操作。<br> 问题3-6：JDK7 的死循环问题（并不是死锁）。<br>–这也是为什么JDK8 对HashMap 进行大手术的原因所在。问题出在HashMap 扩容时。扩容对用户是透明的，却是一切坑的原因。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted25.png" alt="upload successful"><br>因为JDK7 的新节点是添加到链表头部，导致重新散列后，链表的节点顺序会颠倒。如果是单线程情况下，这不算问题。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted26.png" alt="upload successful"><br>多线程扩容时，同时执行transfer 方法，可能扩容后形成循环列表。如果下步要查询<br>get()一个不存在的key，或者put 不存在的key，悲剧出现了——Infinite Loop。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted27.png" alt="upload successful"><br>参考：<a href="https://www.jianshu.com/p/e1c020d37c6a" target="_blank" rel="noopener">https://www.jianshu.com/p/e1c020d37c6a</a><br> 问题3-7 多线程put 的时候为什么可能导致元素丢失<br>–主要问题出在addEntry 方法的new Entry (hash, key, value, e)，如两个线程都同时<br>取得了e,则他们下一个元素都是e，然后赋值给table 元素时有一个成功有一个丢失。虽然HashMap 是线程不安全的，还是有人在多线程情况下用，其实是开发者自己的原因。有人把这个问题报给了Oracle，不过Oracle 起初不认为这是一个问题。因为HashMap 本来就不支持并发。要并发就用ConcurrentHashmap 或者使用Collections 类的synchronizedMap()方法来同步。别看Oracle 嘴硬，在JDK8 中还是进行了修补。  </p>
-<hr>
-<h3 id="四、JDK8-HashMap"><a href="#四、JDK8-HashMap" class="headerlink" title="四、JDK8 HashMap"></a><em>四、JDK8 HashMap</em></h3><h4 id="4-1-问题4：JDK8-中HashMap-的变化"><a href="#4-1-问题4：JDK8-中HashMap-的变化" class="headerlink" title="4.1 问题4：JDK8 中HashMap 的变化"></a>4.1 问题4：JDK8 中HashMap 的变化</h4><p> 结构变化：由数组+链表变成了数组+链表+红黑树。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted28.png" alt="upload successful"><br> 链表长度&gt;=8，转换为红黑树；链表长度减少为6，红黑树再变回链表。只有总的节点数量&gt;=64 的时候，才会有红黑树，否则直接进行主数组扩容。<br> 链表节点为Node，红黑树节点为TreeNode。Node 是TreeNode 的父类。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted29.png" alt="upload successful"><br> 添加到链表后面：JDK7 中新的节点是加到最前，JDK8 后新节点是加到最后<br>（也是避免死循环的一种解决方式）<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted30.png" alt="upload successful"><br> 主数组的创建不是构造方法中搞定，而是put 元素时通过resize()搞定。<br> 哈希表扩容后原来链表节点重新散列后不改变之前顺序，也不会形成循环链表注意：JDK8 HashMap 虽然针对JDK7 的缺点做了某些修改，但是仍旧是线程不安全的，并发情况下建议使用ConcurrentHashMap，或者使用Collections 加锁。  </p>
-<h4 id="4-2-问题5：为什么是当链表长度-gt-8-后变成红黑树，而不是其他值"><a href="#4-2-问题5：为什么是当链表长度-gt-8-后变成红黑树，而不是其他值" class="headerlink" title="4.2 问题5：为什么是当链表长度&gt;=8 后变成红黑树，而不是其他值"></a>4.2 问题5：为什么是当链表长度&gt;=8 后变成红黑树，而不是其他值</h4><p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted31.png" alt="upload successful"><br>因为泊松分布Poisson distribution（概率和数理统计内容）。在理想的随机hashCodes 下，容器中节点的频率遵循泊松分布，对于0.75 的默认调整阈值，泊松分布的概率质量函数中参数λ（事件发生的平均次数）的值约为0.5，尽管λ的值会因为load factor 值的调整而产生较大变化。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted32.png" alt="upload successful"><br>即链表中出现8 个节点的概率是非常低的，仅有0.00000006，所以不用担心产生大量红黑树导致结构复杂的问题  </p>
-<h4 id="4-3-源码阅读"><a href="#4-3-源码阅读" class="headerlink" title="4.3 源码阅读"></a>4.3 源码阅读</h4><p> 依旧要求主数组容量还是2的幂<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted33.png" alt="upload successful"><br>这是一个小巧但精妙的方法，这里通过异或的位运算将两个字节的n 打造成比cap 大但最接近2 的n 次幂的一个数值。例如：<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted34.png" alt="upload successful"><br> 计算哈希码的方法简单了<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted35.png" alt="upload successful"><br>JDK7 中，hash 计算的时候会对操作数进行右移操作，计算复杂，目的是将高位也参与运算，减少hash 碰撞；在JDK8 中，链表可以转变成红黑树，所以hash计算也变得简单。下面的图为JDK8 中的hash 计算和索引计算。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted36.png" alt="upload successful"><br> 添加数据的步骤：put()<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted37.png" alt="upload successful"><br>图片来自：<a href="https://blog.csdn.net/goosson/article/details/81029729" target="_blank" rel="noopener">https://blog.csdn.net/goosson/article/details/81029729</a>  </p>
-<pre><code class="java"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>{
-<span class="keyword">return</span> putVal(hash(key), key, value, <span class="keyword">false</span>, <span class="keyword">true</span>);
-}
-<span class="comment">// 第三个参数onlyIfAbsent 如果是true，那么只有在不存在该key 时或者value 是null 才会进行</span>
-<span class="comment">// put 操作，第四个参数evict 我们这里不关心</span>
-<span class="function"><span class="keyword">final</span> V <span class="title">putVal</span><span class="params">(<span class="keyword">int</span> hash, K key, V value, <span class="keyword">boolean</span> onlyIfAbsent, <span class="keyword">boolean</span> evict)</span> </span>{
-Node&lt;K, V&gt;[] tab;<span class="comment">//指向哈希表主数组的数组名</span>
-Node&lt;K, V&gt; p;<span class="comment">//链表</span>
-<span class="keyword">int</span> n, i; <span class="comment">//n 永远存放数组长度，i 表示key 在数组中的索引</span>
-<span class="comment">// 第一次put 值的时候，会触发下面的resize(),第一次resize 和后续的扩容有些不一样，</span>
-<span class="comment">// 因为这次是数组从null 初始化到默认的16 或自定义的初始容量</span>
-<span class="keyword">if</span> ((tab = table) == <span class="keyword">null</span> || (n = tab.length) == <span class="number">0</span>)
-n = (tab = resize()).length;
-<span class="comment">// 找到具体的数组下标，如此位置没有值，那么直接初始化一下Node 并放置在这个位置就可以了</span>
-<span class="keyword">if</span> ((p = tab[i = (n - <span class="number">1</span>) &amp; hash]) == <span class="keyword">null</span>)
-tab[i] = newNode(hash, key, value, <span class="keyword">null</span>);
-<span class="keyword">else</span> {<span class="comment">// 数组该位置有数据</span>
-Node&lt;K, V&gt; e;
-K k;
-<span class="comment">// 首先，判断该位置的第一个数据和要插入的数据，key 是不是"相等"，如果是，取出这个节点</span>
-<span class="keyword">if</span> (p.hash == hash &amp;&amp;
-((k = p.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))
-e = p;
-<span class="comment">// 如果该节点是代表红黑树的节点，调用红黑树的插值方法，本文不展开说红黑树</span>
-<span class="keyword">else</span> <span class="keyword">if</span> (p <span class="keyword">instanceof</span> TreeNode)
-e = ((TreeNode&lt;K, V&gt;) p).putTreeVal(<span class="keyword">this</span>, tab, hash, key, value);
-<span class="keyword">else</span> {
-<span class="comment">// 到这里，说明数组该位置上是一个链表</span>
-<span class="keyword">for</span> (<span class="keyword">int</span> binCount = <span class="number">0</span>; ; ++binCount) {
-<span class="comment">// 如果不存在相同key 的，插入到链表的最后面(Java7 是插入到链表的最前面)</span>
-<span class="keyword">if</span> ((e = p.next) == <span class="keyword">null</span>) {
-p.next = newNode(hash, key, value, <span class="keyword">null</span>);
-<span class="comment">// TREEIFY_THRESHOLD 为8，所以，如果新插入的值是链表中的第8 个</span>
-<span class="comment">// 会触发下面的treeifyBin，也就是将链表转换为红黑树</span>
-<span class="keyword">if</span> (binCount &gt;= TREEIFY_THRESHOLD - <span class="number">1</span>) <span class="comment">// -1 for 1st</span>
-treeifyBin(tab, hash);
-<span class="keyword">break</span>;
-}
-<span class="comment">// 如果在该链表中找到了"相等"的key(== 或equals)</span>
-<span class="keyword">if</span> (e.hash == hash &amp;&amp;
-((k = e.key) == key || (key != <span class="keyword">null</span> &amp;&amp; key.equals(k))))
-<span class="comment">// 此时break，那么e 为链表中[与要插入的新值的key "相等"]的node</span>
-<span class="keyword">break</span>;
-p = e;
-}
-}
-<span class="comment">// e!=null 说明存在旧值的key 与要插入的key"相等"</span>
-<span class="comment">// 对于我们分析的put 操作，下面这个if 其实就是进行"值覆盖"，然后返回旧值</span>
-<span class="keyword">if</span> (e != <span class="keyword">null</span>) {
-V oldValue = e.value;
-<span class="keyword">if</span> (!onlyIfAbsent || oldValue == <span class="keyword">null</span>)
-e.value = value;
-afterNodeAccess(e);
-<span class="keyword">return</span> oldValue;
-}
-}
-++modCount;
-<span class="comment">// 如果HashMap 由于新插入这个值导致size 已经超过了阈值，需要进行扩容</span>
-<span class="keyword">if</span> (++size &gt; threshold)
-resize();
-afterNodeInsertion(evict);
-<span class="keyword">return</span> <span class="keyword">null</span>;
-}</code></pre>
-<p> 主数组容量扩容为原来的二倍，原来元素的索引会有什么变化吗？<br>索引要么是原来的索引，要么是原来的索引+原来的数组容量。在JDK8 中，不进行存储位置的重新计算，而是判断应该在原位置还是新位置。判断条件为：<br>if ((e.hash &amp; oldCap) == 0) {//如果是原来的索引<br>} else{//如果是原来的索引+原来的数组容量<br>}  </p>
-<p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted38.png" alt="upload successful"><br> 扩容到底是怎么实现的<br>扩容后，原来的一个链表可能会变成两个链表。实现思路是定义四个指针，在对原来链表进行逐个重新散列的过程中<br> Node loHead,loTail 分别指向索引不变的新链表的首节点、尾节点<br> Node hiHead,hiTail 分别指向索引改变的新链表的首节点、尾节点<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted39.png" alt="upload successful"><br> 单链表变成红黑树是怎么实现的<br>简单来说，是先调用treeifyBin()方法，将单链表变成双向链表（但节点已经是红黑树的节点TreeNode），再将双向链表转换为红黑树。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted40.png" alt="upload successful"></p>
-<hr>
-<h3 id="五、简单来看一下Hashtable"><a href="#五、简单来看一下Hashtable" class="headerlink" title="五、简单来看一下Hashtable"></a><em>五、简单来看一下Hashtable</em></h3><p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted41.png" alt="upload successful"><br>Hashmap 类大致相当于Hashtable，只是它不同步并且允许空值。  </p>
-<h4 id="5-1-问题6：Hashtable-和HashMap-的不同之处"><a href="#5-1-问题6：Hashtable-和HashMap-的不同之处" class="headerlink" title="5.1 问题6：Hashtable 和HashMap 的不同之处"></a>5.1 问题6：Hashtable 和HashMap 的不同之处</h4><p> Hashtable 的方法是同步的<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted42.png" alt="upload successful"><br>父类是Dictionary<br> 主数组长度不要求是2 的幂<br> 默认长度11<br> Key 和value 都不能是null<br> 计算哈希值就是直接调用hashCode()<br> 计算存储位置就是使用%取模<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted43.png" alt="upload successful"><br> 每次扩容为原来容量的2 倍再+1<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted44.png" alt="upload successful"><br> 使用Enumeration 进行迭代，而不是使用Iterator（JDK1.2 才有）。  </p>
-<h4 id="5-2-问题7：为什么Hashtable-主数组默认长度是11，为何扩容2-倍还要-1"><a href="#5-2-问题7：为什么Hashtable-主数组默认长度是11，为何扩容2-倍还要-1" class="headerlink" title="5.2 问题7：为什么Hashtable 主数组默认长度是11，为何扩容2 倍还要+1"></a>5.2 问题7：为什么Hashtable 主数组默认长度是11，为何扩容2 倍还要+1</h4><p>按照哈希表的经典理论：哈希表主数组的长度应该是一个素数，这样会产生最分散的余数，尽可能减少哈希冲突。11 就是素数。扩容2 倍肯定不是素数，+1 可能变成素数。  </p>
-<h4 id="5-3-问题8：Hashtable-的缺点"><a href="#5-3-问题8：Hashtable-的缺点" class="headerlink" title="5.3 问题8：Hashtable 的缺点"></a>5.3 问题8：Hashtable 的缺点</h4><p>Hashtable 的方法使用的synchronized 同步方法锁，非静态方法的锁是this（当前的Hashtable 对象，即整个哈希表）。一个线程上锁，就会锁住所有的访问同步方法的线程，并且是挡在了方法之外，效率太低。HashMap 是非线程同步的，可以借助Collections. synchronziedMap()保证线程安全，底层使用synchronized 同步代码块，同步监视器也是当前的对象this，也是锁住了整个哈希表，但是是将其他线程所在了方法之内，同步代码之外，实际性能比Hashtable 有提高，但是提高有限。在大量高并发情况下如何提高集合的效率和安全呢？能否降低锁的粒度，锁住哈希表的一部分而不是全部呢？可以的<br> JDK7 ConcurrentHashMap 锁住主数组的一部分（几个桶）<br> JDK8 ConcurrentHashMap 锁住主数组的一部分（一个桶）<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted45.png" alt="upload successful"><br>red：锁住整个表（所有桶）； blue：锁住几个桶green：锁住一个桶   </p>
-<hr>
-<h3 id="六、JDK7-ConcurrentHashMap"><a href="#六、JDK7-ConcurrentHashMap" class="headerlink" title="六、JDK7 ConcurrentHashMap"></a><em>六、JDK7 ConcurrentHashMap</em></h3><h4 id="6-1-问题9：JDK7-ConcurrentHashMap-关键技能点"><a href="#6-1-问题9：JDK7-ConcurrentHashMap-关键技能点" class="headerlink" title="6.1 问题9：JDK7 ConcurrentHashMap 关键技能点"></a>6.1 问题9：JDK7 ConcurrentHashMap 关键技能点</h4><p> 使用分段锁Segment。由Hashtable 的锁住整个表，HashMap 的不锁，到锁住表的一部分。线程同步使用的是Lock 锁。<br> 结构图：<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted46.png" alt="upload successful"><br> ConcurrentHashMap 是由Segment 数组和HashEntry 数组结构组成。<br> Segment 是一种可重入锁ReentrantLock，在ConcurrentHashMap 里扮演锁的角色，HashEntry 则用于存储键值对数据。<br> 一个ConcurrentHashMap 里包含一个Segment 数组，Segment 的结构和HashMap 类似，是一种数组和链表结构。一个Segment 里包含一个HashEntry 数组，每个HashEntry 是一个链表结构的元素。每个Segment 守护着一个HashEntry 数组里的元素,当对HashEntry 数组的数据进行修改时，必须首先获得它对应的Segment 锁。  </p>
-<h4 id="6-2-问题10：JDK7-ConcurrentHashMap-通过无参构造方法创建对象的结果"><a href="#6-2-问题10：JDK7-ConcurrentHashMap-通过无参构造方法创建对象的结果" class="headerlink" title="6.2 问题10：JDK7 ConcurrentHashMap 通过无参构造方法创建对象的结果"></a>6.2 问题10：JDK7 ConcurrentHashMap 通过无参构造方法创建对象的结果</h4><p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted47.png" alt="upload successful"></p>
-<p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted48.png" alt="upload successful"><br> initialCapacity：初始容量，这个值指的是整个ConcurrentHashMap 的初始容量，实际操作的时候需要平均分给每个Segment<br> loadFactor：加载因子。Segment 数组不扩容，所以是针对每个Segment内部的加载因子。<br> concurrencyLevel：并发级别，segment 数组容量，默认16。要求是2的幂。<br> SEGMENT_TABLE_CAPACITY：每个Segment 的内部数组的容量，最小是2。可以扩容，必须是2 的幂。每次扩容100%。（int newCapacity =oldCapacity &lt;&lt; 1;）<br> 采用无参数构造方法创建对象后的内存结构如图所示（不包含蓝色部分）.<br>Segment 数组长度16，只给segments[0]分配空间。发现每个Segment  其实就是一个HashMap，其中的数组table 的容量是2。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted49.png" alt="upload successful"><br> 认识Segment 和HashEntry：<br>Segment 其实就是之前的一个HashMap，本身继承了ReentrantLock，可以直接复用加锁、解锁等操作<br>HashEntry 就是HashMap 中的Entry，是链表的节点类型，存储具体的键值对信息。<br>注意：Segment 的table、HashEntry 的value、next 都使用volatile修饰，其修改在各个线程之间具有可见性。  </p>
-<p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted50.png" alt="upload successful"></p>
-<h4 id="6-3-JDK7-ConcurrentHashMap-源码阅读"><a href="#6-3-JDK7-ConcurrentHashMap-源码阅读" class="headerlink" title="6.3 JDK7 ConcurrentHashMap 源码阅读"></a>6.3 JDK7 ConcurrentHashMap 源码阅读</h4><p> put 操作：  </p>
-<p>1) 计算key 所在的Segments 数组的索引j。如果segments[ j]==null，需要先分配空间。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted51.png" alt="upload successful"><br>2) 计算key 所在的HashEntry 数组的索引，并完成添加操作(使用Lock 锁保证并发安全)<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted52.png" alt="upload successful"><br>3) 注意1 ： 新的节点会添加到链表的头部（ JDK7 的HashMap 和ConcurrentHashMap 都是添加到头部）。<br>4) 注意2：添加了新节点再判断是否扩容（JDK7 的HashMap 是先判断是否扩容，再添加）。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted53.png" alt="upload successful"><br> get 操作：  </p>
-<p>1) 计算key 所在的Segments 数组的索引j。如果是null，直接返回null，不存在。<br>2) 计算key 所在的HashEntry 数组的索引。找到了返回HashEntry 的value，找不到，返回null。<br>3) 查询不加锁，但是支持并发查询。需要使用UNSAFE 的方法  </p>
-<p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted54.png" alt="upload successful"><br> size()操作：  </p>
-<p>1) 有些方法需要跨段，比如size()和containsValue()。需要锁定整个表而而不仅仅是某个段，这需要按顺序锁定所有段，操作完毕后，又按顺序释放所有段的锁。<br>2) 这里“按顺序”是很重要的，否则极有可能出现死锁  </p>
-<p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted55.png" alt="upload successful"></p>
-<h4 id="6-4-问题11：Unsafe-类是怎么回事"><a href="#6-4-问题11：Unsafe-类是怎么回事" class="headerlink" title="6.4 问题11：Unsafe 类是怎么回事"></a>6.4 问题11：Unsafe 类是怎么回事</h4><p> Unsafe 类是在sun.misc 包下，不属于Java 标准。但是很多Java 的基础类库，包括一些被广泛使用的高性能开发库都是基于Unsafe 类开发的，比如Netty、Hadoop、Kafka 等。<br> 使用Unsafe 可用来直接访问系统内存资源并进行自主管理，大部分API 都是native 的方法。Unsafe 类在提升Java 运行效率，增强Java 语言底层操作能力方面起了很大的作用。<br> Unsafe 可认为是Java 中留下的后门，提供了一些低层次操作，如直接内存访问、线程调度等。官方并不建议使用Unsafe。  </p>
-<h4 id="6-5-问题12：JDK7-ConcurrentHashMap-的缺点是什么"><a href="#6-5-问题12：JDK7-ConcurrentHashMap-的缺点是什么" class="headerlink" title="6.5 问题12：JDK7 ConcurrentHashMap 的缺点是什么"></a>6.5 问题12：JDK7 ConcurrentHashMap 的缺点是什么</h4><p> 结构复杂了：由一个Segment 数组和多个HashEntry 组成的两级结构组成<br> 查询效率低了：需要先查询到Segment 的索引，再查询到HashEntry 的索引。统计size()需要遍历整个Segment 数组。<br> 锁的粒度也不算小：concurrentLevel（并发数）基本上是固定的，其实还是锁住了一个哈希表，哪怕是一个小的HashMap。能否只锁住HashMap 的一个桶呢？concurrentLevel 就可以和数组大小保持一致了。  </p>
-<hr>
-<h3 id="七、JDK8-中ConcurrentHashMap"><a href="#七、JDK8-中ConcurrentHashMap" class="headerlink" title="七、JDK8 中ConcurrentHashMap"></a><em>七、JDK8 中ConcurrentHashMap</em></h3><h4 id="7-1-问题13：JDK8-中ConcurrentHashMap-变化"><a href="#7-1-问题13：JDK8-中ConcurrentHashMap-变化" class="headerlink" title="7.1 问题13：JDK8 中ConcurrentHashMap 变化"></a>7.1 问题13：JDK8 中ConcurrentHashMap 变化</h4><p>1) 结构简单：JDK8 抛弃JDK7 的Segment 分段锁机制，由JDK7 的两级数组变回了原来的一级数组。链表长度&gt;=8，该链表转换为红黑树。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted56.png" alt="upload successful"><br>2) 降低锁的粒度：锁住数组的每个桶的头结点，锁粒度更小。（Hashtable 是锁住整个表、JDK7 的ConcurrrentHashMap 是锁住一个段Segment。而这里是锁住一个链表或者一个红黑树）<br>3) 锁变化：不使用Segment 锁（继承ReentrantLock），利用CAS+Synchronized来保证并发安全。<br>4) 并发扩容,多个线程参与。（JDK7 的ConncurrentHashMap 的Segement 数组长度固定不扩容，扩容的每个HashEntry 数组的容量，此时不需要考虑并发，因为到这里的时候，是持有该Segment 的独占锁的）注意：JDK8 中，Segment 类依旧存在，但只是为了兼容，只有在序列化和反序列化时才会被用到<br>5) 更多的Node 类型<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted57.png" alt="upload successful"><br>a. Node&lt;K,V&gt;：基本结点/普通节点。当table 中的Entry 以链表形式存储时才使用，存储实际数据。该类的key 和value 不为null（其子类可为null）<br>b. TreeNode：红黑树结点。当table 中的Entry 以红黑树的形式存储时才会使用，存储实际数据。ConcurrentHashMap 中对TreeNode 结点的操作都会由TreeBin 代理执行。<br>c. TreeBin：代理操作TreeNode 结点。该节点的hash 值固定为-2，存储实际数据的红黑树的根节点。因为红黑树进行写入操作整个树的结构可能发生很大变化，会影响到读线程。因此TreeBin 需要维护一个简单的读写锁，不用考虑写-写竞争的情况。当然并不是全部的写操作都需要加写锁，只有部分put/remove 需要加写锁。<br>d. ForwardingNode：转发结点。该节点是一种临时结点，只有在扩容进行中才会出现，该节点的hash 值固定为-1，并且他不存储实际数据。如果旧table的一个hash 桶中全部结点都迁移到新的数组中，旧table 就在桶中放置一个ForwardingNode。当读操作或者迭代操作遇到ForwardingNode 时，将操作转发到扩容后新的table 数组中去执行，当写操作遇见ForwardingNode时，则尝试帮助扩容。<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted58.png" alt="upload successful"><br>e. ReservationNode：保留结点，也被称为空节点。该节点的hash 值固定为-3，不保存实际数据。正常的写操作都需要对hash 桶的第一个节点进行加锁，如果hash 桶的第一个节点为null 时是无法加锁的， 因此需要new 一个ReservationNode 节点，作为hash 桶的第一个节点，对该节点进行加锁。  </p>
-<h4 id="7-2-问题14：JDK8-ConcurrentHashMap-怎么放弃Lock-使用synchronized-了"><a href="#7-2-问题14：JDK8-ConcurrentHashMap-怎么放弃Lock-使用synchronized-了" class="headerlink" title="7.2 问题14：JDK8 ConcurrentHashMap 怎么放弃Lock 使用synchronized 了"></a>7.2 问题14：JDK8 ConcurrentHashMap 怎么放弃Lock 使用synchronized 了</h4><p>1) synchronized 之前一直都是重量级锁，但是JDK6 中官方是对他进行过升级，引入了偏向锁，轻量级锁，重量级锁，现在采用的是锁升级的方式去做的。针对synchronized 获取锁的方式，JVM 使用了锁升级的优化方式，就是先使用偏向锁优先同一线程然后再次获取锁，如果失败，就升级为CAS 轻量级锁，如果失败就会短暂自旋，防止线程被系统挂起。最后如果以上都失败就升级为重量级锁。所以是一步步升级上去的，最初也是通过很多轻量级的方式锁定的。<br>2) ReentantLock 是JDK 层面的， synchronized 是JVM 层面的。相对而言synchronized 的性能优化空间更大，这就使得synchronized 能够随着JDK 版本的升级而不改动代码的前提下获得性能上的提升。<br>3) 另外此处synchronized 锁住的是单个链表的头结点，粒度小，而不是Hashtable、Collections 等锁整个哈希表。低粒度下，synchronized 和Lock 的差异没有高粒度下明显。  </p>
-<p>  对象头Mark Word（标记字段）<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted59.png" alt="upload successful">  </p>
-<p>下图列 依次为锁，优点，缺点，适用场景<br><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted61.png" alt="upload successful"></p>
-<h4 id="7-3-问题15：sizeCtl-属性的作用"><a href="#7-3-问题15：sizeCtl-属性的作用" class="headerlink" title="7.3 问题15：sizeCtl 属性的作用"></a>7.3 问题15：sizeCtl 属性的作用</h4><p>sizeCtl 属性是ConcurrentHashMap 中出镜率很高的一个属性，因为它是一个控制标识符，在不同的地方有不同用途，而且它的取值不同，也代表不同的含义。  </p>
-<p>1) -1 代表正在初始化<br>2) -N 表示有N-1 个线程正在进行扩容操作<br>3) 正数或0 代表hash 表还没有被初始化，这个数值表示初始化或下一次进行扩容的大小，这一点类似于扩容阈值的概念。还后面可以看到，它的值始终是当前ConcurrentHashMap 容量的0.75 倍，这与loadfactor 是对应的。  </p>
-<h4 id="7-4-问题16：为什么？Hashtable-不可存储null-key-value，HashMap可以，ConcurrentHashMap-不可以"><a href="#7-4-问题16：为什么？Hashtable-不可存储null-key-value，HashMap可以，ConcurrentHashMap-不可以" class="headerlink" title="7.4 问题16：为什么？Hashtable 不可存储null key-value，HashMap可以，ConcurrentHashMap 不可以"></a>7.4 问题16：为什么？Hashtable 不可存储null key-value，HashMap可以，ConcurrentHashMap 不可以</h4><p>其实你发现Hashtable、ConcurrentHashMap 不允许null，但是都是线程安全的，适用于多线程环境。而HashMap 却是线程不安全的，适用于单线程环境。和此有关吗？其实有关系的。无法容忍的歧义。如果map.get(key) return null，是key 不存在呢，还是value 是<br>null 呢？单线程情况下可以区分，可以通过先调用map.contains(key)来辨别，但在并行映射中，两次调用map.contains(key)和map.get(key) 之间，映射可能已更改。  </p>
-<h4 id="7-5-JDK8-ConcurrentHashMap-源码阅读：put"><a href="#7-5-JDK8-ConcurrentHashMap-源码阅读：put" class="headerlink" title="7.5 JDK8 ConcurrentHashMap 源码阅读：put( )"></a>7.5 JDK8 ConcurrentHashMap 源码阅读：put( )</h4><pre><code class="java"><span class="function"><span class="keyword">public</span> V <span class="title">put</span><span class="params">(K key, V value)</span> </span>{
-<span class="keyword">return</span> putVal(key, value, <span class="keyword">false</span>);
-}
-<span class="function"><span class="keyword">final</span> V <span class="title">putVal</span><span class="params">(K key, V value, <span class="keyword">boolean</span> onlyIfAbsent)</span> </span>{
-<span class="comment">// key 和value 均不能为空</span>
-<span class="keyword">if</span> (key == <span class="keyword">null</span> || value == <span class="keyword">null</span>) <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();
-<span class="comment">// 得到hash 值</span>
-<span class="keyword">int</span> hash = spread(key.hashCode());
-<span class="comment">// 用于记录相应链表的长度</span>
-<span class="keyword">int</span> binCount = <span class="number">0</span>;
-<span class="keyword">for</span> (Node&lt;K, V&gt;[] tab = table; ; ) {
-Node&lt;K, V&gt; f;
-<span class="keyword">int</span> n, i, fh;
-<span class="comment">// 如果数组"空"，进行数组初始化</span>
-<span class="keyword">if</span> (tab == <span class="keyword">null</span> || (n = tab.length) == <span class="number">0</span>)
-<span class="comment">// 初始化数组，后面会详细介绍</span>
-tab = initTable();
-<span class="comment">// 找该hash 值对应的数组下标，得到第一个节点f</span>
-<span class="keyword">else</span> <span class="keyword">if</span> ((f = tabAt(tab, i = (n - <span class="number">1</span>) &amp; hash)) == <span class="keyword">null</span>) {
-<span class="comment">// 如果数组该位置为空，用一次CAS 操作将这个新值放入其中即可，</span>
-<span class="comment">//这个put 操作差不多就结束了，可以拉到最后面了</span>
-<span class="comment">// 如果CAS 失败，那就是有并发操作，进到下一个循环就好了</span>
-<span class="keyword">if</span> (casTabAt(tab, i, <span class="keyword">null</span>,
-<span class="keyword">new</span> Node&lt;K, V&gt;(hash, key, value, <span class="keyword">null</span>)))
-<span class="keyword">break</span>; <span class="comment">// no lock when adding to empty bin</span>
-}
-<span class="comment">// hash 等于MOVED，表示正在扩容</span>
-<span class="keyword">else</span> <span class="keyword">if</span> ((fh = f.hash) == MOVED)
-<span class="comment">// 帮助数据迁移</span>
-tab = helpTransfer(tab, f);
-<span class="keyword">else</span> { <span class="comment">// 到这里就是说，f 是该位置的头结点，而且不为空</span>
-V oldVal = <span class="keyword">null</span>;
-<span class="comment">// 获取数组该位置的头结点的监视器锁</span>
-<span class="keyword">synchronized</span> (f) {
-<span class="keyword">if</span> (tabAt(tab, i) == f) {
-<span class="keyword">if</span> (fh &gt;= <span class="number">0</span>) { <span class="comment">// 头结点的hash 值大于0，说明是链表</span>
-<span class="comment">// 用于累加，记录链表的长度</span>
-binCount = <span class="number">1</span>;
-<span class="comment">// 遍历链表</span>
-<span class="keyword">for</span> (Node&lt;K, V&gt; e = f; ; ++binCount) {
-K ek;
-<span class="comment">// 如果发现了"相等"的key，进行值覆盖，</span>
-<span class="keyword">if</span> (e.hash == hash &amp;&amp;
-((ek = e.key) == key ||
-(ek != <span class="keyword">null</span> &amp;&amp; key.equals(ek)))) {
-oldVal = e.val;
-<span class="keyword">if</span> (!onlyIfAbsent)
-e.val = value;
-<span class="keyword">break</span>;
-}
-<span class="comment">// 到了链表的最末端，将这个新值放到链表的最后面</span>
-Node&lt;K, V&gt; pred = e;
-<span class="keyword">if</span> ((e = e.next) == <span class="keyword">null</span>) {
-pred.next = <span class="keyword">new</span> Node&lt;K, V&gt;(hash, key,
-value, <span class="keyword">null</span>);
-<span class="keyword">break</span>;
-}
-}
-} <span class="keyword">else</span> <span class="keyword">if</span> (f <span class="keyword">instanceof</span> TreeBin) { <span class="comment">// 红黑树</span>
-Node&lt;K, V&gt; p;
-binCount = <span class="number">2</span>;
-<span class="comment">// 调用红黑树的插值方法插入新节点</span>
-<span class="keyword">if</span> ((p = ((TreeBin&lt;K, V&gt;) f).putTreeVal(hash, key,
-value)) != <span class="keyword">null</span>) {
-oldVal = p.val;
-<span class="keyword">if</span> (!onlyIfAbsent)
-p.val = value;
-}
-}
-}
-}
-<span class="comment">// binCount != 0 说明上面在做链表操作</span>
-<span class="keyword">if</span> (binCount != <span class="number">0</span>) {
-<span class="comment">// 判断是否要将链表转换为红黑树，临界值和HashMap 一样，也是8</span>
-<span class="keyword">if</span> (binCount &gt;= TREEIFY_THRESHOLD)
-treeifyBin(tab, i);
-<span class="keyword">if</span> (oldVal != <span class="keyword">null</span>)
-<span class="keyword">return</span> oldVal;
-<span class="keyword">break</span>;
-}
-}
-}
-<span class="comment">//节点数增加了1 个</span>
-addCount(<span class="number">1L</span>, binCount);
-<span class="keyword">return</span> <span class="keyword">null</span>;
-}</code></pre>
-<hr>
-<h3 id="八、最后的总结和交流"><a href="#八、最后的总结和交流" class="headerlink" title="八、最后的总结和交流"></a><em>八、最后的总结和交流</em></h3><h4 id="8-1-三代HashMap-代码行数的变化"><a href="#8-1-三代HashMap-代码行数的变化" class="headerlink" title="8.1 三代HashMap 代码行数的变化"></a>8.1 三代HashMap 代码行数的变化</h4><p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted62.png" alt="upload successful"><br>编程不识Doug Lea,写尽Java 也枉然。整个JUC（java.util.concurrent）就是他的杰作。  </p>
-<p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted63.png" alt="upload successful"></p>
-<p><img src="/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/pasted64.png" alt="upload successful"></p>
-<h4 id="8-2-多阅读源码"><a href="#8-2-多阅读源码" class="headerlink" title="8.2 多阅读源码"></a>8.2 多阅读源码</h4><ol>
-<li>理解的更加明白透彻，知其然且知其所以然  </li>
-<li>阅读的是顶级程序员架构师的编码，开拓思路，增长智慧，无形之中提高编码能力。熟读唐诗三百首，不会做诗也会吟。  </li>
-<li>日常工作的优势，物以类聚，人以群分。你会认识很多技术牛人。  </li>
-<li>如何看源码<br>(1) 广度优先遍历，而不是深度优先遍历。先明白主要步骤，再研究每步骤细节<br>(2) 有所为有所不为，研究关键点，懂得放弃。<br>(3) 充分借助网络资源提高效率，大量的源码爱好者已经写好了详细的注释并分享<br>(4) idea 中查看源码的跳转键ctrl+alt+(左右方向健)  <h4 id="8-3-更多并发编程技能点"><a href="#8-3-更多并发编程技能点" class="headerlink" title="8.3 更多并发编程技能点"></a>8.3 更多并发编程技能点</h4></li>
-<li>Java 内存模型（可见性、有序性、原子性）  </li>
-<li>AQS 抽象的队列式同步器  </li>
-<li>锁的类型和升级：自旋锁、偏向锁、锁消除、锁粗化、悲观锁、乐观锁  </li>
-<li>JUC  </li>
-<li>CAS  </li>
-<li>ABA 问题  </li>
-<li>volatile  </li>
-<li>sun.misc.Unsafe 类  </li>
-<li>安全失败（fail—safe）和快速失败（fail—fast）  </li>
-</ol>
-<h5 id="人与人最小的差别是智商，最大的差距是坚持。"><a href="#人与人最小的差别是智商，最大的差距是坚持。" class="headerlink" title="人与人最小的差别是智商，最大的差距是坚持。"></a>人与人最小的差别是智商，最大的差距是坚持。</h5><h5 id="谢谢你耐心的阅读，有很多不足日后会补充，一起加油！"><a href="#谢谢你耐心的阅读，有很多不足日后会补充，一起加油！" class="headerlink" title="谢谢你耐心的阅读，有很多不足日后会补充，一起加油！"></a>谢谢你耐心的阅读，有很多不足日后会补充，一起加油！</h5>
-    
-
-    
-    <div class="page-reward">
-      <a href="javascript:void(0);" class="page-reward-btn tooltip-top" target="_self">
-        <div class="tooltip tooltip-east">
-          <span class="tooltip-item">
-            赏
-          </span>
-          <span class="tooltip-content">
-            <span class="tooltip-text">
-              <span class="tooltip-inner">
-                <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i
-                    class="icon icon-quo-right"></i></p>
-                <div class="reward-box">
-                  
-                  
-                  <div class="reward-box-item">
-                    <img class="reward-img" src="/img/Wechat.jpg">
-                    <span class="reward-type">微信</span>
-                  </div>
-                  
-                </div>
-              </span>
-            </span>
-          </span>
-        </div>
-      </a>
-    </div>
-    
-
-    
-    <div class="declare"> 
-      <ul class="post-copyright">
-        <li>
-          <strong>本文作者：</strong>
-          Stephen Cheng
-        </li>
-        <li>
-          <strong>本文链接：</strong>
-          <a href="https://chengqijie.gitee.io/2020/05/14/哈希表的前世今生/" title="哈希表的前世今生" target="_blank">https://chengqijie.gitee.io/2020/05/14/哈希表的前世今生/</a>
-        </li>
-        
-        <li>
-          <strong>版权声明： </strong>
+        <div class="article-info info-on-right">
           
-          本博客所有文章除特别声明外，均采用 <a href="https://github.com/JoeyBling/hexo-theme-yilia-plus/blob/master/LICENSE" rel="external nofollow" target="_blank">MIT</a> 许可协议。转载请注明出处！
-        </li>
-        
-      </ul>
-    </div>
-    
-
-  </div>
-  <div class="article-info article-info-index">
-    
-    
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">HashMap</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Redis</a>
         		</li>
       		
 		</ul>
 	</div>
 
-    
+          
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/数据结构//" class="article-tag-list-link color5">数据结构</a>
+        			<a href="/categories/Redis//" class="article-tag-list-link color1">Redis</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
-    
-
-    
-    
-<div class="share-btn share-icons tooltip-left">
-  <div class="tooltip tooltip-east">
-    <span class="tooltip-item">
-      <a href="javascript:;" class="share-sns share-outer">
-        <i class="icon icon-share"></i>
-      </a>
-    </span>
-    <span class="tooltip-content">
-      <div class="share-wrap">
-        <div class="share-icons">
-          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
-            <i class="icon icon-weibo"></i>
-          </a>
-          <!-- <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
-            <i class="icon icon-weixin"></i>
-          </a> -->
-          <a class="qq share-sns" href="javascript:;" data-type="qq">
-            <i class="icon icon-qq"></i>
-          </a>
-          <a class="douban share-sns" href="javascript:;" data-type="douban">
-            <i class="icon icon-douban"></i>
-          </a>
-          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
-            <i class="icon icon-qzone"></i>
-          </a>
-          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
-            <i class="icon icon-facebook"></i>
-          </a>
-          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
-            <i class="icon icon-twitter"></i>
-          </a>
-          <a class="google share-sns" href="javascript:;" data-type="google">
-            <i class="icon icon-google"></i>
-          </a>
         </div>
-      </div>
-    </span>
-  </div>
-</div>
-
-<div class="page-modal wx-share js-wx-box">
-    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
-    <p>扫一扫，分享到微信</p>
-    <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/05/14/%E5%93%88%E5%B8%8C%E8%A1%A8%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" alt="微信分享二维码"> -->
-    </div>
-</div>
-
-<div class="mask js-mask"></div>
-
-    
-    <div class="clearfix"></div>
-  </div>
+        <div class="clearfix"></div>
+    </header>
   </div>
 </article>
-
-
-<nav id="article-nav">
-  
-    <a href="/2020/05/14/%E6%B3%9B%E5%9E%8B%E7%9A%84%E8%87%AA%E6%88%91%E8%AE%A4%E7%9F%A5/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          泛型的自我认知
-        
-      </div>
-    </a>
   
   
-</nav>
-
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-        <div class="toc-container tooltip-left">
-            <i class="icon-font icon-category"></i>
-            <div class="tooltip tooltip-east">
-                <span class="tooltip-item">
-                </span>
-                <span class="tooltip-content">
-                    <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#主要内容："><span class="toc-number">1.</span> <span class="toc-text">主要内容：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#一、开篇"><span class="toc-number">2.</span> <span class="toc-text">一、开篇</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题1：哈希表的前世今生是什么"><span class="toc-number">2.1.</span> <span class="toc-text">问题1：哈希表的前世今生是什么</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#问题2（若干子问题）："><span class="toc-number">2.2.</span> <span class="toc-text">问题2（若干子问题）：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#二、哈希表的原理"><span class="toc-number">3.</span> <span class="toc-text">二、哈希表的原理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-问题1：哈希表的由来，它究竟解决了什么问题，为什么神奇？"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 问题1：哈希表的由来，它究竟解决了什么问题，为什么神奇？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#三、JDK7-HashMap"><span class="toc-number">4.</span> <span class="toc-text">三、JDK7 HashMap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-问题3：JDK7-中HashMap-的关键点"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 问题3：JDK7 中HashMap 的关键点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-源码阅读"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 源码阅读</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-更多的细节问题"><span class="toc-number">4.3.</span> <span class="toc-text">3.3 更多的细节问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#四、JDK8-HashMap"><span class="toc-number">5.</span> <span class="toc-text">四、JDK8 HashMap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-问题4：JDK8-中HashMap-的变化"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 问题4：JDK8 中HashMap 的变化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-问题5：为什么是当链表长度-gt-8-后变成红黑树，而不是其他值"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 问题5：为什么是当链表长度&gt;&#x3D;8 后变成红黑树，而不是其他值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-源码阅读"><span class="toc-number">5.3.</span> <span class="toc-text">4.3 源码阅读</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#五、简单来看一下Hashtable"><span class="toc-number">6.</span> <span class="toc-text">五、简单来看一下Hashtable</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-问题6：Hashtable-和HashMap-的不同之处"><span class="toc-number">6.1.</span> <span class="toc-text">5.1 问题6：Hashtable 和HashMap 的不同之处</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-问题7：为什么Hashtable-主数组默认长度是11，为何扩容2-倍还要-1"><span class="toc-number">6.2.</span> <span class="toc-text">5.2 问题7：为什么Hashtable 主数组默认长度是11，为何扩容2 倍还要+1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-问题8：Hashtable-的缺点"><span class="toc-number">6.3.</span> <span class="toc-text">5.3 问题8：Hashtable 的缺点</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#六、JDK7-ConcurrentHashMap"><span class="toc-number">7.</span> <span class="toc-text">六、JDK7 ConcurrentHashMap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#6-1-问题9：JDK7-ConcurrentHashMap-关键技能点"><span class="toc-number">7.1.</span> <span class="toc-text">6.1 问题9：JDK7 ConcurrentHashMap 关键技能点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-2-问题10：JDK7-ConcurrentHashMap-通过无参构造方法创建对象的结果"><span class="toc-number">7.2.</span> <span class="toc-text">6.2 问题10：JDK7 ConcurrentHashMap 通过无参构造方法创建对象的结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-3-JDK7-ConcurrentHashMap-源码阅读"><span class="toc-number">7.3.</span> <span class="toc-text">6.3 JDK7 ConcurrentHashMap 源码阅读</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-4-问题11：Unsafe-类是怎么回事"><span class="toc-number">7.4.</span> <span class="toc-text">6.4 问题11：Unsafe 类是怎么回事</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-5-问题12：JDK7-ConcurrentHashMap-的缺点是什么"><span class="toc-number">7.5.</span> <span class="toc-text">6.5 问题12：JDK7 ConcurrentHashMap 的缺点是什么</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#七、JDK8-中ConcurrentHashMap"><span class="toc-number">8.</span> <span class="toc-text">七、JDK8 中ConcurrentHashMap</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#7-1-问题13：JDK8-中ConcurrentHashMap-变化"><span class="toc-number">8.1.</span> <span class="toc-text">7.1 问题13：JDK8 中ConcurrentHashMap 变化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-2-问题14：JDK8-ConcurrentHashMap-怎么放弃Lock-使用synchronized-了"><span class="toc-number">8.2.</span> <span class="toc-text">7.2 问题14：JDK8 ConcurrentHashMap 怎么放弃Lock 使用synchronized 了</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-3-问题15：sizeCtl-属性的作用"><span class="toc-number">8.3.</span> <span class="toc-text">7.3 问题15：sizeCtl 属性的作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-4-问题16：为什么？Hashtable-不可存储null-key-value，HashMap可以，ConcurrentHashMap-不可以"><span class="toc-number">8.4.</span> <span class="toc-text">7.4 问题16：为什么？Hashtable 不可存储null key-value，HashMap可以，ConcurrentHashMap 不可以</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-5-JDK8-ConcurrentHashMap-源码阅读：put"><span class="toc-number">8.5.</span> <span class="toc-text">7.5 JDK8 ConcurrentHashMap 源码阅读：put( )</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#八、最后的总结和交流"><span class="toc-number">9.</span> <span class="toc-text">八、最后的总结和交流</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#8-1-三代HashMap-代码行数的变化"><span class="toc-number">9.1.</span> <span class="toc-text">8.1 三代HashMap 代码行数的变化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-2-多阅读源码"><span class="toc-number">9.2.</span> <span class="toc-text">8.2 多阅读源码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-3-更多并发编程技能点"><span class="toc-number">9.3.</span> <span class="toc-text">8.3 更多并发编程技能点</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#人与人最小的差别是智商，最大的差距是坚持。"><span class="toc-number">9.3.1.</span> <span class="toc-text">人与人最小的差别是智商，最大的差距是坚持。</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#谢谢你耐心的阅读，有很多不足日后会补充，一起加油！"><span class="toc-number">9.3.2.</span> <span class="toc-text">谢谢你耐心的阅读，有很多不足日后会补充，一起加油！</span></a></li></ol></li></ol></li></ol>
-                    </div>
-                </span>
-            </div>
-        </div>
-        
-    </div>
-</aside>
-
-
-
-
-
-
-
-
-
-
-  <div id="giteement-ctn"></div>
+    </div></section>
   
-    <link rel="stylesheet" href="/lib/default.css">
-    <script src="/lib/giteement.browser.js"></script>
-  
-  <script>
-  <!-- id: "哈希表的前世今生" -->
-  var giteement = new Giteement({
-    id: '20200514185630',
-    owner: 'chengqijie',
-    repo: 'chengqijie',
-    backcall_uri: 'https://chengqijie.gitee.io',
-    oauth_uri: 'https://cors-anywhere.herokuapp.com/https://gitee.com/oauth/token',
-    oauth: {
-      client_id: 'e551fed6367a77dcf3a8672bede3eff5e038f747e7d5e674dc58b215488d5545',
-      client_secret: 'fc2cd40a7b35bff445412d26248a22323155df97d0eb8f3802625f533d723a54'
-    },
-  })
-  giteement.render('giteement-ctn')
-  </script>
 
-
-
-
-
-
+    
 
 
           </div>
@@ -872,10 +318,10 @@ addCount(<span class="number">1L</span>, binCount);
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: true,
+		isPost: false,
 		isArchive: false,
 		isTag: false,
-		isCategory: false,
+		isCategory: true,
 		open_in_new: true,
 		toc_hide_index: true,
 		root: "/",
