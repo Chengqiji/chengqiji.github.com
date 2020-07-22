@@ -5,31 +5,33 @@
   
   
   
-	<meta name="keywords" content="JVM,博客">
+	<meta name="keywords" content="数据库MySQL,博客">
 	
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="https://chengqijie.gitee.io">
-  <title>JVM垃圾回收 | Stephen Cheng`s blog</title>
+  <title>MySQL高级-第一篇 | Stephen Cheng`s blog</title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   
   <meta property="og:type" content="article">
-<meta property="og:title" content="JVM垃圾回收">
-<meta property="og:url" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/index.html">
+<meta property="og:title" content="MySQL高级-第一篇">
+<meta property="og:url" content="https://chengqijie.gitee.io/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/index.html">
 <meta property="og:site_name" content="Stephen Cheng&#96;s blog">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://images.unsplash.com/photo-1591787823821-157f30f793d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm13.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm14.png">
-<meta property="og:image" content="https://chengqijie.gitee.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm15.png">
-<meta property="article:published_time" content="2020-05-17T16:05:50.000Z">
-<meta property="article:modified_time" content="2020-06-16T01:01:14.802Z">
+<meta property="og:image" content="https://img.pc841.com/2018/0319/20180319090858589.jpg">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/mysql01.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/mysql02.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/mysql03.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/mysql04.png">
+<meta property="og:image" content="https://chengqijie.gitee.io/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/mysql05.png">
+<meta property="article:published_time" content="2020-07-22T08:55:50.000Z">
+<meta property="article:modified_time" content="2020-07-22T08:12:10.834Z">
 <meta property="article:author" content="Stephen Cheng">
-<meta property="article:tag" content="JVM">
+<meta property="article:tag" content="数据库MySQL">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://images.unsplash.com/photo-1591787823821-157f30f793d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60">
+<meta name="twitter:image" content="https://img.pc841.com/2018/0319/20180319090858589.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Stephen Cheng`s blog" type="application/atom+xml">
   
@@ -215,7 +217,7 @@
               class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-JVM垃圾回收" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-MySQL高级-第一篇" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
@@ -225,7 +227,7 @@
    <center><p>
   
     <h1 class="article-title_code_ant" itemprop="name">
-      JVM垃圾回收
+      MySQL高级-第一篇
     </h1>
   
 
@@ -238,8 +240,8 @@
               <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
         </span>
 
-<a href="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" class="archive-article-date">
-        <time datetime="2020-05-17T16:05:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-05-18</time>
+<a href="/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/" class="archive-article-date">
+        <time datetime="2020-07-22T08:55:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-07-22</time>
 </a>
 
   
@@ -252,7 +254,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">3.1k字</span>
+      <span class="post-count">2.6k字</span>
     </span>
   </span>
 
@@ -261,7 +263,7 @@
     <span class="post-meta-item-icon">
       <i class="icon-book icon"></i>
       <span class="post-meta-item-text"> 阅读时长≈</span>
-      <span class="post-count">11分</span>
+      <span class="post-count">9分</span>
     </span>
   </span>
 </div>
@@ -272,58 +274,84 @@
   
   <div class="article-entry" itemprop="articleBody">
 	
-    <img src="https://images.unsplash.com/photo-1591787823821-157f30f793d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" style="width:100%">  
-<a id="more"></a>  
+    <img src="https://img.pc841.com/2018/0319/20180319090858589.jpg" style="width:100%">  
+<a id="more"></a>    
 
 
-<h3 id="如何判断一个对象是垃圾"><a href="#如何判断一个对象是垃圾" class="headerlink" title="如何判断一个对象是垃圾"></a>如何判断一个对象是垃圾</h3><p>判断对象是否存活一般有两种方式：</p>
-<p><strong>引用计数：</strong>每个对象有一个引用计数属性，新增一个引用时计数加1，引用释放时计数减1，计数为0时可以回收。此方法简单，无法解决对象相互循环引用的问题。<br><strong>可达性分析（Reachability Analysis）：</strong>从GC Roots开始向下搜索，搜索所走过的路径称为引用链。当一个对象到GC Roots没有任何引用链相连时，则证明此对象是不可用的。不可达对象。</p>
-<p>在Java语言中，GC Roots包括：</p>
-<p>(1)虚拟机栈中引用的对象。</p>
-<p>(2)方法区中类静态属性实体引用的对象。<br> <!--more--><br>(3)方法区中常量引用的对象。</p>
-<p>(4)本地方法栈中JNI引用的对象。  </p>
-<h3 id="垃圾收集算法"><a href="#垃圾收集算法" class="headerlink" title="垃圾收集算法"></a>垃圾收集算法</h3><p>（1）标记清除<br>（2）复制<br>（3）标记整理  </p>
-<h4 id="标记-清除算法"><a href="#标记-清除算法" class="headerlink" title="标记 -清除算法"></a>标记 -清除算法</h4><p>“标记-清除”（Mark-Sweep）算法，如它的名字一样，算法分为“标记”和“清除”两个阶段：首先标记出所有需要回收的对象，在标记完成后统一回收掉所有被标记的对象。之所以说它是最基础的收集算法，是因为后续的收集算法都是基于这种思路并对其缺点进行改进而得到的。</p>
-<p>它的主要缺点有两个：一个是效率问题，标记和清除过程的效率都不高；另外一个是空间问题，标记清除之后会产生大量不连续的内存碎片，空间碎片太多可能会导致，当程序在以后的运行过程中需要分配较大对象时无法找到足够的连续内存而不得不提前触发另一次垃圾收集动作。  </p>
-<h4 id="复制算法"><a href="#复制算法" class="headerlink" title="复制算法"></a>复制算法</h4><p>“复制”（Copying）的收集算法，它将可用内存按容量划分为大小相等的两块，每次只使用其中的一块。当这一块的内存用完了，就将还存活着的对象复制到另外一块上面，然后再把已使用过的内存空间一次清理掉。</p>
-<p>这样使得每次都是对其中的一块进行内存回收，内存分配时也就不用考虑内存碎片等复杂情况，只要移动堆顶指针，按顺序分配内存即可，实现简单，运行高效。只是这种算法的代价是将内存缩小为原来的一半，持续复制长生存期的对象则导致效率降低。  </p>
-<h4 id="标记-压缩算法"><a href="#标记-压缩算法" class="headerlink" title="标记-压缩算法"></a>标记-压缩算法</h4><p>复制收集算法在对象存活率较高时就要执行较多的复制操作，效率将会变低。更关键的是，如果不想浪费50%的空间，就需要有额外的空间进行分配担保，以应对被使用的内存中所有对象都100%存活的极端情况，所以在老年代一般不能直接选用这种算法。</p>
-<p>根据老年代的特点，有人提出了另外一种“标记-整理”（Mark-Compact）算法，标记过程仍然与“标记-清除”算法一样，但后续步骤不是直接对可回收对象进行清理，而是让所有存活的对象都向一端移动，然后直接清理掉端边界以外的内存  </p>
-<h4 id="分代收集算法"><a href="#分代收集算法" class="headerlink" title="分代收集算法"></a>分代收集算法</h4><p>GC分代的基本假设：绝大部分对象的生命周期都非常短暂，存活时间短。</p>
-<p>“分代收集”（Generational Collection）算法，把Java堆分为新生代和老年代，这样就可以根据各个年代的特点采用最适当的收集算法。在新生代中，每次垃圾收集时都发现有大批对象死去，只有少量存活，那就选用复制算法，只需要付出少量存活对象的复制成本就可以完成收集。而老年代中因为对象存活率高、没有额外空间对它进行分配担保，就必须使用“标记-清理”或“标记-整理”算法来进行回收。  </p>
-<h3 id="垃圾收集器"><a href="#垃圾收集器" class="headerlink" title="垃圾收集器"></a>垃圾收集器</h3><blockquote>
-<p>如果说收集算法是内存回收的方法论，垃圾收集器就是内存回收的具体实现  </p>
-</blockquote>
-<h4 id="Serial收集器"><a href="#Serial收集器" class="headerlink" title="Serial收集器"></a>Serial收集器</h4><p>串行收集器是最古老，最稳定以及效率高的收集器，可能会产生较长的停顿，只使用一个线程去回收。新生代、老年代使用串行回收；新生代复制算法、老年代标记-压缩；垃圾收集的过程中会Stop The World（服务暂停）<br><img src="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm13.png" alt="Alt text">  </p>
-<h4 id="ParNew收集器"><a href="#ParNew收集器" class="headerlink" title="ParNew收集器"></a>ParNew收集器</h4><p>ParNew收集器其实就是Serial收集器的多线程版本。新生代并行，老年代串行；新生代复制算法、老年代标记-压缩<br><img src="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm14.png" alt="Alt text">    </p>
-<h4 id="Parallel收集器"><a href="#Parallel收集器" class="headerlink" title="Parallel收集器"></a>Parallel收集器</h4><p>Parallel Scavenge收集器类似ParNew收集器，Parallel收集器更关注系统的吞吐量。可以通过参数来打开自适应调节策略，虚拟机会根据当前系统的运行情况收集性能监控信息，动态调整这些参数以提供最合适的停顿时间或最大的吞吐量；也可以通过参数控制GC的时间不大于多少毫秒或者比例；新生代复制算法、老年代标记-压缩</p>
-<p>参数控制： -XX:+UseParallelGC 使用Parallel收集器+ 老年代串行  </p>
-<h4 id="Parallel-Old-收集器"><a href="#Parallel-Old-收集器" class="headerlink" title="Parallel Old 收集器"></a>Parallel Old 收集器</h4><p>Parallel Old是Parallel Scavenge收集器的老年代版本，使用多线程和“标记－整理”算法。这个收集器是在JDK 1.6中才开始提供</p>
-<p>参数控制： -XX:+UseParallelOldGC 使用Parallel收集器+ 老年代并行</p>
-<h4 id="CMS收集器"><a href="#CMS收集器" class="headerlink" title="CMS收集器"></a>CMS收集器</h4><p>CMS（Concurrent Mark Sweep）收集器是一种以获取最短回收停顿时间为目标的收集器。目前很大一部分的Java应用都集中在互联网站或B/S系统的服务端上，这类应用尤其重视服务的响应速度，希望系统停顿时间最短，以给用户带来较好的体验。</p>
-<p>从名字（包含“Mark Sweep”）上就可以看出CMS收集器是基于“标记-清除”算法实现的，它的运作过程相对于前面几种收集器来说要更复杂一些，整个过程分为4个步骤，包括：</p>
-<p>(1)初始标记（CMS initial mark）</p>
-<p>(2)并发标记（CMS concurrent mark）</p>
-<p>(3)重新标记（CMS remark）</p>
-<p>(4)并发清除（CMS concurrent sweep）</p>
-<p>其中初始标记、重新标记这两个步骤仍然需要“Stop The World”。初始标记仅仅只是标记一下GC Roots能直接关联到的对象，速度很快，并发标记阶段就是进行GC Roots Tracing的过程，而重新标记阶段则是为了修正并发标记期间，因用户程序继续运作而导致标记产生变动的那一部分对象的标记记录，这个阶段的停顿时间一般会比初始标记阶段稍长一些，但远比并发标记的时间短。</p>
-<p>由于整个过程中耗时最长的并发标记和并发清除过程中，收集器线程都可以与用户线程一起工作，所以总体上来说，CMS收集器的内存回收过程是与用户线程一起并发地执行。老年代收集器（新生代使用ParNew）</p>
-<p>优点: 并发收集、低停顿<br>缺点: 产生大量空间碎片、并发阶段会降低吞吐量</p>
-<p>参数控制：</p>
-<p>-XX:+UseConcMarkSweepGC 使用CMS收集器<br>-XX:+ UseCMSCompactAtFullCollection Full GC后，进行一次碎片整理；整理过程是独占的，会引起停顿时间变长<br>-XX:+CMSFullGCsBeforeCompaction 设置进行几次Full GC后，进行一次碎片整理<br>-XX:ParallelCMSThreads 设定CMS的线程数量（一般情况约等于可用CPU数量）<br><img src="/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/jvm15.png" alt="Alt text">   </p>
-<h4 id="G1收集器"><a href="#G1收集器" class="headerlink" title="G1收集器"></a>G1收集器</h4><p>G1是目前技术发展的最前沿成果之一，HotSpot开发团队赋予它的使命是未来可以替换掉JDK1.5中发布的CMS收集器。与CMS收集器相比G1收集器有以下特点：</p>
-<p>(1)空间整合，G1收集器采用标记整理算法，不会产生内存空间碎片。分配大对象时不会因为无法找到连续空间而提前触发下一次GC。</p>
-<p>(2)可预测停顿，这是G1的另一大优势，降低停顿时间是G1和CMS的共同关注点，但G1除了追求低停顿外，还能建立可预测的停顿时间模型，能让使用者明确指定在一个长度为N毫秒的时间片段内，消耗在垃圾收集上的时间不得超过N毫秒，这几乎已经是实时Java（RTSJ）的垃圾收集器的特征了。</p>
-<p>上面提到的垃圾收集器，收集的范围都是整个新生代或者老年代，而G1不再是这样。使用G1收集器时，Java堆的内存布局与其他收集器有很大差别，它将整个Java堆划分为多个大小相等的独立区域（Region），虽然还保留有新生代和老年代的概念，但新生代和老年代不再是物理隔阂了，它们都是一部分（可以不连续）Region的集合。    </p>
-<p>G1的新生代收集跟ParNew类似，当新生代占用达到一定比例的时候，开始出发收集。和CMS类似，G1收集器收集老年代对象会有短暂停顿。</p>
-<p>收集步骤：</p>
-<p>1、标记阶段，首先初始标记(Initial-Mark),这个阶段是停顿的(Stop the World Event)，并且会触发一次普通Mintor GC。对应GC log:GC pause (young) (inital-mark)</p>
-<p>2、Root Region Scanning，程序运行过程中会回收survivor区(存活到老年代)，这一过程必须在young GC之前完成。</p>
-<p>3、Concurrent Marking，在整个堆中进行并发标记(和应用程序并发执行)，此过程可能被young GC中断。在并发标记阶段，若发现区域对象中的所有对象都是垃圾，那个这个区域会被立即回收(图中打X)。同时，并发标记过程中，会计算每个区域的对象活性(区域中存活对象的比例)。    </p>
-<p>4、Remark, 再标记，会有短暂停顿(STW)。再标记阶段是用来收集 并发标记阶段 产生新的垃圾(并发阶段和应用程序一同运行)；G1中采用了比CMS更快的初始快照算法:snapshot-at-the-beginning (SATB)。</p>
-<p>5、Copy/Clean up，多线程清除失活对象，会有STW。G1将回收区域的存活对象拷贝到新区域，清除Remember Sets，并发清空回收区域并把它返回到空闲区域链表中。    </p>
-<p>6、复制/清除过程后。回收区域的活性对象已经被集中回收到深蓝色和深绿色区域。  </p>
-<h4 id="常用的收集器组合"><a href="#常用的收集器组合" class="headerlink" title="常用的收集器组合"></a>常用的收集器组合</h4><p>【新生代GC策略】 【老年代GC策略】<br><strong>组合1</strong>    【Serial】    【Serial Old】    :Serial和Serial Old都是单线程进行GC，特点就是GC时暂停所有应用线程。<br><strong>组合2</strong>    【Serial】    【CMS+Serial Old】    CMS（Concurrent Mark Sweep）是并发GC，实现GC线程和应用线程并发工作，不需要暂停所有应用线程。另外，当CMS进行GC失败时，会自动使用Serial Old策略进行GC。<br><strong>组合3</strong>    【ParNew】    【CMS】    使用 -XX:+UseParNewGC选项来开启。ParNew是Serial的并行版本，可以指定GC线程数，默认GC线程数为CPU的数量。可以使用-XX:ParallelGCThreads选项指定GC的线程数。如果指定了选项 -XX:+UseConcMarkSweepGC选项，则新生代默认使用ParNew GC策略。<br><strong>组合4</strong>【    ParNew】    【Serial Old】    使用 -XX:+UseParNewGC选项来开启。新生代使用ParNew GC策略，年老代默认使用Serial Old GC策略。<br><strong>组合5</strong>    【Parallel Scavenge】    【Serial Old】    Parallel Scavenge策略主要是关注一个可控的吞吐量：应用程序运行时间 / (应用程序运行时间 + GC时间)，可见这会使得CPU的利用率尽可能的高，适用于后台持久运行的应用程序，而不适用于交互较多的应用程序。<br><strong>组合6</strong>    【Parallel Scavenge】    【Parallel Old】    Parallel Old是Serial Old的并行版本<br><strong>组合7</strong>    【G1GC】    【G1GC】    -XX:+UnlockExperimentalVMOptions -XX:+UseG1GC #开启； -XX:MaxGCPauseMillis=50 #暂停时间目标； -XX:GCPauseIntervalMillis=200 #暂停间隔目标； -XX:+G1YoungGenSize=512m #年轻代大小； -XX:SurvivorRatio=6 #幸存区比例</p>
+<h2 id="索引"><a href="#索引" class="headerlink" title="索引"></a>索引</h2><h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>MySQL官方对索引的定义为：索引（index）是帮助MySQL高效获取数据的数据结构（有序）。在数据之外，数据库系统还维护者满足特定查找算法的数据结构，这些数据结构以某种方式引用（指向）数据， 这样就可以在这些数据结构上实现高级查找算法，这种数据结构就是索引。  </p>
+<h3 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h3><p> （1）类似与书籍的目录，提高数据检索效率，降低数据库的IO成本<br> （2）通过索引列对数据进行排序，降低数据排序成本，降低CPU的消耗  </p>
+<h3 id="劣势"><a href="#劣势" class="headerlink" title="劣势"></a>劣势</h3><p>（1）占用空间。实际上索引也是一张表，该表中保存了主键与索引字段、指向实体类的记录<br>（2）虽然索引提高了查询效率，但是同时也降低了更新表的速度。如update,delete,insert。因为更新表时，不仅要保存数据，还要保存一下索引文件每次更新添加索引列的字段，调整因为更新所带来的键值变化后的索引信息  </p>
+<h3 id="索引结构"><a href="#索引结构" class="headerlink" title="索引结构"></a>索引结构</h3><p>索引是在MySQl存储引擎层中实现的。每种存储引擎的索引都不一定完全相同，也不是所有的存储引擎都支持所有索引类型的。<br><img src="/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/mysql01.png" alt="Alt text">    </p>
+<h3 id="BTree结构"><a href="#BTree结构" class="headerlink" title="BTree结构"></a>BTree结构</h3><p>又叫多路平衡搜索树。一颗m叉的BTree特性如下：<br>（1）树中每个节点最多包含m个孩子<br>（2）除根节点和叶子节点外，每个节点至少有【ceil(m/2)】（m/2向上取整）个孩子<br>（3）若根节点不是叶子节点，则至少有两个孩子<br>（4）所有的叶子节点都在同一层<br>（5）每个非叶子节点由n个key和n+1个指针组成，其中【ceil(m/2)-1】&lt;= n &lt;= m-1    </p>
+<p>以5叉BTree为例，key的数量：公式推导[ceil(m/2)-1] &lt;= n &lt;= m-1。所以 2 &lt;= n &lt;=4 。当n&gt;4时，中间节点分裂到父节点，两边节点分裂。  </p>
+<p>BTREE树 和 二叉树 相比， 查询数据的效率更高， 因为对于相同的数据量来说，BTREE的层级结构比二叉树小，因此搜索速度快。  </p>
+<p>插入 C N G A H E K Q M F W L T Z D P R X Y S 数据为例<br>插入过程省略  ，大家可以自己一步一步推导<br><img src="/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/mysql02.png" alt="Alt text"></p>
+<h3 id="B-Tree结构"><a href="#B-Tree结构" class="headerlink" title="B+Tree结构"></a>B+Tree结构</h3><p>B+Tree为BTree的变种，B+Tree与BTree的区别为：<br>（1) n叉B+Tree最多含有n个key，而BTree最多含有n-1个key<br>（2) B+Tree的叶子节点保存所有的key信息，依key大小顺序排列<br>（3) 所有的非叶子节点都可以看作是key的索引部分<br><img src="/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/mysql03.png" alt="Alt text"><br>由于B+Tree只有叶子节点保存key信息，查询任何key都要从root走到叶子。所以B+Tree的查询效率更加稳定。  </p>
+<h3 id="MySQL中的B-Tree"><a href="#MySQL中的B-Tree" class="headerlink" title="MySQL中的B+Tree"></a>MySQL中的B+Tree</h3><p>MySql索引数据结构对经典的B+Tree进行了优化。在原B+Tree的基础上，增加一个指向相邻叶子节点的链表指针，就形成了带有顺序指针的B+Tree，提高区间访问的性能。<br><img src="/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/mysql04.png" alt="Alt text">  </p>
+<h3 id="索引分类"><a href="#索引分类" class="headerlink" title="索引分类"></a>索引分类</h3><p>（1）单值索引：一个索引只包含单个列，一张表可以有多个单列索引<br>（2）唯一索引：索引列的值必须唯一，但允许有多个空值<br>（3）复合索引：一个索引可以包含多列  </p>
+<h3 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h3><p>索引在创建表的时候，可以同时创建， 也可以随时增加新的索引。  </p>
+<pre><code class="sql"><span class="keyword">CREATE</span> 索引类别[<span class="keyword">UNIQUE</span>|FULLTEXT|SPATIAL]   
+<span class="keyword">INDEX</span> 索引命名index_name   索引数据结构类型（默认BTree）[<span class="keyword">USING</span> index_type]     
+<span class="keyword">ON</span> 表名tbl_name(字段名index_col_name,...) index_col_name : column_name[(<span class="keyword">length</span>)][<span class="keyword">ASC</span> | <span class="keyword">DESC</span>]    
+
+比如：<span class="keyword">create</span> <span class="keyword">index</span> idx_city_name <span class="keyword">on</span> city(city_name) ;</code></pre>
+<h3 id="查看索引"><a href="#查看索引" class="headerlink" title="查看索引"></a>查看索引</h3><p>show index from table_name;  </p>
+<h3 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h3><p>DROP INDEX index_name ON tbl_name;  </p>
+<h3 id="ALTER命令"><a href="#ALTER命令" class="headerlink" title="ALTER命令"></a>ALTER命令</h3><pre><code class="sql">1). <span class="keyword">alter</span> <span class="keyword">table</span> tb_name <span class="keyword">add</span> primary <span class="keyword">key</span>(字段名column_list);   
+该语句添加一个主键，这意味着索引值必须是唯一的，且不能为NULL   
+2). <span class="keyword">alter</span> <span class="keyword">table</span> tb_name <span class="keyword">add</span> <span class="keyword">unique</span> index_name(column_list);   
+这条语句创建索引的值必须是唯一的（除了NULL外，NULL可能会出现多次）   
+3). <span class="keyword">alter</span> <span class="keyword">table</span> tb_name <span class="keyword">add</span> <span class="keyword">index</span> index_name(column_list);   
+添加普通索引， 索引值可以出现多次。   
+4). <span class="keyword">alter</span> <span class="keyword">table</span> tb_name <span class="keyword">add</span> fulltext index_name(column_list);   
+该语句指定了索引为FULLTEXT， 用于全文索引</code></pre>
+<h3 id="索引设计原则"><a href="#索引设计原则" class="headerlink" title="索引设计原则"></a>索引设计原则</h3><p>索引的设计可以遵循一些已有的原则，创建索引的时候请尽量考虑符合这些原则，便于提升索引的使用效率，更高效的使用索引。<br>（1）对查询频次较高，且数据量比较大的表建立索引。<br>（2）索引字段的选择，最佳候选列应当从where子句的条件中提取，如果where子句中的组合比较多，那么应当挑选最常用、过滤效果最好的列的组合<br>（3）使用唯一索引，区分度越高，使用索引的效率越高。<br>（4）索引可以有效的提升查询数据的效率，但索引数量不是多多益善，索引越多，维护索引的代价自然也就水涨船高。对于插入、更新、删除等DML操作比较频繁的表来说，索引过多，会引入相当高的维护代价，降低DML操作的效率，增加相应操作的时间消耗。另外索引过多的话，MySQL也会犯选择困难病，虽然最终仍然会找到一个可用的索引，但无疑提高了选择的代价。<br>（5）使用短索引，索引创建之后也是使用硬盘来存储的，因此提升索引访问的I/O效率，也可以提升总体的访问效率。假如构成索引的字段总长度比较短，那么在给定大小的存储块内可以存储更多的索引值，相应的可以有效的提升MySQL访问索引的I/O效率。<br>（6）利用最左前缀，N个列组合而成的组合索引，那么相当于是创建了N个索引，如果查询时where子句中使用了组成该索引的前几个字段，那么这条查询SQL可以利用组合索引来提升查询效率。  </p>
+<pre><code class="sql">创建复合索引:   
+<span class="keyword">CREATE</span> <span class="keyword">INDEX</span> idx_name_email_status <span class="keyword">ON</span> tb_seller(<span class="keyword">NAME</span>,email,<span class="keyword">STATUS</span>);    
+
+就相当于  
+对name 创建索引 ;   
+对name , email 创建了索引 ;   
+对name , email, status 创建了索引 ;</code></pre>
+<h2 id="视图"><a href="#视图" class="headerlink" title="视图"></a>视图</h2><h3 id="概述-1"><a href="#概述-1" class="headerlink" title="概述"></a>概述</h3><p>视图（View）是一种虚拟存在的表。视图并不在数据库中实际存在，行和列数据来自定义视图的查询中使用的表，并且是在使用视图时动态生成的。通俗的讲，视图就是一条SELECT语句执行后返回的结果集。所以我们在创建视图的时候，主要的工作就落在创建这条SQL查询语句上。<br>视图相对于普通的表的优势主要包括以下几项：<br>简单：使用视图的用户完全不需要关心后面对应的表的结构、关联条件和筛选条件，对用户来说已经是过滤好的复合条件的结果集。<br>安全：使用视图的用户只能访问他们被允许查询的结果集，对表的权限管理并不能限制到某个行某个列，但是通过视图就可以简单的实现。<br>数据独立：一旦视图的结构确定了，可以屏蔽表结构变化对用户的影响，源表增加列对视图没有影响；源表修改列名，则可以通过修改视图来解决，不会造成对访问者的影响。</p>
+<h3 id="创建和修改视图"><a href="#创建和修改视图" class="headerlink" title="创建和修改视图"></a>创建和修改视图</h3><p>创建视图：   </p>
+<pre><code class="sql"><span class="keyword">CREATE</span> [<span class="keyword">OR</span> <span class="keyword">REPLACE</span>] [ALGORITHM = {UNDEFINED | <span class="keyword">MERGE</span> | TEMPTABLE}] 
+<span class="keyword">VIEW</span> view_name [(column_list)] <span class="keyword">AS</span> select_statement [<span class="keyword">WITH</span> [<span class="keyword">CASCADED</span> | <span class="keyword">LOCAL</span>] <span class="keyword">CHECK</span> <span class="keyword">OPTION</span>]
+</code></pre>
+<p>修改视图：  </p>
+<pre><code class="sql"><span class="keyword">ALTER</span> [ALGORITHM = {UNDEFINED | <span class="keyword">MERGE</span> | TEMPTABLE}] 
+<span class="keyword">VIEW</span> view_name [(column_list)] <span class="keyword">AS</span> select_statement [<span class="keyword">WITH</span> [<span class="keyword">CASCADED</span> | <span class="keyword">LOCAL</span>] <span class="keyword">CHECK</span> <span class="keyword">OPTION</span>]</code></pre>
+<p>比如：  </p>
+<pre><code class="sql"><span class="keyword">create</span> <span class="keyword">or</span> <span class="keyword">replace</span> <span class="keyword">view</span> city_country_view asselect t.*,c.country_name <span class="keyword">from</span> country c , city t <span class="keyword">where</span> c.country_id = t.country_id;</code></pre>
+<h3 id="查看视图"><a href="#查看视图" class="headerlink" title="查看视图"></a>查看视图</h3><p>从 MySQL 5.1 版本开始，使用 SHOW TABLES 命令的时候不仅显示表的名字，同时也会显示视图的名字，而不存在单独显示视图的 SHOW VIEWS 命令。  </p>
+<p>同样，在使用 SHOW TABLE STATUS 命令的时候，不但可以显示表的信息，同时也可以显示视图的信息。  </p>
+<p>如果需要查询某个视图的定义，可以使用 SHOW CREATE VIEW 命令进行查看   </p>
+<h3 id="删除视图"><a href="#删除视图" class="headerlink" title="删除视图"></a>删除视图</h3><pre><code class="sql"><span class="keyword">DROP</span> <span class="keyword">VIEW</span> [<span class="keyword">IF</span> <span class="keyword">EXISTS</span>] view_name [, view_name] ...[RESTRICT | <span class="keyword">CASCADE</span>]  </code></pre>
+<p>比如：<br>DROP VIEW city-country-view;    </p>
+<h2 id="存储过程和函数"><a href="#存储过程和函数" class="headerlink" title="存储过程和函数"></a>存储过程和函数</h2><h3 id="概述-2"><a href="#概述-2" class="headerlink" title="概述"></a>概述</h3><p>存储过程和函数是事先经过编译并存储在数据库中的一-段 SQL语句的集合,调用存储过程和函数可以简化应用开发人员的很多工作,减少数据在数据库和应用服务器之间的传输,对于提高数据处理的效率是有好处的。<br>存储过程和函数的区别在于函数必须有返回值,而存储过程没有。<br>函数:是一个有返回值的过程;<br>过程:是一个没有返回值的函数;</p>
+<h3 id="创建查看删除存储过程"><a href="#创建查看删除存储过程" class="headerlink" title="创建查看删除存储过程"></a>创建查看删除存储过程</h3><p>CREATE PROCEDURE procedure_ name ([proC_ parameter[,…]])<br>begin<br>– SQL语向<br>end ;   </p>
+<p>DELIMITER<br>该关键字用来声明SQL语句的分隔符,告诉MySQL解释器,该段命令是否已经结束了, mysq|l是否可以执行了。默认情况下, delimiter是分号;。在命令行客户端中,如果有一行命令以分号结束,那么回车后, mysq将会执行该命令。<br>比如：</p>
+<pre><code class="sql">delimiter $
+<span class="keyword">create</span> <span class="keyword">procedure</span> pro_ test1O)
+<span class="keyword">begin</span>
+<span class="keyword">select</span> <span class="string">'He11o Mysq1'</span> ;
+<span class="keyword">end</span>$
+delimiter ;</code></pre>
+<p>调用存储过程 ：call procedure_name();<br>查看存储过程： </p>
+<pre><code class="sql">查询db_name 数据库中所有的存储过程：<span class="keyword">select</span> <span class="keyword">name</span> <span class="keyword">from</span> mysql.proc <span class="keyword">where</span> db=’db_name‘;   
+查询某个存储过程的定义：<span class="keyword">show</span> <span class="keyword">create</span> <span class="keyword">procedure</span> test.pro_test1 \G;</code></pre>
+<p>删除存储过程:DROP PROCEDURE pro_name;    </p>
+<h2 id="触发器"><a href="#触发器" class="headerlink" title="触发器"></a>触发器</h2><h3 id="概述-3"><a href="#概述-3" class="headerlink" title="概述"></a>概述</h3><p>触发器是与表有关的数据库对象,指在insert/update/delete之前或之后,触发并执行触发器中定义的SQL语句集合。触发器的这种特性可以协助应用在数据库端确保数据的完整性,日志记录,数据校验等操作。<br>使用别名OLD和NEW来引用触发器中发生变化的记录内容,这与其他的数据库是相似的。现在触发器还只支持行级触发,不支持语句级触发。<br><img src="/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/mysql05.png" alt="Alt text">  </p>
+<h3 id="创建触发器"><a href="#创建触发器" class="headerlink" title="创建触发器"></a>创建触发器</h3><pre><code class="sql"><span class="keyword">create</span> <span class="keyword">trigger</span> tri gger_ <span class="keyword">name</span>
+<span class="keyword">before</span>/<span class="keyword">after</span> <span class="keyword">insert</span>/<span class="keyword">update</span>/<span class="keyword">delete</span>
+<span class="keyword">on</span> tb1 <span class="keyword">name</span>
+[ <span class="keyword">for</span> <span class="keyword">each</span> <span class="keyword">row</span> ] <span class="comment">--行级触发器</span>
+<span class="keyword">begin</span>
+trigger_ stmt ;
+<span class="keyword">end</span>;
+</code></pre>
+<h3 id="删除触发器"><a href="#删除触发器" class="headerlink" title="删除触发器"></a>删除触发器</h3><p>DROP TRIGGER tregger_name;  </p>
+<h3 id="查看触发器"><a href="#查看触发器" class="headerlink" title="查看触发器"></a>查看触发器</h3><p>show treggers ;  </p>
 
     
 
@@ -365,7 +393,7 @@
         </li>
         <li>
           <strong>本文链接：</strong>
-          <a href="https://chengqijie.gitee.io/2020/05/18/JVM垃圾回收/" title="JVM垃圾回收" target="_blank">https://chengqijie.gitee.io/2020/05/18/JVM垃圾回收/</a>
+          <a href="https://chengqijie.gitee.io/2020/07/22/MySQL高级-第一篇/" title="MySQL高级-第一篇" target="_blank">https://chengqijie.gitee.io/2020/07/22/MySQL高级-第一篇/</a>
         </li>
         
         <li>
@@ -387,7 +415,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">JVM</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">数据库MySQL</a>
         		</li>
       		
 		</ul>
@@ -399,7 +427,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/JVM//" class="article-tag-list-link color4">JVM</a>
+        			<a href="/categories/数据库MySQL//" class="article-tag-list-link color4">数据库MySQL</a>
         		</li>
       		
 		</ul>
@@ -454,7 +482,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/05/18/JVM%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/" alt="微信分享二维码"> -->
+     <!-- <img src="//pan.baidu.com/share/qrcode?url=https://chengqijie.gitee.io/2020/07/22/MySQL%E9%AB%98%E7%BA%A7-%E7%AC%AC%E4%B8%80%E7%AF%87/" alt="微信分享二维码"> -->
     </div>
 </div>
 
@@ -469,18 +497,9 @@
 
 <nav id="article-nav">
   
-    <a href="/2020/05/18/JVM%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          JVM常用命令
-        
-      </div>
-    </a>
   
-  
-    <a href="/2020/05/17/JVM%E5%86%85%E5%AD%98%E6%A8%A1%E5%9E%8B/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">JVM内存模型</div>
+    <a href="/2020/07/21/%E7%BA%A2%E9%BB%91%E6%A0%91/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">红黑树</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -507,7 +526,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#如何判断一个对象是垃圾"><span class="toc-number">1.</span> <span class="toc-text">如何判断一个对象是垃圾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垃圾收集算法"><span class="toc-number">2.</span> <span class="toc-text">垃圾收集算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#标记-清除算法"><span class="toc-number">2.1.</span> <span class="toc-text">标记 -清除算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#复制算法"><span class="toc-number">2.2.</span> <span class="toc-text">复制算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#标记-压缩算法"><span class="toc-number">2.3.</span> <span class="toc-text">标记-压缩算法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#分代收集算法"><span class="toc-number">2.4.</span> <span class="toc-text">分代收集算法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#垃圾收集器"><span class="toc-number">3.</span> <span class="toc-text">垃圾收集器</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Serial收集器"><span class="toc-number">3.1.</span> <span class="toc-text">Serial收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ParNew收集器"><span class="toc-number">3.2.</span> <span class="toc-text">ParNew收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Parallel收集器"><span class="toc-number">3.3.</span> <span class="toc-text">Parallel收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Parallel-Old-收集器"><span class="toc-number">3.4.</span> <span class="toc-text">Parallel Old 收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CMS收集器"><span class="toc-number">3.5.</span> <span class="toc-text">CMS收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#G1收集器"><span class="toc-number">3.6.</span> <span class="toc-text">G1收集器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#常用的收集器组合"><span class="toc-number">3.7.</span> <span class="toc-text">常用的收集器组合</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#索引"><span class="toc-number">1.</span> <span class="toc-text">索引</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述"><span class="toc-number">1.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#优势"><span class="toc-number">1.2.</span> <span class="toc-text">优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#劣势"><span class="toc-number">1.3.</span> <span class="toc-text">劣势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引结构"><span class="toc-number">1.4.</span> <span class="toc-text">索引结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#BTree结构"><span class="toc-number">1.5.</span> <span class="toc-text">BTree结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#B-Tree结构"><span class="toc-number">1.6.</span> <span class="toc-text">B+Tree结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL中的B-Tree"><span class="toc-number">1.7.</span> <span class="toc-text">MySQL中的B+Tree</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引分类"><span class="toc-number">1.8.</span> <span class="toc-text">索引分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建索引"><span class="toc-number">1.9.</span> <span class="toc-text">创建索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看索引"><span class="toc-number">1.10.</span> <span class="toc-text">查看索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除索引"><span class="toc-number">1.11.</span> <span class="toc-text">删除索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ALTER命令"><span class="toc-number">1.12.</span> <span class="toc-text">ALTER命令</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#索引设计原则"><span class="toc-number">1.13.</span> <span class="toc-text">索引设计原则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#视图"><span class="toc-number">2.</span> <span class="toc-text">视图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述-1"><span class="toc-number">2.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建和修改视图"><span class="toc-number">2.2.</span> <span class="toc-text">创建和修改视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看视图"><span class="toc-number">2.3.</span> <span class="toc-text">查看视图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除视图"><span class="toc-number">2.4.</span> <span class="toc-text">删除视图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#存储过程和函数"><span class="toc-number">3.</span> <span class="toc-text">存储过程和函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述-2"><span class="toc-number">3.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建查看删除存储过程"><span class="toc-number">3.2.</span> <span class="toc-text">创建查看删除存储过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#触发器"><span class="toc-number">4.</span> <span class="toc-text">触发器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#概述-3"><span class="toc-number">4.1.</span> <span class="toc-text">概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建触发器"><span class="toc-number">4.2.</span> <span class="toc-text">创建触发器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#删除触发器"><span class="toc-number">4.3.</span> <span class="toc-text">删除触发器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看触发器"><span class="toc-number">4.4.</span> <span class="toc-text">查看触发器</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
@@ -531,9 +550,9 @@
     <script src="/lib/giteement.browser.js"></script>
   
   <script>
-  <!-- id: "JVM垃圾回收" -->
+  <!-- id: "MySQL高级-第一篇" -->
   var giteement = new Giteement({
-    id: '20200518000550',
+    id: '20200722165550',
     owner: 'chengqijie',
     repo: 'chengqijie',
     backcall_uri: 'https://chengqijie.gitee.io',
